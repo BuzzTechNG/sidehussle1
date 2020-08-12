@@ -1,0 +1,27 @@
+.userLogger {
+    margin: 200px auto;
+    width: 500px;
+    text-align: center;
+    box-shadow: 0 10px 9px #ccc;
+    border: 1px solid indigo;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.switchButton {
+    width: 70px;
+    height: 40px;
+    border: 3px solid indigo;
+    box-shadow: 0 7px 6px rgb(86, 86, 128);
+    border-radius: 15px;
+    outline: none;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 20px;
+
+}
+
+.switchButton:hover {
+    background-color: rgb(129, 124, 145);
+
+}

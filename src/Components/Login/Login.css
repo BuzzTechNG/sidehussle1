@@ -1,0 +1,33 @@
+.inputElement {
+    outline: none;
+    border: 1px solid #ccc;
+    background-color: white;
+    font: inherit;
+    padding: 6px 10px;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.inputElement:focus {
+    outline: none;
+    background-color: #ccc;
+}
+
+.buttonLogin {
+    outline: none;
+    border: 1px solid #ccc;
+    background-color: white;
+    font: inherit;
+    padding: 6px 10px;
+    display: block;
+    width: 80%;
+    margin: auto;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.buttonLogin:hover {
+    outline: none;
+    background-color: #ccc
+}
