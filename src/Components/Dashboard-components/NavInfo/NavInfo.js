@@ -40,18 +40,18 @@ const NavInfo = () => {
             >
               <ul className="navbar-nav ">
                 <li className="nav-item">
-                  <NavLink to="/" exact className="nav-link text-light ml-3">
+                  <NavLink to="/dashboard/" exact className="nav-link text-light ml-3">
                     Available Jobs
                   </NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink to="/startjob" className="nav-link text-light ml-3">
+                  <NavLink to="/dashboard/startjob" className="nav-link text-light ml-3">
                     Start a job
                   </NavLink>
                 </li>
                 <li className="nav-item">
                   <NavLink
-                    to="/inprogress"
+                    to="/dashboard/inprogress"
                     className="nav-link text-light ml-3"
                   >
                     Job in progress
@@ -60,7 +60,7 @@ const NavInfo = () => {
 
                 <li className="nav-item">
                   <NavLink
-                    to="/previousjobs"
+                    to="/dashboard/previousjobs"
                     className="nav-link text-light ml-3"
                   >
                     Previous jobs
