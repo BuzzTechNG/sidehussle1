@@ -4,6 +4,7 @@ import "./Dashboard";
 
 import Mainpage from "../../Components/Dashboard-components/Mainpage/Mainpage";
 import NavInfo from "../../Components/Dashboard-components/NavInfo/NavInfo";
+import Footer from "../../Components/Dashboard-components/Footer/Footer";
 
 class Dashboard extends Component {
   constructor() {
@@ -17,6 +18,7 @@ class Dashboard extends Component {
           <div className="row">
             <NavInfo />
             <Mainpage />
+            <Footer />
           </div>
         </div>
       </div>

@@ -9,9 +9,7 @@ import Availablejobs from "./Availablejobs/Availablejobs";
 class Mainpage extends Component {
   render() {
     return (
-      <div className="mainpage">
-        
-
+      <div className="mainpage mx-lg-auto">
         <Switch>
           <Route path="/dashboard/startjob" component={Startjob} />
           <Route path="/dashboard/inprogress" component={Jobprogress} />
