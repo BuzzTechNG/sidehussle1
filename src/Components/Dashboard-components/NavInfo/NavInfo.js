@@ -11,7 +11,7 @@ const NavInfo = () => {
             id="navbar"
             className="navbar navbar-dark text-light bg-dark fixed-top  navbar-expand-lg py-2"
           >
-            <a href="/" className="navbar-brand">
+            <div exact className="navbar-brand">
               <img
                 src="sidehusslelogo.jpg"
                 width="45"
@@ -23,7 +23,7 @@ const NavInfo = () => {
               <span className="small text-uppercase font-weight-bold">
                 Logo of Sidehussle
               </span>
-            </a>
+            </div>
 
             <button
               className="navbar-toggler"

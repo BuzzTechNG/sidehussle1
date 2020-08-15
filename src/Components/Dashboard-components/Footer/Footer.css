@@ -1,3 +1,32 @@
 .footer {
-    margin-top: static;
+    width: 100%;
+    background-color: rgb(0, 0, 0);
+    min-height: 40vh;
+    overflow-x: hidden;
+    color: white;
+    text-align: center;
+    padding: 20px;
+
+}
+
+.copyright {
+    background-color: black;
+    height: fit-content;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    font-style: italic;
+}
+
+.newsletter-input {
+    padding: 1rem;
+    width: 100%;
+    max-width: 70%;
+    border-radius: 5px;
+    border: none;
+}
+
+.newsletter-btn {
+    border-radius: 5px;
+    margin-left: -1rem;
 }

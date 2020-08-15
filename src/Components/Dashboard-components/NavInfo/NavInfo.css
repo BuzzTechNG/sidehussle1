@@ -1,3 +1,9 @@
-.navinfo {
-    position: static;
+.active {
+    background-color: rgb(8, 8, 8);
+    border-bottom: 4px solid #1d1ab9;
+    font-weight: bold;
+    color: #070707;
+    border-radius: 10px;
+    padding: 5px;
+    width: fit-content;
 }

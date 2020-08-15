@@ -3,7 +3,7 @@ import "./Card.css";
 
 const card = (props) => {
   return (
-    <div class="col-md-4 mx-auto my-5">
+    <div class="col-sm-6 col-md-4 mx-auto my-5">
       <div class="card">
         <div className="card-header text-center text-uppercase bg-primary">
           <h4>Job Type:</h4>
