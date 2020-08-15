@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import availableJobs from "./AvailablejobsList";
+import availableJobs from "../AvailablejobsList";
 import Card from "./Card/Card";
 
 class Availablejobs extends Component {

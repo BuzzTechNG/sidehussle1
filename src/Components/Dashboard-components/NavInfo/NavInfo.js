@@ -39,17 +39,36 @@ const NavInfo = () => {
               id="navbarLinks"
             >
               <ul className="navbar-nav ">
-                <li className="nav-item">
-                  <NavLink to="/dashboard/" exact className="nav-link text-light ml-3">
+                <li
+                  className="nav-item"
+                  data-toggle="collapse"
+                  data-target=".navbar-collapse.show"
+                >
+                  <NavLink
+                    to="/dashboard/"
+                    exact
+                    className="nav-link text-light ml-3"
+                  >
                     Available Jobs
                   </NavLink>
                 </li>
-                <li className="nav-item">
-                  <NavLink to="/dashboard/startjob" className="nav-link text-light ml-3">
+                <li
+                  className="nav-item"
+                  data-toggle="collapse"
+                  data-target=".navbar-collapse.show"
+                >
+                  <NavLink
+                    to="/dashboard/startjob"
+                    className="nav-link text-light ml-3"
+                  >
                     Start a job
                   </NavLink>
                 </li>
-                <li className="nav-item">
+                <li
+                  className="nav-item"
+                  data-toggle="collapse"
+                  data-target=".navbar-collapse.show"
+                >
                   <NavLink
                     to="/dashboard/inprogress"
                     className="nav-link text-light ml-3"
@@ -58,7 +77,11 @@ const NavInfo = () => {
                   </NavLink>
                 </li>
 
-                <li className="nav-item">
+                <li
+                  className="nav-item"
+                  data-toggle="collapse"
+                  data-target=".navbar-collapse.show"
+                >
                   <NavLink
                     to="/dashboard/previousjobs"
                     className="nav-link text-light ml-3"
