@@ -14,6 +14,12 @@ const previousjobtable = (props) => {
         </div>
         <div className="panel-footer">
           <p>
+            <strong>Date: </strong>
+            {props.date}
+            <strong>Time: </strong>
+            {props.time}
+          </p>
+          <p>
             <strong>Price: </strong>
             {props.price}
           </p>

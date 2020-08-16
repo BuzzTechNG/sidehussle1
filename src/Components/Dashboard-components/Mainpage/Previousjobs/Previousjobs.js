@@ -17,6 +17,8 @@ class Previousjob extends Component {
         description={pJobList.description}
         price={pJobList.price}
         location={pJobList.location}
+        time={pJobList.time}
+        date={pJobList.date}
       />
     ));
 
