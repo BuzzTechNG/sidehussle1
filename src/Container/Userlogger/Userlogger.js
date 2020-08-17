@@ -5,18 +5,18 @@ import "./Userlogger.css";
 import LogIn from "../../Components/Login/Login";
 import Register from "../../Components/Register/Register";
 
-class App extends React.Component {
+class Userlogger extends React.Component {
   constructor() {
     super();
     this.state = {
-      pressed: true,
+      signUpView: true,
     };
   }
-  pressing = () => {
-    this.setState({ pressed: !this.state.pressed });
+  switchView = () => {
+    this.setState({ signUpView: !this.state.signUpView });
   };
   renderContent = () => {
-    switch (this.state.pressed) {
+    switch (this.state.signUpView) {
       case true:
         return <LogIn />;
       case false:
@@ -26,7 +26,7 @@ class App extends React.Component {
   };
 
   renderContentinsideButton = () => {
-    switch (this.state.pressed) {
+    switch (this.state.signUpView) {
       case true:
         return "SignUp";
       case false:
@@ -37,7 +37,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="userLogger">
-        <button className="switchButton" onClick={(e) => this.pressing()}>
+        <button className="switchButton" onClick={(e) => this.switchView()}>
           {this.renderContentinsideButton()}
         </button>
         <br></br>
@@ -47,4 +47,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default Userlogger;
