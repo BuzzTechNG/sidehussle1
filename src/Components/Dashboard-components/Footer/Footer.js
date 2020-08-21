@@ -8,50 +8,50 @@ class Footer extends Component {
         <div className="row ">
           <div className="container">
             <div className="row">
-              <div className="col-12"></div>
+              {/* <div className="col-12"></div> */}
             </div>
             <div className="row footer-row">
               <div className="col-md-4 p-3">
-                <h1 className="text-primary">About SideHussle</h1>
-                <p>
+                <div className="footer-title">About Us</div>
+                <p className="footer-subtitle">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea
                   voluptate id aliquam exercitationem voluptatum ipsa
                 </p>
                 <br />
-                <h1 className=" text-primary">Contact Us</h1>
-                <h5>
-                  <i className="fas fa-mobile-alt fa-fw"></i>:
-                  <a className="text-white-50" href="/">
+                <div className=" footer-title">Contact Us</div>
+                <div>
+                  <i className="fas fa-mobile-alt footer-subtitle fa-fw"></i>:
+                  <a className="footer-subtitle" href="/">
                     08034565543
                   </a>
-                </h5>
+                </div>
 
-                <h5>
-                  <i className="fas fa-envelope fa-fw"></i>:
-                  <a className="text-white-50" href="mailto:mail@example.com">
+                <div>
+                  <i className="fas fa-envelope fa-fw footer-subtitle"></i>:
+                  <a className="footer-subtitle" href="mailto:mail@example.com">
                     mail@BuzzTech.com
                   </a>
-                </h5>
+                </div>
               </div>
               <div className="col-md-4 p-3">
-                <h1 className="text-primary">Follow Along On:</h1>
-                <div className="d-flex justify-content-around p-5 social-icons">
+                <div className="footer-title">Follow Along On:</div>
+                <div className="d-flex justify-content-between py-2 px-5 social-icons">
                   <a href="/">
-                    <i className="fab m-2 fa-facebook fa-2x text-light"></i>{" "}
+                    <i className="fab m-2 fa-facebook fa-1x footer-subtitle"></i>{" "}
                   </a>
                   <a href="/">
-                    <i className="fab m-2 fa-twitter fa-2x text-light"></i>
+                    <i className="fab m-2 fa-twitter fa-1x footer-subtitle"></i>
                   </a>
                   <a href="/">
-                    <i class="fab m-2 fa-linkedin fa-2x text-light"></i>
+                    <i class="fab m-2 fa-linkedin fa-1x footer-subtitle"></i>
                   </a>
                   <a href="/">
-                    <i class="fab m-2 fa-instagram fa-2x text-light"></i>
+                    <i class="fab m-2 fa-instagram fa-1x footer-subtitle"></i>
                   </a>
                 </div>
               </div>
               <div class="col-md-4 p-3">
-                <h2 className="text-primary">Subscribe for job updates:</h2>
+                <h2 className="footer-title">Subscribe for job updates:</h2>
                 <form action="#" className="d-flex justify-content-center pt-4">
                   <input
                     type="text"
@@ -69,9 +69,9 @@ class Footer extends Component {
             </div>
           </div>
 
-          <div className="copyright fixed-bottom">
+          {/* <div className="copyright fixed-bottom">
             Copyright © 2020 BuzzTech - All Rights Reserved. Privacy Policy.
-          </div>
+          </div> */}
         </div>
       </div>
     );

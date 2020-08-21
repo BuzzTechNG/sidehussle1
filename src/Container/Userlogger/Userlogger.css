@@ -1,18 +1,26 @@
+.main-background{
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+}
 .userLogger {
-    margin: 200px auto;
-    width: 500px;
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 380px;
     text-align: center;
-    box-shadow: 0 10px 9px #ccc;
-    border: 1px solid indigo;
-    padding: 10px;
+    box-shadow: 0 3px 5px #ddd;
+    padding: 20px 35px;
     box-sizing: border-box;
+    transition: all 1000ms ease-in-out;
 }
 
 .switchButton {
     width: 70px;
     height: 40px;
-    border: 3px solid indigo;
-    box-shadow: 0 7px 6px rgb(86, 86, 128);
+    /* border: 3px solid indigo; */
+    /* box-shadow: 0 7px 6px rgb(86, 86, 128); */
     border-radius: 15px;
     outline: none;
     font-weight: bold;
@@ -23,5 +31,4 @@
 
 .switchButton:hover {
     background-color: rgb(129, 124, 145);
-
 }

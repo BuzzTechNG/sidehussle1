@@ -1,0 +1,96 @@
+import React, { Component } from "react";
+
+class Home extends Component {
+  render() {
+    return (
+      <div className="full-width column mt-4">
+        <div className="container-v custom-shadow row">
+          <div className="col-1 row bdr justify-content-center align-items-center"> <i className="fa fa-warning text-info"></i></div>
+          <div className="col ">
+            <div className="subtitle1 px-3" style={{textDecoration:"underline"}}>Kindly complete your registration</div>
+            <p className="subtitle2 py-2 px-3">Unfortunately we were not able to accept the profile you submitted. Please check the messages you received from our support team for more information.
+
+If you would like, you may edit your profile and then resubmit it for another review.</p>
+          </div>
+        </div>
+      <div className="col column container-v custom-shadow mb-5 mt-4">  
+      {/* Top container  */}
+      <div className="col row padding-m py-4 bdb align-items-center">
+      <div className="avatar"></div>
+      <div className="col">
+        <div className="title1">User Name</div>
+        <div className="subtitle1"> <i className="fa fa-location"></i> User location</div>
+      </div>
+      </div>
+      {/* Top End */}
+        <div className="col row">
+            {/* Left Contaienr */}
+            <div className=" col-lg-3 col-md-12 col-sm-12 col-xs-12 bdr p-3">
+                 <p className="subtitle1"> Video introduction <i className="round-btn fa fa-plus"></i></p> 
+                 <p className="subtitle1"> Availability <i className="round-btn fa fa-pen"></i></p> 
+                 <p className="subtitle1"> Avaliable Online</p> 
+                 {/* Language */}
+                 <div className="mb-3">
+                 <div className="subtitle1"> Languages <i className="round-btn fa fa-plus"></i><i className="round-btn fa fa-pen"></i></div> 
+                  <ul className="list subtitle3">
+                    <li>English</li>
+                  </ul>
+                  </div>
+                 {/* Education */}
+                 <div className="mb-3">
+                 <div className="subtitle1"> Education <i className="round-btn fa fa-plus"></i></div> 
+                  <ul className="list subtitle3">
+                    <li>English</li>
+                  </ul>
+                  </div>
+
+            </div>
+            {/* Right Container */}
+            <div className="col-lg-9 col-md-12 col-sm-12 col-xs-12 p-3 bdb">
+              {/* Title and user info */}
+              <div className="bdb pb-2">
+                <div className="title2">Web and Mobile Developer  <i className="round-btn fa fa-pen"></i> </div>
+                 <p className="title3"> Costing -- N200/hr <i className="round-btn fa fa-pen"></i></p> 
+                  <p className="subtitle2">Info about user</p>
+              </div>
+              {/* User Skills */}
+                <div className="bdb py-3">
+                  <p className="title3"> Services <i className="round-btn fa fa-pen"></i></p>
+                  <ul className="subtitle3 list">
+                    <li> My Skills and Services </li>
+                    <li> My Skills and Services </li>
+                    <li> My Skills and Services </li>
+                    <li> My Skills and Services </li>
+                    <li> My Skills and Services </li>
+                  </ul>
+                </div>
+                {/* Work history and Reviews */}
+                <div className="bdb py-3">
+                <p className="title3"> Work History</p>
+                <div className="row align-items-center justify-content-center">
+                    <div style={{width:"40%"}}>
+                    <img style={{width:"100%"}} src={require('../../../../assets/hiring.png')} alt="review"/>
+                      <p className="text-center subtitle2">Work History</p>
+                      <div className="square-btn"> <i className="fa fa-search my-auto mr-2"></i> Find Work </div>
+                      </div>
+                  </div>
+                </div>
+                {/* Reviews and Rating */}
+                <div className="bdb py-3">
+                <p className="title3">Reviews</p>
+                  <div className="row align-items-center justify-content-center">
+                    <div style={{width:"40%"}}>
+                    <img style={{width:"100%"}} src={require('../../../../assets/reviews.png')} alt="review"/>
+                      <p className="text-center subtitle2">No review avaliable</p>
+                      </div>
+                  </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+      </div>
+    );
+  }
+}
+export default Home;

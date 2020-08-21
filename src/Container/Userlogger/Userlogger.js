@@ -18,9 +18,9 @@ class Userlogger extends React.Component {
   renderContent = () => {
     switch (this.state.signUpView) {
       case true:
-        return <LogIn />;
+        return <LogIn switchView={this.switchView} />;
       case false:
-        return <Register />;
+        return <Register switchView={this.switchView} />;
       default:
     }
   };
@@ -36,12 +36,12 @@ class Userlogger extends React.Component {
   };
   render() {
     return (
+      <div className="main-background">
       <div className="userLogger">
-        <button className="switchButton" onClick={(e) => this.switchView()}>
-          {this.renderContentinsideButton()}
-        </button>
+        <div>Side Hussle Logo</div>
         <br></br>
         {this.renderContent()}
+      </div>
       </div>
     );
   }

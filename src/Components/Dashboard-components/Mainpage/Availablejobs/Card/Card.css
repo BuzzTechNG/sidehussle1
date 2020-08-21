@@ -1,3 +1,12 @@
-.card {
-    box-shadow: 0 7px 6px rgb(160, 160, 187)
+.xcard {
+    box-shadow: 0 1px 8px 0 #e9e9e9;
+    border-left: 2px solid #cccccc00;
+    cursor: pointer;
+    transition: all 300ms;
+}
+.xcard:hover{
+    border-left: 4px solid #fe3852ff
+}
+.card-list li{
+    font-size: 13px;
 }
