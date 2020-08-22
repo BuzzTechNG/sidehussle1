@@ -5,6 +5,35 @@
 .full-height{
   height: 100%;
 }
+@keyframes pageTitleAnimation{
+  from{
+    width: 10vw;
+    transform: translateX(-50px);
+    clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 100%);  }
+    to{
+      width: Clamp(15px, 22px, Calc(1vw + 10px));
+      transform: translateX(0px);
+  }
+}
+.page-title{
+  font-size: Clamp(15px, 22px, Calc(1vw + 10px));
+  font-weight: 700;
+  position: relative;
+  width: max-content;
+  margin-left: -15px;
+}
+.page-title::after{
+  content: "";
+  height: 95%;
+  transform-origin: right;
+  animation: pageTitleAnimation 500ms forwards cubic-bezier(0.47, 0, 0.745, 0.715);
+  width: Clamp(15px, 22px, Calc(1vw + 10px));
+  position: absolute;
+  top: 0;
+  left: 102%;
+  background-image: linear-gradient(to right,#c42252 100%,#fe3852 100%);
+  clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
 .avatar{
   background-color:#ccc;
   width: 80px;
@@ -21,6 +50,11 @@
 }
 .container-m{
   max-width: 990px;
+  width: 100%;
+  margin: 0 auto;
+}
+.container-lg{
+  max-width: 1300px;
   width: 100%;
   margin: 0 auto;
 }

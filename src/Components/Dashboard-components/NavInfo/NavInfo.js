@@ -6,19 +6,13 @@ const NavInfo = () => {
   return (
     <div className="navinfo">
       <div className="col">
-        <div className="container">
+        <div className="">
           <nav
             id="navbar"
-            className="navbar nav-background fixed-top  navbar-expand-lg "
+            className=" navbar  nav-background fixed-top  navbar-expand-lg "
           >
+          <div className="container-lg">
             <div exact className="navbar-brand">
-              <img
-                src="sidehusslelogo.jpg"
-                width="45"
-                height="45"
-                alt="sh"
-                className="d-inline-block align-middle mr-2"
-              />
 
               <span className="small text-uppercase font-weight-bold">
                 Logo of Sidehussle
@@ -102,6 +96,7 @@ const NavInfo = () => {
                   </NavLink>
                 </li>
               </ul>
+            </div>
             </div>
           </nav>
         </div>
