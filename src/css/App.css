@@ -213,3 +213,10 @@ a:hover{
 .custom-input{
 
 }
+ :root{
+  --dark-primary: #1F1A24;
+  --dark-secondary: #332940;
+  --dark-shadow: #1F1A24
+} 
+
+/* Dark Mode */

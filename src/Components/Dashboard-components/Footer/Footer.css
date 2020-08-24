@@ -10,12 +10,19 @@
     padding: 20px;
     border-top: #caa 1px solid;
 }
+[dark="dark"] .footer{
+    background-image: linear-gradient(145deg,var(--dark-primary),var(--dark-primary));
+}
+
 .footer-title{
     color: Red;
     font-size: 19px;
 }
+[dark="dark"] .footer-title{
+    color: #ccc;
+}
 .footer-subtitle{
-    color: #555;
+    color: #888;
     font-size: 13px;
 }
 .copyright {

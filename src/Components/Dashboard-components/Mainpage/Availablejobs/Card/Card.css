@@ -3,10 +3,22 @@
     border-left: 2px solid #cccccc00;
     cursor: pointer;
     transition: all 300ms;
+    
 }
 .category-card {
     box-shadow: 0 2px 8px 0 #e0e0e0;
     border-right: 2px solid #000
+}
+[dark="dark"] .category-card{
+    box-shadow: 0 2px 8px 0 var(--dark-shadow);
+    border-right: 2px solid #111
+}
+[dark="dark"] .xcard{
+    box-shadow: 0 1px 8px 0 var(--dark-shadow);
+    border-left: 2px solid #cccccc00;
+    
+    background-color: var(--dark-secondary);
+    border: #000 1px solid;
 
 }
 .xcard:hover{
