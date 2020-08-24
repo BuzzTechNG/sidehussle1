@@ -1,26 +1,20 @@
-.mainpage {
-    margin-top: 70px;
-    /* background-color: #f3f3f4; */
-    overflow: hidden;
-}
-.post-subtitle, .post-title{
-    color: #000
-}
-.form-width{
-    max-width: 990px;
-    width: 100%;
-    margin: 0 auto;
-    
+@import "../../../css/variables";
+[dark="dark"]{
+.card{
+    background: $dark-primary;
 }
 .mcard{
-    box-shadow: 0 0 2px 0 #eee;
-    border: #bbb solid 1px;
+    background-color: lighten($dark-primary,2);
+    box-shadow: 0 0 2px 0 $dark-shadow;
+    border: $dark-shadow solid 0px;
 }
-
+.post-subtitle, .post-title{
+    color: #fff
+}
 .job-title{
     padding: 45px 15px;
-    background-image: linear-gradient(to right,#c42253cb,#fe3852d7);
-    box-shadow: 0px 1px 10px 0 #aa1c47c4;
+    background-image: linear-gradient(to right,$dark-secondary,$dark-secondary);
+    box-shadow: 0px 1px 5px 0 $dark-primary;
     color: white;
     font-size: 26px;
     overflow: hidden;
@@ -36,18 +30,10 @@
     height: 200px;
     border-radius: 10%;
     transform: rotateZ(37deg);
-    background-color: #cf142dde;
+    background-color: $dark-primary;
     z-index: -1;
 }
-.job-tab{
-    display: flex;
-    flex-direction: row;
-    justify-content: left;
-    align-items: center;
-    padding: 25px 15px 25px 0;
-    width: max-content;
-    gap: 20px;
-}
+
 .job-tab .active{
     box-shadow: 0px 2px 2px 0 red;
     background-color: #cf142dde;
@@ -66,8 +52,7 @@
 }
 
 .job-form div i{
-    font-size: 16px;
-    font-weight: 100;
+    
     color: #c42252;
 }
 .job-form .hint{
@@ -75,17 +60,16 @@
     font-weight: 400;
 }
 .job-form input, .job-form textarea, .modal-body select{
-    outline: none;
-    box-shadow: -1px 1px 5px 0px #bbbbbbdd;
-    border: none;
-    padding: 10px 20px;
-    margin: 7px 0;
-    width: 100%;
+    background-color: $dark-primary;
+    box-shadow: -1px 1px 5px 0px $dark-shadow;
+    color: white;
+    border-bottom: 1px #ccc solid;
 }
 .job-form input:focus, .job-form textarea:focus{
-    box-shadow: 1px 1px 5px 1px #aaa;
-    background-color: #ffa2aa;
-
+    box-shadow: 1px 1px 5px 1px $dark-primary;
+    background-color: $dark-secondary;
+    color: white;
+    border-bottom: 1px red solid;
 }
 .modal-body select{
     outline: none;
@@ -131,4 +115,5 @@
     width: 90vh;
     border-radius: 50%;
     left: 78vw;   
+}
 }

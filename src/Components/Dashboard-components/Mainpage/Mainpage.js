@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./Mainpage.css";
+import "./MainPageDark.scss";
 import Jobprogress from "./Jobprogress/Jobprogress";
 import PostJob from "./Jobprogress/PostJob";
 import Previousjobs from "./Previousjobs/Previousjobs";

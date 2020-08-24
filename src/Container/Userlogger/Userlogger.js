@@ -4,6 +4,7 @@ import "./Userlogger.css";
 
 import LogIn from "../../Components/Login/Login";
 import Register from "../../Components/Register/Register";
+import DarkModeContext, { DarkModeToggler } from "../../DarkModeContext";
 
 class Userlogger extends React.Component {
   constructor() {
@@ -34,10 +35,13 @@ class Userlogger extends React.Component {
       default:
     }
   };
+  static contextType = DarkModeContext
   render() {
+    const mode = this.context[0]
     return (
-      <div className="main-background">
+      <div className="main-background" dark={mode}>
       <div className="userLogger">
+      <DarkModeToggler />
         <div>
         <img src={require('../../assets/logo-with-name.png')} alt="SideHussle Logo" style={{width:"250px",height:"100%"}}></img></div>
         <br></br>

@@ -1,6 +1,8 @@
 import React from "react";
 import "./NavInfo.css";
+import "./NavDarkMode.scss";
 import { NavLink } from "react-router-dom";
+import { DarkModeToggler } from "../../../DarkModeContext";
 
 const NavInfo = () => {
   return (
@@ -9,7 +11,7 @@ const NavInfo = () => {
         <div className="">
           <nav
             id="navbar"
-            className=" navbar navbar-light nav-background fixed-top  navbar-expand-lg "
+            className=" navbar nav-background fixed-top  navbar-expand-lg "
           >
           <div className="container-lg">
             <div exact className="navbar-brand">
@@ -29,7 +31,7 @@ const NavInfo = () => {
             </button>
 
             <div
-              className="collapse navbar-collapse justify-content-end mr-5"
+              className="collapse navbar-collapse justify-content-end mr-5 custom-nav"
               id="navbarLinks"
             >
               <ul className="navbar-nav ">
@@ -123,6 +125,13 @@ const NavInfo = () => {
                     Post A Job
                   </NavLink>
                   
+                </li>
+                <li
+                  className="my-auto ml-4"
+                  data-toggle="collapse"
+                  data-target=".navbar-collapse.show"
+                >
+                <DarkModeToggler/>
                 </li>
               </ul>
             </div>

@@ -7,10 +7,10 @@ export default class PostJob extends Component {
       {/* <div className="image-background"></div> */}
         
         
-        <div className="form-width p-5" style={{zIndex:"0"}}>
+        <div className="form-width pt-4" style={{zIndex:"0"}}>
           <div className="">
-          <div className="title1" style={{color:"#000",fontSize:"40px"}}>Tell us what you need done</div>
-          <div className="subtitle1" style={{color:"#000"}}>
+          <div className="post-title" style={{fontSize:"40px"}}>Tell us what you need done</div>
+          <div className="subtitle1 post-subtitle">
             Contact skilled hussler within minutes. View profiles and ratings
             and chat with them. Pay the freelancer only when you are 100%
             satisfied with their work
@@ -18,7 +18,7 @@ export default class PostJob extends Component {
           </div>
     
           <div className="my-4">
-          <div className="mcard p-4" style={{backgroundColor:"#ffffffee"}}>
+          <div className="mcard p-4">
               {/*  */}
               <div className="job-form">
               <div> <i className="fa fa-edit"></i> Choose a project title</div>
@@ -47,7 +47,7 @@ export default class PostJob extends Component {
               </div>
               {/*  */}
           </div>
-          <div className="px-4 py-2 my-4 mcard " style={{backgroundColor:"#ffffffee"}}>
+          <div className="px-4 py-2 my-4 mcard ">
               {/*  */}
               <div className="job-form">
               <div><i className="fa fa-money"></i> What is your budget</div>
