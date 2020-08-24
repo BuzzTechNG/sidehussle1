@@ -51,6 +51,7 @@ class Availablejobs extends Component {
                     }}
                     type="text"
                     placeholder="Search Location"
+                    className="filter-input"
                   />
                   <span>
                     {" "}
@@ -64,7 +65,7 @@ class Availablejobs extends Component {
                 ></div>
                 {/* Search Service */}
                 <div
-                  className=" p-2 mb-sm-3 col-sm-12 col-md-4 col-lg-12 ml-md-4 ml-lg-0 mb-lg-4 mb-md-0"
+                  className=" p-2 mb-sm-3 col-sm-12 col-md-4 col-lg-12 ml-md-4 ml-lg-0 mb-lg-4 mb-md-0 "
                   style={{ border: "1px solid #aaa" }}
                 >
                   <input
@@ -76,6 +77,7 @@ class Availablejobs extends Component {
                     }}
                     type="text"
                     placeholder="Search Services"
+                    className="filter-input"
                   />
                   <span>
                     {" "}
@@ -108,8 +110,8 @@ class Availablejobs extends Component {
                       <i className="fa fa-search"></i>{" "}
                     </span>{" "}
                     <input
-                      className="col"
-                      style={{ outline: "none", border: "none" }}
+                      className="col filter-input"
+                      style={{ outline: "none", border: "none",backgroundColor:"transparent" }}
                       type="text"
                       placeholder="Search Job"
                     />

@@ -40,9 +40,8 @@ class Userlogger extends React.Component {
     const mode = this.context[0]
     return (
       <div className="main-background" dark={mode}>
-      <DarkModeToggler/>
-      { this.contextType }
       <div className="userLogger">
+      <DarkModeToggler />
         <div>
         <img src={require('../../assets/logo-with-name.png')} alt="SideHussle Logo" style={{width:"250px",height:"100%"}}></img></div>
         <br></br>

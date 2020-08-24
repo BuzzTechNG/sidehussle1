@@ -63,11 +63,13 @@
     background-color: $dark-primary;
     box-shadow: -1px 1px 5px 0px $dark-shadow;
     color: white;
+    border-bottom: 1px #ccc solid;
 }
 .job-form input:focus, .job-form textarea:focus{
     box-shadow: 1px 1px 5px 1px $dark-primary;
     background-color: $dark-secondary;
     color: white;
+    border-bottom: 1px red solid;
 }
 .modal-body select{
     outline: none;

@@ -37,10 +37,10 @@
     background-color: #ddd;
   }
     .title1, .title2, .title3{
-    color: #666;
+    color: #ddd;
   }
   .subtitle1, .subtitle2, .subtitle3{
-    color: #888;
+    color: #bbb;
   } 
   .bdr{
     border-color: darken($dark-primary,4);
@@ -74,11 +74,16 @@
   }
   .round-btn:hover, .square-btn:hover{
     box-shadow: 0px 2px 11px 1px #1c1820;
+    background-color: #aaa;
   }
   .list li{
     background-color: $dark-secondary;
   }
   .custom-shadow{
-    box-shadow: 2px 1px 5px 0px #1c1820,-2px -1px 5px 0px #1c1820;
+    background-color:$dark-secondary2;  
+    box-shadow: 2px 1px 5px 0px $dark-shadow,-2px -1px 5px 0px $dark-shadow;
+  }
+  .filter-input{
+      color: white;
   }
 }

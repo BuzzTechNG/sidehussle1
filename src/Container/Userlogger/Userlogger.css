@@ -1,19 +1,19 @@
 .main-background{
-    height: 90vh;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #f9f9f9;
 }
 .userLogger {
-    background-color: #ffffff;
+    /* background-color: #ffffff; */
     width: 100%;
     max-width: 380px;
     text-align: center;
     box-shadow: 0 3px 5px #ddd;
     padding: 20px 35px;
     box-sizing: border-box;
-    transition: all 1000ms ease-in-out;
+    transition: all 200ms ease-in-out;
 }
 
 .switchButton {
@@ -26,7 +26,6 @@
     font-weight: bold;
     cursor: pointer;
     margin: 20px;
-
 }
 
 .switchButton:hover {
