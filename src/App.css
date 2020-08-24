@@ -1,3 +1,12 @@
+
+a{
+  text-decoration: none;  
+  color: black;
+}
+a:hover{
+  text-decoration: none;  
+  color: black;
+}
 .full-width{
   width: 100vw;
   overflow: hidden;
@@ -7,7 +16,7 @@
 }
 @keyframes pageTitleAnimation{
   from{
-    width: 10vw;
+    width: 5vw;
     transform: translateX(-50px);
     clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 100%);  }
     to{
@@ -39,6 +48,36 @@
   width: 80px;
   height: 80px;
   border-radius: 50%
+}
+@keyframes shimerEffect{
+  from{
+    transform: translateX(45px);
+    background-color: #ccc;
+  }
+  to{
+    background-color: #eee;
+    transform: translateX(-30px);
+  }
+}
+.avatar-mini{
+  background-image: linear-gradient(145deg,#ccc,#fcfcfc);
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-mini::after{
+  content: "";
+  animation: shimerEffect 1000ms ease-in-out alternate-reverse infinite ;
+  width: 80%;
+  height: 100%;
+  border-radius: 50%;
+  position: absolute;
+  background-color: #ddd;
+}
+.rating-star i{
+  font-size: 14px;
 }
 .padding-m{
   padding: 15px;

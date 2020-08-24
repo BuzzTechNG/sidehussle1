@@ -87,10 +87,11 @@ class Availablejobs extends Component {
             {/* Right Container */}
 
             <div className="col-lg-9 col-md-12 col-sm-12 col-xs-12 pl-2">
-              <div className="row pt-lg-3 align-items-center">
+              <div className="row pt-lg-3 align-items-center justify-content-left">
                 <div
                   onClick={() => setIsGrid()}
-                  className="square-btn py-3 px-3"
+                  className="square-btn"
+                  style={{margin:"0px 35px 0 12px ",padding:"13px 15px"}}
                 >
                   <i
                     className={
@@ -98,7 +99,7 @@ class Availablejobs extends Component {
                     }
                   ></i>{" "}
                 </div>
-                <div className="col-10 col-lg-7 col-md-7 col-sm-11 row ml-lg-4 ml-2">
+                <div className="" style={{width:"60%",minWidth:"250px"}}>
                   <div
                     className="col p-2 row align-items-center"
                     style={{ border: "1px solid #aaa" }}
@@ -114,11 +115,11 @@ class Availablejobs extends Component {
                     />
                   </div>
                 </div>
-                <div className="col-md-4 col-sm-6 py-xs-2">
+                <div className="py-3 ml-2">
                   sort by - <span className="text-primary">latest</span>
                 </div>
               </div>
-              <div className="row">{aJobs}</div>
+              <div className="row mt-3">{aJobs}</div>
             </div>
           </div>
         </div>

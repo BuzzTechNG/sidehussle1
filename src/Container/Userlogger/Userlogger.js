@@ -38,7 +38,8 @@ class Userlogger extends React.Component {
     return (
       <div className="main-background">
       <div className="userLogger">
-        <div>Side Hussle Logo</div>
+        <div>
+        <img src={require('../../assets/logo-with-name.png')} alt="SideHussle Logo" style={{width:"250px",height:"100%"}}></img></div>
         <br></br>
         {this.renderContent()}
       </div>

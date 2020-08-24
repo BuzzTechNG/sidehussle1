@@ -9,13 +9,13 @@ const NavInfo = () => {
         <div className="">
           <nav
             id="navbar"
-            className=" navbar  nav-background fixed-top  navbar-expand-lg "
+            className=" navbar navbar-light nav-background fixed-top  navbar-expand-lg "
           >
           <div className="container-lg">
             <div exact className="navbar-brand">
 
               <span className="small text-uppercase font-weight-bold">
-                Logo of Sidehussle
+                <img src={require('../../../assets/logo-with-name.png')} alt="SideHussle Logo" style={{width:"150px",height:"100%"}}></img>
               </span>
             </div>
 
