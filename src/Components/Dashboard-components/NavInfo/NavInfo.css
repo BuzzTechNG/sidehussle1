@@ -33,3 +33,12 @@
     box-shadow: 0px 3px 7px 0 #ccc;
     color: #666
 }
+.post-a-job{
+    /* background-color: orangered; */
+    background-image: linear-gradient(to right,#c42252 100%,#fe3852 100%);
+    padding: 0 5px;
+    border-radius: 2px;
+    border: 0;
+    color: white;
+    font-size: 14px;
+}

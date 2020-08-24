@@ -1,12 +1,24 @@
 import React, { Component } from "react";
+import { ChangeRateViewModal, EducationViewModal, LanguageViewModal, SkillsViewModal, TitleViewModal } from '../Modals/Modal'
 
+const ModalBtn= ({ title, icon } ) => {
+  return (
+  <button
+          type="button"
+          className={`round-btn ${icon}`}
+          data-toggle="modal"
+          data-target={`#${title}`}
+          style={{border:0,outline:0,transform:"translateY(-5px)"}}
+        ></button>
+)}
 class Home extends Component {
+  
   render() {
     return (
       <div className="full-width column mt-4">
         <div className="container-v custom-shadow row">
-          <div className="col-1 row bdr justify-content-center align-items-center"> <i className="fa fa-warning text-info"></i></div>
-          <div className="col ">
+          <div className="row bdr justify-content-center align-items-center px-4 ml-0"> <i className="fa fa-warning text-info"></i></div>
+          <div className="col">
             <div className="subtitle1 px-3" style={{textDecoration:"underline"}}>Kindly complete your registration</div>
             <p className="subtitle2 py-2 px-3">Unfortunately we were not able to accept the profile you submitted. Please check the messages you received from our support team for more information.
 
@@ -31,14 +43,14 @@ If you would like, you may edit your profile and then resubmit it for another re
                  <p className="subtitle1"> Avaliable Online</p> 
                  {/* Language */}
                  <div className="mb-3">
-                 <div className="subtitle1"> Languages <i className="round-btn fa fa-plus"></i><i className="round-btn fa fa-pen"></i></div> 
+                 <div className="subtitle1"> Languages <ModalBtn title="editLanguage" icon="fa fa-plus"/><i className="round-btn fa fa-pen"></i></div> 
                   <ul className="list subtitle3">
                     <li>English</li>
                   </ul>
                   </div>
                  {/* Education */}
                  <div className="mb-3">
-                 <div className="subtitle1"> Education <i className="round-btn fa fa-plus"></i></div> 
+                 <div className="subtitle1"> Education <ModalBtn title="editEducation" icon="fa fa-plus"/> </div> 
                   <ul className="list subtitle3">
                     <li>English</li>
                   </ul>
@@ -49,13 +61,13 @@ If you would like, you may edit your profile and then resubmit it for another re
             <div className="col-lg-9 col-md-12 col-sm-12 col-xs-12 p-3 bdb">
               {/* Title and user info */}
               <div className="bdb pb-2">
-                <div className="title2">Web and Mobile Developer  <i className="round-btn fa fa-pen"></i> </div>
-                 <p className="title3"> Costing -- N200/hr <i className="round-btn fa fa-pen"></i></p> 
+                <div className="title2">Web and Mobile Developer <ModalBtn title="title" icon="fa fa-pen"/> </div>
+                 <p className="title3"> Costing -- N200/hr <ModalBtn title="changeRate" icon="fa fa-pen"/></p> 
                   <p className="subtitle2">Info about user</p>
               </div>
               {/* User Skills */}
                 <div className="bdb py-3">
-                  <p className="title3"> Services <i className="round-btn fa fa-pen"></i></p>
+                  <p className="title3"> Services <ModalBtn title="mySkills" icon="fa fa-pen"/></p>
                   <ul className="subtitle3 list">
                     <li> My Skills and Services </li>
                     <li> My Skills and Services </li>
@@ -89,6 +101,11 @@ If you would like, you may edit your profile and then resubmit it for another re
             </div>
         </div>
         </div>
+        <ChangeRateViewModal/> 
+        <EducationViewModal/> 
+        <LanguageViewModal/> 
+        <SkillsViewModal/> 
+        <TitleViewModal/>
       </div>
     );
   }

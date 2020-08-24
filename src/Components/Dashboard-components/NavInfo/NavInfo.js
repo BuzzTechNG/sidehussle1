@@ -39,7 +39,7 @@ const NavInfo = () => {
                   data-target=".navbar-collapse.show"
                 >
                   <NavLink
-                    to="/dashboard/"
+                    to="/dashboard/avaliablejobs"
                     exact
                     className="nav-link ml-3 custom-nav"
                   >
@@ -94,6 +94,35 @@ const NavInfo = () => {
                   >
                     Transaction History
                   </NavLink>
+                  
+                </li>
+                <li
+                  className="nav-item"
+                  data-toggle="collapse"
+                  data-target=".navbar-collapse.show"
+                >
+                <NavLink
+                    to="/dashboard/"
+                    exact
+                    className="nav-link ml-3 custom-nav"
+                  >
+                    UserName
+                  </NavLink>
+                  
+                </li>
+                <li
+                  className="post-a-job ml-3"
+                  data-toggle="collapse"
+                  data-target=".navbar-collapse.show"
+                >
+                <NavLink
+                    to="/dashboard/postjob"
+                    exact
+                    className="nav-link text-light"
+                  >
+                    Post A Job
+                  </NavLink>
+                  
                 </li>
               </ul>
             </div>

@@ -91,7 +91,7 @@ class Availablejobs extends Component {
                 <div
                   onClick={() => setIsGrid()}
                   className="square-btn"
-                  style={{margin:"0px 35px 0 12px ",padding:"13px 15px"}}
+                  style={{margin:"0px 30px 0 22px ",padding:"13px 15px"}}
                 >
                   <i
                     className={
