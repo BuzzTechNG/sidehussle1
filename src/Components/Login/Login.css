@@ -1,33 +1,91 @@
 .inputElement {
+    transition: all 500ms;
     outline: none;
-    border: 1px solid #ccc;
-    background-color: white;
-    font: inherit;
-    padding: 6px 10px;
+    border: 1px solid #eee;
+    background-color: #eee;
+    margin:20px 0 ;
+    font-size: 14px;
+    padding: 10px 14px;
     display: block;
     width: 100%;
-    box-sizing: border-box;
+    position: relative;
+    border-bottom: #fff solid 1px;
+    border-radius: 2px;
 }
 
 .inputElement:focus {
     outline: none;
-    background-color: #ccc;
+    background-color: #ebccfd;
+    border-bottom: red solid 1px;
 }
 
 .buttonLogin {
     outline: none;
-    border: 1px solid #ccc;
-    background-color: white;
+    border: 1px solid #ddd;
+    /* background-color: #fdfcfd; */
+    background-image: linear-gradient(145deg, #FF416C, #FF4B2B);
+    color: white;
     font: inherit;
     padding: 6px 10px;
     display: block;
-    width: 80%;
+    width: 100%;
     margin: auto;
     box-sizing: border-box;
-    border-radius: 10px;
+    border-radius: 2px;
 }
 
 .buttonLogin:hover {
     outline: none;
     background-color: #ccc
+}
+.line{
+    height: 1px;
+    width: 40%;
+    background-color: #ccc;
+}
+.line-div{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.facebook{
+    background-color: #5555aa;
+}
+.google{
+    background-color: orangered;
+}
+.padding{
+    padding: 5px;
+    font-size: 13px;
+}
+.i{
+    font-size: 12px;
+}
+.info{
+    font-size: 13px;
+    color: #bbb;
+}
+.playstore{
+    background-image: url('../../assets/get-it-on-playstore.png');
+    width: 40%;
+}
+.appstore{
+    background-image: url('../../assets/on-app-store.png');
+    width: 35%;
+}
+.store-settings{
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 40px;
+    /* width: 45%; */
+}
+.link{
+    transition: all 500ms;
+    cursor: pointer;
+    transform-origin: center;
+    
+}
+.link:hover{
+    transform: scale(0.95);
 }

@@ -3,7 +3,8 @@ import "./Register.css";
 
 class SignUp extends Component {
   state = {
-    name: "",
+    firstName: "",
+    lastName: "",
     password: "",
     password2: "",
     DOB: "",
@@ -23,9 +24,19 @@ class SignUp extends Component {
         <p>
           <input
             className="inputElement"
-            name="name"
-            value={this.state.name}
-            placeholder="Enter Your Name"
+            name="firstName"
+            value={this.state.firstName}
+            placeholder="First Name"
+            onChange={this.inputHandler}
+            type="text"
+          />
+        </p>
+        <p>
+          <input
+            className="inputElement"
+            name="lastName"
+            value={this.state.lastName}
+            placeholder="Last Name"
             onChange={this.inputHandler}
             type="text"
           />
@@ -43,7 +54,7 @@ class SignUp extends Component {
           <input
             className="inputElement"
             value={this.state.password}
-            placeholder="Enter Your Password"
+            placeholder="Password"
             type="password"
             onChange={this.inputHandler}
           />
@@ -53,7 +64,7 @@ class SignUp extends Component {
           <input
             className="inputElement"
             value={this.state.password2}
-            placeholder="Enter Your Password Again"
+            placeholder="Confirm Password"
             type="password"
             onChange={this.inputHandler}
           />
@@ -71,15 +82,18 @@ class SignUp extends Component {
         <p>
           <input
             className="inputElement"
-            type="number"
+            type="date"
             value={this.state.DOB}
-            placeholder="Enter your Date of Birth format(dd/mm/yyyy)"
+            placeholder="Date of Birth"
             onChange={this.inputHandler}
           />
         </p>
 
-        <button className="button">Register </button>
+        <button className="buttonLogin link">Register </button>
         <br></br>
+        <div className="mt-4 mb-4 info">
+        Already have an account? <span className="link" onClick={this.props.switchView} style={{color:"#44c"}}>Sign In</span>
+        </div>
       </div>
     );
   }

@@ -7,7 +7,7 @@ import "./App.css";
 
 function App() {
   return (
-    <Router>
+    <Router >
       <Switch>
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/" exact component={Userlogger} />

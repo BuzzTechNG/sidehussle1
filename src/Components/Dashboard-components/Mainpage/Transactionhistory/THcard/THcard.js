@@ -6,10 +6,10 @@ const thcard = (props) => {
       <tr>
         <th scope="row">{props.id}</th>
         <td>
-          <strong>Date:</strong> {props.date}{" "}
+        <strong>{props.date}{" "}</strong>
           <span>
-            <strong>Time: </strong>
-            {props.time}
+           
+          <strong> {props.time}</strong>
           </span>
         </td>
         <td>{props.name}</td>
