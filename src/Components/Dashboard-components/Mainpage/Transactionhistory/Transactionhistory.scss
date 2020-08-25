@@ -3,14 +3,14 @@
 [dark="dark"] {
     .tablehead {
         background-color: $dark-primary;
-        color: white;
+        color: grey;
     }
 
     .tbody {
-        color: aqua;
+        color: white;
     }
 
     .tbody:hover {
-        color: green;
+        color: rgb(108, 112, 108);
     }
 }
