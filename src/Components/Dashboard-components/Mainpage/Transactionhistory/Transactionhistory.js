@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./Transactionhistory.css";
 import transactionlist from "../Previousjobslist";
+import "./Transactionhistory.scss";
 
 import THcard from "./THcard/THcard";
 
@@ -24,15 +25,13 @@ class Transactionhistory extends Component {
       />
     ));
     return (
-      <div className="full-width">
-        <div className="container-lg">
-        <div className="page-title my-4">
-        Transactions
-        </div>
+      <div>
+        <div className="container">
+          <h1 className="my-5 strong text-center"> Transaction history</h1>
           <div className="row">
             <div className="col-12">
-              <table class="table table-bordered table-hover mb-5">
-                <thead class="xcard" style={{backgroundColor:"#eee"}}>
+              <table className="table table-bordered">
+                <thead className=" tablehead">
                   <tr>
                     <th scope="col">#</th>
                     <th>Date & Time</th>

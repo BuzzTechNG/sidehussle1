@@ -1,0 +1,8 @@
+.tablehead {
+    background-color: black;
+    color: aliceblue;
+}
+
+.tbody:hover {
+    color: rgb(150, 144, 144);
+}

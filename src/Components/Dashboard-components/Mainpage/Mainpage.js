@@ -11,7 +11,6 @@ import Home from "./Home/Home.jsx";
 import Thistory from "./Transactionhistory/Transactionhistory";
 import jobPage from "./Jobprogress/JobPage";
 
-
 class Mainpage extends Component {
   render() {
     return (
@@ -23,7 +22,11 @@ class Mainpage extends Component {
           <Route path="/dashboard/postjob" component={PostJob} />
           <Route path="/dashboard/avaliablejobs/:id" component={jobPage} />
           <Route path="/dashboard/previousjobs" component={Previousjobs} />
-          <Route path="/dashboard/avaliablejobs" exact component={Availablejobs} />
+          <Route
+            path="/dashboard/avaliablejobs"
+            exact
+            component={Availablejobs}
+          />
           <Route path="/dashboard/" exact component={Home} />
         </Switch>
       </div>
