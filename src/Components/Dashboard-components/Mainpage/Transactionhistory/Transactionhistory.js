@@ -25,12 +25,12 @@ class Transactionhistory extends Component {
       />
     ));
     return (
-      <div>
-        <div className="container">
-          <h1 className="my-5 strong text-center"> Transaction history</h1>
+      <div className="full-width">
+        <div className="container-lg">
+          <div className="page-title my-4"> Transaction history</div>
           <div className="row">
             <div className="col-12">
-              <table className="table table-bordered">
+              <table className="table table-bordered mb-5">
                 <thead className=" tablehead">
                   <tr>
                     <th scope="col">#</th>

@@ -1,0 +1,11 @@
+@import "../../../../css/variables";
+
+[dark="dark"] {
+    .modalbg {
+        background-color: $dark-secondary
+    }
+
+    .modalshadow {
+        box-shadow: 0 0px 8px 0 $dark-shadow;
+    }
+}

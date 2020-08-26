@@ -1,31 +1,33 @@
 import React from "react";
+import "./Modal.scss";
+import "./Modal.css";
 const state = {
-    titles: [
-      { id: 1, title: "Edit Your Title", modalType: "title" },
-      { id: 2, title: "Charge Rate", modalType: "changeRate" },
-      { id: 3, title: "My Skills", modalType: "mySkills" },
-      { id: 4, title: "Add Language", modalType: "editLanguage" },
-      { id: 5, title: "Add Education", modalType: "editEducation" },
-    ],
-    yourRate: 0,
-    servicefee: 0,
-    yourPay: 0,
-  };
-  const inputHandler = (event) => {
-    let servicefee = state.yourRate * 0.1;
-    let yourPay = state.yourRate - servicefee;
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value,
-      servicefee: servicefee,
-      yourPay: yourPay,
-    });
-  };
+  titles: [
+    { id: 1, title: "Edit Your Title", modalType: "title" },
+    { id: 2, title: "Charge Rate", modalType: "changeRate" },
+    { id: 3, title: "My Skills", modalType: "mySkills" },
+    { id: 4, title: "Add Language", modalType: "editLanguage" },
+    { id: 5, title: "Add Education", modalType: "editEducation" },
+  ],
+  yourRate: 0,
+  servicefee: 0,
+  yourPay: 0,
+};
+const inputHandler = (event) => {
+  let servicefee = state.yourRate * 0.1;
+  let yourPay = state.yourRate - servicefee;
+  const { name, value } = event.target;
+  this.setState({
+    [name]: value,
+    servicefee: servicefee,
+    yourPay: yourPay,
+  });
+};
 const ModalView = ({ body, title, modalType }) => {
   return (
     <div
-      class="modal fade"
-      style={{backgroundColor:"#cccccccc"}}
+      class="modal fade "
+      style={{ backgroundColor: "#cccccccc" }}
       backdrop="static"
       id={modalType}
       tabIndex={-1}
@@ -33,8 +35,11 @@ const ModalView = ({ body, title, modalType }) => {
       aria-labelledby="ModalLabel"
       aria-hidden="true"
     >
-      <div class="modal-dialog modal-lg modal-dialog-centered" style={{border:0,outline:0}}>
-        <div class="modal-content" style={{border:0,outline:0}}>
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered "
+        style={{ border: 0, outline: 0 }}
+      >
+        <div class="modal-content modalbg" style={{ border: 0, outline: 0 }}>
           <div class="modal-header">
             <h4 class="modal-title" id="ModalLabel">
               {title}
@@ -48,16 +53,12 @@ const ModalView = ({ body, title, modalType }) => {
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body job-form">{body}</div>
+          <div class="modal-body job-form  ">{body}</div>
           <div class="modal-footer">
-            <button
-              type="button"
-              class="modal-close-btn"
-              data-dismiss="modal"
-            >
+            <button type="button" class="modal-close-btn" data-dismiss="modal">
               Close
             </button>
-            <button type="button"  class="modal-save-btn square-btn m-0"  >
+            <button type="button" class="modal-save-btn square-btn m-0">
               Save changes
             </button>
           </div>
@@ -78,7 +79,7 @@ const TitleModal = (
       <div class="form-group">
         <input
           type="text"
-          class="form-control job-form"
+          class="form-control job-form modalshadow"
           id="title"
           placeholder="Title"
         />
@@ -266,29 +267,22 @@ const EducationModal = (
   </div>
 );
 
+// percentCalc = () => {
+//   let servicefee = +state.servicefee * 0.1;
+//   let yourPay = +state.yourRate - servicefee;
+//   this.setState({
+//     servicefee: servicefee,
+//     yourPay: yourPay,
+//   });
+// };
 
+//   <button
+//     type="button"
+//     className="btn btn-primary m-5 p-3"
+//     data-toggle="modal"
+//     // data-target={`#${title.modalType}`}
 
-
-
-
-  // percentCalc = () => {
-  //   let servicefee = +state.servicefee * 0.1;
-  //   let yourPay = +state.yourRate - servicefee;
-  //   this.setState({
-  //     servicefee: servicefee,
-  //     yourPay: yourPay,
-  //   });
-  // };
-
-
-        //   <button
-        //     type="button"
-        //     className="btn btn-primary m-5 p-3"
-        //     data-toggle="modal"
-        //     // data-target={`#${title.modalType}`}
-            
-        //   />
-   
+//   />
 
 const TitleViewModal = () => {
   return (
