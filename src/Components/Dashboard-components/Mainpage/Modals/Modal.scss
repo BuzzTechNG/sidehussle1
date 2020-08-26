@@ -2,10 +2,10 @@
 
 [dark="dark"] {
     .modalbg {
-        background-color: $dark-secondary
+        background-color: $dark-primary
     }
 
-    .modalshadow {
-        box-shadow: 0 0px 8px 0 $dark-shadow;
+    .modalframe {
+        background-color: $dark-shadow;
     }
 }

@@ -4,7 +4,7 @@ import "./Startjob.scss";
 const startJobModal = ({ body, title, modalType }) => {
   return (
     <div
-      class="modal fade"
+      class="modal fade modalframe"
       backdrop="static"
       id={modalType}
       tabIndex={-1}

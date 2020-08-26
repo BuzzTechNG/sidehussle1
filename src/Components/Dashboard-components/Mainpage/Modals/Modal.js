@@ -26,8 +26,7 @@ const inputHandler = (event) => {
 const ModalView = ({ body, title, modalType }) => {
   return (
     <div
-      class="modal fade "
-      style={{ backgroundColor: "#cccccccc" }}
+      class="modal fade modalframe"
       backdrop="static"
       id={modalType}
       tabIndex={-1}
