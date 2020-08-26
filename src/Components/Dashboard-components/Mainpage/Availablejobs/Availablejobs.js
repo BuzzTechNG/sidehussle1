@@ -93,7 +93,7 @@ class Availablejobs extends Component {
                 <div
                   onClick={() => setIsGrid()}
                   className="square-btn"
-                  style={{margin:"0px 30px 0 22px ",padding:"13px 15px"}}
+                  style={{ margin: "0px 30px 0 22px ", padding: "13px 15px" }}
                 >
                   <i
                     className={
@@ -101,7 +101,7 @@ class Availablejobs extends Component {
                     }
                   ></i>{" "}
                 </div>
-                <div className="" style={{width:"60%",minWidth:"250px"}}>
+                <div className="" style={{ width: "60%", minWidth: "250px" }}>
                   <div
                     className="col p-2 row align-items-center"
                     style={{ border: "1px solid #aaa" }}
@@ -111,7 +111,11 @@ class Availablejobs extends Component {
                     </span>{" "}
                     <input
                       className="col filter-input"
-                      style={{ outline: "none", border: "none",backgroundColor:"transparent" }}
+                      style={{
+                        outline: "none",
+                        border: "none",
+                        backgroundColor: "transparent",
+                      }}
                       type="text"
                       placeholder="Search Job"
                     />

@@ -2,14 +2,13 @@ import React from "react";
 
 const thcard = (props) => {
   return (
-    <tbody>
+    <tbody className="tbody">
       <tr>
         <th scope="row">{props.id}</th>
         <td>
-        <strong>{props.date}{" "}</strong>
+          <strong>{props.date} </strong>
           <span>
-           
-          <strong> {props.time}</strong>
+            <strong> {props.time}</strong>
           </span>
         </td>
         <td>{props.name}</td>

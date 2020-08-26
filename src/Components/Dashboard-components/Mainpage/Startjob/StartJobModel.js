@@ -1,9 +1,10 @@
 import React from "react";
+import "./Startjob.scss";
 
 const startJobModal = ({ body, title, modalType }) => {
   return (
     <div
-      class="modal fade"
+      class="modal fade modalframe"
       backdrop="static"
       id={modalType}
       tabIndex={-1}
@@ -12,7 +13,7 @@ const startJobModal = ({ body, title, modalType }) => {
       aria-hidden="true"
     >
       <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content ">
+        <div class="modal-content modalbg">
           <div class="modal-header">
             <h4 class="modal-title" id="ModalLabel">
               {title}

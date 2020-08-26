@@ -1,43 +1,46 @@
 @import '../../css/variables';
-[dark="dark"]{
+
+[dark="dark"] {
     .inputElement {
         border: 0px solid $dark-primary;
         background-color: $dark-secondary;
         border-bottom: $dark-shadow solid 1px;
         border-radius: 2px;
     }
-    
+
     .inputElement:focus {
         outline: none;
         background-color: $dark-shadow;
         color: white;
         border-bottom: red solid 1px;
     }
-    
-    .buttonLogin{
+
+    .buttonLogin {
         border: 0px solid #ddd;
         /* background-color: #fdfcfd; */
         background-image: linear-gradient(145deg, #FF416C, #FF4B2B);
         color: white;
     }
-    
+
     .buttonLogin:hover {
         outline: none;
         background-color: #ccc
     }
-    .line{
+
+    .line {
         height: 1px;
         width: 40%;
         background-color: #ccc;
     }
-    
-    .info{
+
+    .info {
         font-size: 13px;
         color: #bbb;
     }
-    .userLogger{
+
+    .userLogger {
         background-color: $dark-secondary2;
-        box-shadow: 3px 3px 3px $dark-shadow,-2px -2px 3px $dark-shadow;
+        box-shadow: 3px 3px 3px $dark-shadow, -2px -2px 3px $dark-shadow;
     }
 
 }

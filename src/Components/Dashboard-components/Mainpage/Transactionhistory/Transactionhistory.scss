@@ -1,0 +1,16 @@
+@import "../../../../css/variables";
+
+[dark="dark"] {
+    .tablehead {
+        background-color: $dark-primary;
+        color: grey;
+    }
+
+    .tbody {
+        color: white;
+    }
+
+    .tbody:hover {
+        color: rgb(108, 112, 108);
+    }
+}
