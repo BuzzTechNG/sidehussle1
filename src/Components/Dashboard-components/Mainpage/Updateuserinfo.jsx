@@ -1,6 +1,6 @@
 import React from "react";
 
-const updateInfo = (props) => {
+const UpdateInfo = (props) => {
   return (
     <div>
       <div className="pt-5" style={{ zIndex: "0" }}>
@@ -60,4 +60,4 @@ const updateInfo = (props) => {
     </div>
   );
 };
-export default updateInfo;
+export default UpdateInfo;
