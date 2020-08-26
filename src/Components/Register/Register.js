@@ -75,7 +75,7 @@ class SignUp extends Component {
             value={this.state.location}
             placeholder="Enter your location"
             onChange={this.inputHandler}
-            type="password"
+            type="text"
           />
         </p>
 
@@ -92,7 +92,14 @@ class SignUp extends Component {
         <button className="buttonLogin link">Register </button>
         <br></br>
         <div className="mt-4 mb-4 info">
-        Already have an account? <span className="link" onClick={this.props.switchView} style={{color:"#44c"}}>Sign In</span>
+          Already have an account?{" "}
+          <span
+            className="link"
+            onClick={this.props.switchView}
+            style={{ color: "#44c" }}
+          >
+            Sign In
+          </span>
         </div>
       </div>
     );
