@@ -1,0 +1,301 @@
+.message{
+    /* width: 60%; */
+    border-radius:20px;
+    padding: 8px;
+    margin: 10px 15px;
+    font-size: 12px;
+}
+.message-left{
+  align-self: flex-start;
+//   background-color: white;
+}
+.message-right{
+    align-self: flex-end;
+    background-image:linear-gradient(245deg, $custom_primary,darken($custom_primary,10));
+    color: white;
+    
+}
+.message-box{ 
+    position: relative;
+display: flex;
+flex-direction: column-reverse;
+height: 100%;
+}
+.message-box
+.message-chat{
+    flex: 1;
+    /* background: teal; */
+    display: flex;
+    flex-direction: column-reverse;
+    overflow-y: scroll;
+    /* margin-top:50px; */
+    /* width:103%; */
+    /* margin-left: -2% */
+}
+.thumb2::-webkit-scrollbar{
+display: none;
+}
+.thumb::-webkit-scrollbar{
+  width: 5px;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 400ms;
+}
+.thumb:hover::-webkit-scrollbar{
+    visibility: visible;
+    opacity: 1;
+}
+
+.thumb::-webkit-scrollbar-track{
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+.thumb::-webkit-scrollbar-thumb{
+  background: $custom_primary;
+  border-radius: 5px;
+}
+
+
+
+@mixin messageBox($isDarkMode){
+.message-box-area{
+    @if($isDarkMode){
+        background-color: $dark-primary;
+    box-shadow: 0px -1px 5px 0 $dark-primary;
+    }@else{
+        background-color: #fcfcfcaa;
+    box-shadow: 0px -1px 5px 0 #dddddddd;
+    }
+    
+    height: 50px;
+
+}   
+.message-box-header{
+    position: absolute;
+    top: 0;
+    right: 1%;
+    height: 50px;
+    width: 100%;
+    @if($isDarkMode){
+        background-color: $dark-primary;
+    box-shadow: 0px 2px 7px 0 lighten($dark-primary,1);
+    }@else{
+        background-color: #fcfcfcf0;
+    box-shadow: 0px 2px 7px 0 #ccc;
+    }
+    
+    .menu{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    cursor: pointer;
+    &::after{
+    content: "";
+    width: 20%;
+    height: 2px;
+    transition: all 200ms cubic-bezier(0.165, 0.84, 0.44, 1);
+    background-image: linear-gradient(245deg,$custom_primary,$custom_primary_accent);
+}
+    &:hover::after{
+    width: 60%;
+}
+}
+}
+}
+
+.message-box{
+ @include messageBox(false)
+}
+
+// .message-box
+// .message-box-header
+
+// .message-box
+// .message-box-header
+
+// .message-box
+// .message-box-header
+// .menu
+// .message-box
+.message-box
+.message-box-area
+input:focus {
+    border-bottom: rgba($custom_primary,0.5) 1px solid;
+}
+
+.message-box
+.message-box-area
+input{
+    position: relative;
+    outline: none;
+    background: transparent;
+    border-color: transparent;
+    border-bottom: 1px solid red($color: #000000);
+    padding-bottom: 5px;
+    
+    // margin: 0 auto;
+
+}
+.message-box
+.message-box-area input
+::after{
+
+    content: "";
+    position: absolute;
+    bottom: 0;
+    /* left: 0; */
+    width: 10px;
+    height: 1px;
+    background-color: #41a362;
+    transition: all 700ms;
+    
+}
+.message-box
+.message-box-area input
+:hover::after{
+    width: 90%;
+}
+@mixin complainList($isDarkMode){
+height: 100%;
+    @if ($isDarkMode){
+        background-color: $dark-primary;
+    // border-right: 1px $dark-secondary solid;
+    }@else{
+        background-color: #f9f9f988;
+    border-right: 1px #ccc solid;
+    }
+    
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    .xlist{
+    
+    height: 100%;
+    width: 104%;
+    overflow-y: scroll; 
+    
+    margin: 5px 0 0 -3%;
+}
+    .item{
+    margin: 7px 0px;
+    width: 100%;
+    height: 55px;
+    @if($isDarkMode){
+        background-image: linear-gradient(145deg, $dark-secondary, $dark-secondary);
+    box-shadow: 1px 1px 12px 1px darken($dark-secondary,5);
+    }@else{
+        background-image: linear-gradient(145deg, #fff, #fcfcfcfc);
+    box-shadow: 1px 1px 12px 1px #e0e0e0;
+    }
+    
+    cursor: pointer;
+    transition: all 200ms;
+    &:hover{
+    @if($isDarkMode){
+       background-image: linear-gradient(135deg,rgba($custom_primary,0.5),rgba($custom_primary_accent,0.5));
+    box-shadow: 1px 1px 12px 1px $dark-secondary;
+    }@else{
+    background-image: linear-gradient(145deg, #bbf3d7, #b9e7d0fc);
+    box-shadow: 1px 1px 12px 1px #cfcfcfff;    
+    }    
+    
+    }
+    .avatar{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @if($isDarkMode){
+        background-color: rgba($custom_primary_accent,0.1);
+    color:#ccc
+    }@else{
+    background-color: #e0e0e0;
+    color:teal    
+    }
+    
+    }
+}
+}
+.complaint-list{
+    @include complainList(false)
+}
+
+// .complaint-list 
+// .complaint-list 
+// .complaint-list .item
+// .complaint-list .item 
+@mixin searchBArContainer($isDarkMode){
+    @if($isDarkMode){
+        color: white;
+        background-color: $dark-primary;
+    box-shadow: 0px 2px 7px 0 $dark-secondary;
+    }@else{
+        background-color: #f9f9f988;
+    box-shadow: 0px 2px 7px 0 #ccc;
+    }
+    
+    height:50px;
+    
+    input {
+    outline: none;
+    border: 0;
+    outline: 0;
+    // color: white;
+    background-color: transparent;
+    font-size: 13px;
+    
+}
+.search-bar{
+    @if($isDarkMode){
+        background-color: #88888833;
+    }@else{
+        background-color: #ccc;
+    }
+    
+    border-radius: 25px;
+    padding: 7px;
+    margin: 5px 0;
+    width: 85%;
+    }
+}
+.search-bar-container{
+    @include searchBArContainer(false)
+}
+
+@mixin complaintContainer($isDarkMode){
+width: 90%;
+    max-width: 1300px;
+    height: 78vh;
+    margin: auto;
+    margin-bottom: 20px;
+    @if($isDarkMode){
+        background-color: lighten($dark-primary,1);
+    box-shadow: -2px 0 13px 0 darken($dark-primary,1);
+    }@else{
+        background-color: #eeeeee88;
+    box-shadow: -2px 0 13px 0 #cccccc88;
+    }
+    
+    
+}
+.complaint-container{
+    @include complaintContainer(false)
+}
+[dark="dark"]{
+    .complaint-container{
+        @include complaintContainer(true)
+    }   
+    .search-bar-container{
+        @include searchBArContainer(true)
+    }
+    .complaint-list{
+        @include complainList(true)
+    }
+    .message-box{
+        @include messageBox(true)
+       }
+}

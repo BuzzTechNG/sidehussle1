@@ -4,7 +4,7 @@ import Userlogger from "./Container/Userlogger/Userlogger";
 import Dashboard from "./Container/Dashboard/Dashboard";
 import DarkModeContext from "./DarkModeContext"
 import "./css/App.css";
-import "./css/AppDarkMode.scss";
+import "./css/styles.scss";
 
 function App() {
   const mode = React.useState("light")
