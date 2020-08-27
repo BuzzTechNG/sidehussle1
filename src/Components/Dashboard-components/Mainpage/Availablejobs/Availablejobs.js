@@ -91,6 +91,7 @@ class Availablejobs extends Component {
             <div className="col-lg-9 col-md-12 col-sm-12 col-xs-12 pl-2">
               <div className="row pt-lg-3 align-items-center justify-content-left">
                 <div
+                  title="Click to change view to grid or list"
                   onClick={() => setIsGrid()}
                   className="square-btn"
                   style={{ margin: "0px 30px 0 22px ", padding: "13px 15px" }}
