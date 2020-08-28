@@ -26,12 +26,12 @@ function MessageApp() {
     return (
         <div className="full-width">
             <div className="container-lg">
-            <div className="page-title my-4">Message </div>
+            <div className="page-title my-4">Message <button type="button" data-toggle="modal" data-target="#message-box">Launch modal</button></div>
         <div 
         // style="overflow: hidden;" 
         className="complaint-container shadow-2 row">
             {/* <!-- complain list --> */}
-            <div className="col-3 complaint-list">
+            <div className="col col-md-3 complaint-list">
                 <div className="search-bar-container row align-items-center justify-content-center">
                 <div className="search-bar row align-items-center"> 
                 <i className="fa fa-search px-sm"/>
@@ -67,7 +67,17 @@ function MessageApp() {
 
             </div>
             {/* <!-- message box --> */}
-            <div className="col message-box">
+            <MessageBox noShow={true}/>
+
+        </div>
+        </div>
+        <ModalView/>
+        </div>
+    )
+}
+const MessageBox = ({item, noShow}) => {
+    return (
+        <div className={[`col message-box ${noShow ? 'no-show' : ''}`]}>
                 <div className="message-box-area row align-items-center justify-content-center">
                     <i className="fa fa-user" />
                     <input className="col-11 q-mx-sm" type="text" placeholder="Reply a complaint"/>
@@ -75,7 +85,7 @@ function MessageApp() {
                 </div>
                 <div className="message-chat thumb">
 
-                  {[0,1,22,55,77,88,"mm8m5","m55m4m5","m4m4"].map((item,index)=>(
+                  {[0,1,22,55,77,88,"mm8m5","m55m4m5","m4m4","df","asd","as","sd","7","5566","45"].map((item,index)=>(
 
                    <div key={item} className={ index%2 === 0 ? 'message message-left' : 'message message-right'}>{index} Ade is a boy and a girl</div>
                   ))}  
@@ -99,11 +109,38 @@ function MessageApp() {
                 </div>
             </div>
 
-
-        </div>
-        </div>
-        </div>
     )
 }
-
+const ModalView = ({ body, title, modalType }) => {
+    return (
+      <div
+        class="modal fade modalframe"
+        backdrop="static"
+        id="message-box"
+        tabIndex={-1}
+        role="dialog"
+        // aria-labelledby="ModalLabel"
+        aria-hidden="true"
+      >
+        <div
+          class="modal-dialog modal-lg modal-dialog-centered "
+          style={{ border: 0, outline: 0 }}
+        >
+          <div class="modal-content modalbg" style={{ border: 0, outline: 0 }}>
+            <div className="model-body" style={{height:"90vh"}}>
+                <MessageBox noShow={false}/>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="modal-close-btn" data-dismiss="modal">
+                Close
+              </button>
+              <button type="button" class="modal-save-btn square-btn m-0">
+                Save changes
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
 export default MessageApp

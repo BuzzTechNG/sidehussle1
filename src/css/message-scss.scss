@@ -197,7 +197,7 @@ height: 100%;
        background-image: linear-gradient(135deg,rgba($custom_primary,0.5),rgba($custom_primary_accent,0.5));
     box-shadow: 1px 1px 12px 1px $dark-secondary;
     }@else{
-    background-image: linear-gradient(145deg, #bbf3d7, #b9e7d0fc);
+    background-image: linear-gradient(145deg, rgba($custom_primary,0.1),rgba($custom_primary_accent,0.1));
     box-shadow: 1px 1px 12px 1px #cfcfcfff;    
     }    
     
@@ -267,7 +267,7 @@ height: 100%;
 }
 
 @mixin complaintContainer($isDarkMode){
-width: 90%;
+width: 99%;
     max-width: 1300px;
     height: 78vh;
     margin: auto;
@@ -299,3 +299,10 @@ width: 90%;
         @include messageBox(true)
        }
 }
+@media screen and ( max-width: 750px){
+    .no-show{
+        display: none;
+        visibility: hidden;
+        opacity: 0;
+    }
+} 
