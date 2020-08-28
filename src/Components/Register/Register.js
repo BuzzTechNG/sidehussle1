@@ -1,21 +1,45 @@
 import React, { Component } from "react";
 import "./Register.css";
+import { register } from "../../apolloHelper";
 
 class SignUp extends Component {
   state = {
     firstName: "",
+    middleName: "",
     lastName: "",
     password: "",
-    password2: "",
-    DOB: "",
+    confirmPassword: "",
+    mobileNumber: "",
     email: "",
-    location: "",
+    address: "",
+    loading: false,
+    response: {},
   };
 
   inputHandler = (event) => {
     const { name, value } = event.target;
     this.setState({
       [name]: value,
+    });
+  };
+
+  register = async () => {
+    this.setState({ loading: true, response: {} });
+    const response = await register(
+      this.state.firstName,
+      this.state.middleName,
+      this.state.lastName,
+      this.state.password,
+      this.state.confirmPassword,
+      this.state.address,
+      this.state.mobileNumber,
+      this.state.email
+    );
+
+    console.log(response);
+    this.setState({
+      loading: false,
+      response: response.data.register.userDetail,
     });
   };
   render() {
@@ -27,6 +51,16 @@ class SignUp extends Component {
             name="firstName"
             value={this.state.firstName}
             placeholder="First Name"
+            onChange={this.inputHandler}
+            type="text"
+          />
+        </p>
+        <p>
+          <input
+            className="inputElement"
+            name="middleName"
+            value={this.state.middleName}
+            placeholder="Middle Name"
             onChange={this.inputHandler}
             type="text"
           />
@@ -63,7 +97,7 @@ class SignUp extends Component {
         <p>
           <input
             className="inputElement"
-            value={this.state.password2}
+            value={this.state.confirmPassword}
             placeholder="Confirm Password"
             type="password"
             onChange={this.inputHandler}
@@ -72,8 +106,8 @@ class SignUp extends Component {
         <p>
           <input
             className="inputElement"
-            value={this.state.location}
-            placeholder="Enter your location"
+            value={this.state.address}
+            placeholder="Enter your address"
             onChange={this.inputHandler}
             type="text"
           />
@@ -82,15 +116,19 @@ class SignUp extends Component {
         <p>
           <input
             className="inputElement"
-            type="date"
+            type="number"
             value={this.state.DOB}
-            placeholder="Date of Birth"
+            placeholder="Mobile Number"
             onChange={this.inputHandler}
-            title="Your date of birth"
+            title="Your mobile number"
           />
         </p>
 
-        <button className="buttonLogin link" title="Register your account">
+        <button
+          className="buttonLogin link"
+          title="Register your account"
+          onClick={this.register}
+        >
           Register{" "}
         </button>
         <br></br>
