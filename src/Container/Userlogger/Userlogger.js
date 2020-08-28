@@ -35,18 +35,24 @@ class Userlogger extends React.Component {
       default:
     }
   };
-  static contextType = DarkModeContext
+  static contextType = DarkModeContext;
   render() {
-    const mode = this.context[0]
+    const mode = this.context[0];
     return (
       <div className="main-background" dark={mode}>
-      <div className="userLogger">
-      <DarkModeToggler />
-        <div>
-        <img src={require('../../assets/logo-with-name.png')} alt="SideHussle Logo" style={{width:"250px",height:"100%"}}></img></div>
-        <br></br>
-        {this.renderContent()}
-      </div>
+        <div className="userLogger">
+          <DarkModeToggler />
+          <div>
+            <img
+              src={require("../../assets/logo-with-name.png")}
+              alt="SideHussle Logo"
+              title="Sidehussle Logo"
+              style={{ width: "250px", height: "100%" }}
+            ></img>
+          </div>
+          <br></br>
+          {this.renderContent()}
+        </div>
       </div>
     );
   }

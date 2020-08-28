@@ -86,10 +86,13 @@ class SignUp extends Component {
             value={this.state.DOB}
             placeholder="Date of Birth"
             onChange={this.inputHandler}
+            title="Your date of birth"
           />
         </p>
 
-        <button className="buttonLogin link">Register </button>
+        <button className="buttonLogin link" title="Register your account">
+          Register{" "}
+        </button>
         <br></br>
         <div className="mt-4 mb-4 info">
           Already have an account?{" "}

@@ -42,7 +42,11 @@ class LogIn extends Component {
         <div className="row justify-content-end mr-2">
           <div className="mb-4 info link">Forgotten password?</div>
         </div>
-        <Link to="/dashboard" className="buttonLogin link text-white">
+        <Link
+          to="/dashboard"
+          className="buttonLogin link text-white"
+          title="Log in to your dashboard"
+        >
           Log in
         </Link>
         <br></br>
@@ -52,12 +56,18 @@ class LogIn extends Component {
           {this.line()}
         </div>
         <div className="row justify-content-center my-4 text-white">
-          <div className="col-5 facebook padding link">
+          <div
+            className="col-5 facebook padding link"
+            title="Log in with your facebook account"
+          >
             <i className="fa fa-facebook mr-2 i"></i>
             Facebook
           </div>
           <div className="col-1"></div>
-          <div className="col-5 google padding link">
+          <div
+            className="col-5 google padding link"
+            title="Log in with your google account"
+          >
             <i className="fa fa-google mr-2 i"></i>
             Google
           </div>
@@ -73,9 +83,15 @@ class LogIn extends Component {
           </span>
         </div>
         <div className="row justify-content-center my-4">
-          <div className="playstore store-settings link"></div>
+          <div
+            className="playstore store-settings link"
+            title="Download for android device on Playstore"
+          ></div>
           <div style={{ width: "15px" }}></div>
-          <div className="appstore store-settings link"></div>
+          <div
+            className="appstore store-settings link"
+            title="Download for iOS device o App Store"
+          ></div>
         </div>
       </div>
     );
