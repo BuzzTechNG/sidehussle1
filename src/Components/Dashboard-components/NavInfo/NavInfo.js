@@ -19,6 +19,7 @@ const NavInfo = () => {
                   <img
                     src={require("../../../assets/logo-with-name.png")}
                     alt="SideHussle Logo"
+                    title="SideHussle logo"
                     style={{ width: "150px", height: "100%" }}
                   ></img>
                 </span>
@@ -29,6 +30,7 @@ const NavInfo = () => {
                 type="button"
                 data-toggle="collapse"
                 data-target="#navbarLinks"
+                title="click to toggle navbar"
               >
                 <span className="navbar-toggler-icon"></span>
               </button>
