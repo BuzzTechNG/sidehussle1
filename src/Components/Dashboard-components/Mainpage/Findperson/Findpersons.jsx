@@ -4,11 +4,13 @@ import Findperson from "./Findperson";
 class Findpersons extends Component {
   render() {
     return (
-      <div className="container">
+      <div className="full-width">
+        <div className="container-lg">
+          <div className="page-title my-3" >Users</div>
         <div className="row">
           {/*sidemenu*/}
           <div className="row col-12 col-md-3">
-            <h3 className="pb-4">Filter By</h3>
+            <h3 className="pb-4 title3">Filter By</h3>
           </div>
 
           {/* filtered data */}
@@ -22,7 +24,7 @@ class Findpersons extends Component {
                 <i className="fa fa-search"></i>{" "}
               </span>{" "}
               <input
-                className="col filter-input"
+                className="filter-input"
                 style={{
                   outline: "none",
                   border: "none",
@@ -35,6 +37,7 @@ class Findpersons extends Component {
             <hr className="px-3 my-3" />
             <Findperson />
           </div>
+        </div>
         </div>
       </div>
     );
