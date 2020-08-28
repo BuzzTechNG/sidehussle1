@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Startjobmodal from "./StartJobModel";
-import UpdateInfo from "../Updateuserinfo";
 class Startjob extends Component {
   state = {
     titles: [
@@ -282,7 +281,7 @@ class Startjob extends Component {
           body={startJobModal5}
         />
         {button}
-        <UpdateInfo/>
+        
       </div>
     );
   }

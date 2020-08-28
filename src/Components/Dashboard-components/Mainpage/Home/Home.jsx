@@ -29,6 +29,7 @@ class Home extends Component {
           </div>
           <div className="col">
             <div
+              title="complete profile details"
               className="subtitle1 px-3"
               style={{ textDecoration: "underline" }}
             >

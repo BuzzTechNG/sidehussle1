@@ -1,7 +1,7 @@
-import React, { Components } from "react";
+import React, { Component } from "react";
 import Findperson from "./Findperson";
 
-class Findpersons extends Components {
+class Findpersons extends Component {
   render() {
     return (
       <div className="container">
