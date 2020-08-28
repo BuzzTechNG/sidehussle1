@@ -14,6 +14,7 @@ class SignUp extends Component {
     address: "",
     loading: false,
     response: {},
+    firstNameRequired: false,
   };
 
   inputHandler = (event) => {
@@ -22,40 +23,72 @@ class SignUp extends Component {
       [name]: value,
     });
   };
+  validateForm = () => {
+    let error = 0;
 
-  register = async () => {
-    this.setState({ loading: true, response: {} });
-    const response = await register(
-      this.state.firstName,
-      this.state.middleName,
-      this.state.lastName,
-      this.state.password,
-      this.state.confirmPassword,
-      this.state.address,
-      this.state.mobileNumber,
-      this.state.email
-    );
+    const validationItems = ["firstName"]; //items to validate would be inserted here
 
-    console.log(response);
-    this.setState({
-      loading: false,
-      response: response.data.register.userDetail,
+    validationItems.forEach((item) => {
+      if (this.state[item].length === 0) {
+        error++;
+        this.state[`${item}Required`] = true;
+      }
     });
+    if (error > 0) {
+      this.setState({});
+    }
+    return error;
   };
+  cancelError = (event) => {
+    const { name } = event.target;
+    if (this.state[`${name}Required`] && this.state[name].length > 0) {
+      this.setState({
+        [`${name}Required`]: false,
+      });
+    }
+  };
+  register = async () => {
+    if (this.validateForm() > 0) return;
+
+    this.setState({ loading: true, response: {} });
+    // uncomment block after testing validation
+    // const response = await register(
+    //   this.state.firstName,
+    //   this.state.middleName,
+    //   this.state.lastName,
+    //   this.state.password,
+    //   this.state.confirmPassword,
+    //   this.state.address,
+    //   this.state.mobileNumber,
+    //   this.state.email
+    // );
+
+    // console.log(response);
+    // this.setState({
+    //   loading: false,
+    //   response: response.data.register.userDetail,
+    // });
+  };
+
   render() {
     return (
-      <div>
-        <p>
+      <div className="register">
+        <div>
           <input
+            show-validation-error={`${this.state.firstNameRequired}`}
             className="inputElement"
             name="firstName"
             value={this.state.firstName}
             placeholder="First Name"
             onChange={this.inputHandler}
             type="text"
+            onBlur={this.cancelError}
           />
-        </p>
-        <p>
+          {this.state.firstNameRequired && (
+            <div className="validation-message"></div>
+          )}
+        </div>
+        <div>
           <input
             className="inputElement"
             name="middleName"
@@ -64,8 +97,8 @@ class SignUp extends Component {
             onChange={this.inputHandler}
             type="text"
           />
-        </p>
-        <p>
+        </div>
+        <div>
           <input
             className="inputElement"
             name="lastName"
@@ -74,8 +107,8 @@ class SignUp extends Component {
             onChange={this.inputHandler}
             type="text"
           />
-        </p>
-        <p>
+        </div>
+        <div>
           <input
             className="inputElement"
             value={this.state.email}
@@ -84,8 +117,8 @@ class SignUp extends Component {
             type="mail"
             onChange={this.inputHandler}
           />
-        </p>
-        <p>
+        </div>
+        <div>
           <input
             className="inputElement"
             value={this.state.password}
@@ -94,9 +127,9 @@ class SignUp extends Component {
             type="password"
             onChange={this.inputHandler}
           />
-        </p>
+        </div>
 
-        <p>
+        <div>
           <input
             className="inputElement"
             value={this.state.confirmPassword}
@@ -105,8 +138,8 @@ class SignUp extends Component {
             name="confirmPassword"
             onChange={this.inputHandler}
           />
-        </p>
-        <p>
+        </div>
+        <div>
           <input
             className="inputElement"
             value={this.state.address}
@@ -115,9 +148,9 @@ class SignUp extends Component {
             onChange={this.inputHandler}
             type="text"
           />
-        </p>
+        </div>
 
-        <p>
+        <div>
           <input
             className="inputElement"
             type="number"
@@ -127,7 +160,7 @@ class SignUp extends Component {
             onChange={this.inputHandler}
             title="Your mobile number"
           />
-        </p>
+        </div>
 
         <button
           className="buttonLogin link"
