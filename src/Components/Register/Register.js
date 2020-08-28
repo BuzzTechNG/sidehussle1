@@ -79,6 +79,7 @@ class SignUp extends Component {
           <input
             className="inputElement"
             value={this.state.email}
+            name="email"
             placeholder="E-mail Address"
             type="mail"
             onChange={this.inputHandler}
@@ -89,6 +90,7 @@ class SignUp extends Component {
             className="inputElement"
             value={this.state.password}
             placeholder="Password"
+            name="password"
             type="password"
             onChange={this.inputHandler}
           />
@@ -100,6 +102,7 @@ class SignUp extends Component {
             value={this.state.confirmPassword}
             placeholder="Confirm Password"
             type="password"
+            name="confirmPassword"
             onChange={this.inputHandler}
           />
         </p>
@@ -107,6 +110,7 @@ class SignUp extends Component {
           <input
             className="inputElement"
             value={this.state.address}
+            name="address"
             placeholder="Enter your address"
             onChange={this.inputHandler}
             type="text"
@@ -117,7 +121,8 @@ class SignUp extends Component {
           <input
             className="inputElement"
             type="number"
-            value={this.state.DOB}
+            name="mobileNumber"
+            value={this.state.mobileNumber}
             placeholder="Mobile Number"
             onChange={this.inputHandler}
             title="Your mobile number"
