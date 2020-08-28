@@ -1,12 +1,15 @@
 import React, { Component } from "react";
+
 import { Link } from "react-router-dom";
 import "./Login.css";
 import "./logindark.scss";
-
+import { login } from "../../apolloHelper";
 class LogIn extends Component {
   state = {
     Username: "",
     Password: "",
+    loading:false,
+    response: ""
   };
   line() {
     return <div className="line"></div>;
@@ -16,39 +19,59 @@ class LogIn extends Component {
     this.setState({
       [name]: value,
     });
+    
   };
+  
+   login = async ()=>{
+    this.setState({loading:true,response:""})
+   const response = await login(this.state.Username,this.state.Password)
+   
+   console.log(response)
+   this.setState({loading:false, response:response.data.login.message})
+  }
+
   render() {
+    // const [login, { data , loading, error }] =  useMutation(LOGIN)
     return (
       <div>
-        <br />
-        <p>
-          <input
+    
+                  <input
+                  name="Username"
             className="inputElement"
             value={this.state.email}
             type="mail"
             placeholder="Email or Phone Number"
             onChange={this.inputHandler}
           />{" "}
-        </p>
-        <p>
+        
+        
           <input
+          name="Password"
             className="inputElement"
             value={this.state.Password}
             placeholder="Password"
             onChange={this.inputHandler}
             type="password"
           />
-        </p>
+        
         <div className="row justify-content-end mr-2">
           <div className="mb-4 info link">Forgotten password?</div>
         </div>
+        <div style={{height:"50px"}}>{!this.state.loading ? 
         <Link
-          to="/dashboard"
+          // to="/dashboard"
+          onClick={this.login}
           className="buttonLogin link text-white"
           title="Log in to your dashboard"
         >
           Log in
-        </Link>
+        </Link> : 
+        <img style={{height:"100%"}} src={require('../../assets/sh-logo-svg.svg')} alt="loading"/>
+        }
+        </div>
+      <div style={{height:"10px"}} className="subtitle1 text-left">{
+        this.state.response
+        }</div>
         <br></br>
         <div className="line-div my-2">
           {this.line()}
