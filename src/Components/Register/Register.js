@@ -15,6 +15,13 @@ class SignUp extends Component {
     loading: false,
     response: {},
     firstNameRequired: false,
+    middleNameRequired: false,
+    lastNameRequired: false,
+    passwordRequired: false,
+    confirmPasswordRequired: false,
+    mobileNumberRequired: false,
+    emailRequired: false,
+    addressRequired: false,
   };
 
   inputHandler = (event) => {
@@ -23,10 +30,21 @@ class SignUp extends Component {
       [name]: value,
     });
   };
+
   validateForm = () => {
     let error = 0;
 
-    const validationItems = ["firstName"]; //items to validate would be inserted here
+    const validationItems = [
+      "firstName",
+      "middleName",
+      "lastName",
+      "password",
+      "confirmPassword",
+      "mobileNumber",
+      "email",
+      "address",
+      "loading",
+    ]; //items to validate would be inserted here
 
     validationItems.forEach((item) => {
       if (this.state[item].length === 0) {
@@ -39,6 +57,7 @@ class SignUp extends Component {
     }
     return error;
   };
+
   cancelError = (event) => {
     const { name } = event.target;
     if (this.state[`${name}Required`] && this.state[name].length > 0) {
@@ -47,27 +66,28 @@ class SignUp extends Component {
       });
     }
   };
+
   register = async () => {
     if (this.validateForm() > 0) return;
 
     this.setState({ loading: true, response: {} });
     // uncomment block after testing validation
-    // const response = await register(
-    //   this.state.firstName,
-    //   this.state.middleName,
-    //   this.state.lastName,
-    //   this.state.password,
-    //   this.state.confirmPassword,
-    //   this.state.address,
-    //   this.state.mobileNumber,
-    //   this.state.email
-    // );
+    const response = await register(
+      this.state.firstName,
+      this.state.middleName,
+      this.state.lastName,
+      this.state.password,
+      this.state.confirmPassword,
+      this.state.address,
+      this.state.mobileNumber,
+      this.state.email
+    );
 
-    // console.log(response);
-    // this.setState({
-    //   loading: false,
-    //   response: response.data.register.userDetail,
-    // });
+    console.log(response);
+    this.setState({
+      loading: false,
+      response: response.data.register.userDetail,
+    });
   };
 
   render() {
@@ -90,68 +110,99 @@ class SignUp extends Component {
         </div>
         <div>
           <input
+            show-validation-error={`${this.state.middleNameRequired}`}
             className="inputElement"
             name="middleName"
             value={this.state.middleName}
             placeholder="Middle Name"
             onChange={this.inputHandler}
             type="text"
+            onBlur={this.cancelError}
           />
+          {this.state.middleNameRequired && (
+            <div className="validation-message"></div>
+          )}
         </div>
         <div>
           <input
+            show-validation-error={`${this.state.lastNameRequired}`}
             className="inputElement"
             name="lastName"
             value={this.state.lastName}
             placeholder="Last Name"
             onChange={this.inputHandler}
             type="text"
+            onBlur={this.cancelError}
           />
+          {this.state.lastNameRequired && (
+            <div className="validation-message"></div>
+          )}
         </div>
         <div>
           <input
+            show-validation-error={`${this.state.emailRequired}`}
             className="inputElement"
             value={this.state.email}
             name="email"
             placeholder="E-mail Address"
             type="mail"
+            onBlur={this.cancelError}
             onChange={this.inputHandler}
           />
+          {this.state.emailRequired && (
+            <div className="validation-message"></div>
+          )}
         </div>
         <div>
           <input
+            show-validation-error={`${this.state.passwordRequired}`}
             className="inputElement"
             value={this.state.password}
             placeholder="Password"
             name="password"
             type="password"
             onChange={this.inputHandler}
+            onBlur={this.cancelError}
           />
+          {this.state.passwordRequired && (
+            <div className="validation-message"></div>
+          )}
         </div>
 
         <div>
           <input
+            show-validation-error={`${this.state.confirmPasswordRequired}`}
             className="inputElement"
             value={this.state.confirmPassword}
             placeholder="Confirm Password"
             type="password"
             name="confirmPassword"
             onChange={this.inputHandler}
+            onBlur={this.cancelError}
           />
+          {this.state.confirmPasswordRequired && (
+            <div className="validation-message"></div>
+          )}
         </div>
         <div>
           <input
+            show-validation-error={`${this.state.addressRequired}`}
             className="inputElement"
             value={this.state.address}
             name="address"
             placeholder="Enter your address"
             onChange={this.inputHandler}
             type="text"
+            onBlur={this.cancelError}
           />
+          {this.state.addressRequired && (
+            <div className="validation-message"></div>
+          )}
         </div>
 
         <div>
           <input
+            show-validation-error={`${this.state.mobileNumberRequired}`}
             className="inputElement"
             type="number"
             name="mobileNumber"
@@ -159,7 +210,11 @@ class SignUp extends Component {
             placeholder="Mobile Number"
             onChange={this.inputHandler}
             title="Your mobile number"
+            onBlur={this.cancelError}
           />
+          {this.state.mobileNumberRequired && (
+            <div className="validation-message"></div>
+          )}
         </div>
 
         <button
