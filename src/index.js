@@ -4,10 +4,27 @@ import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { ApolloClient, InMemoryCache,createHttpLink, ApolloProvider } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+
+const httpLink = createHttpLink({
+  // uri: 'https://hussleserver.herokuapp.com/graphql',
+  uri: 'http://192.168.1.117:3001/graphql',
+});
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const token = localStorage.getItem('token');
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    }
+  }
+});
 
 const client = new ApolloClient({
-  uri: 'https://hussleserver.herokuapp.com/graphql',
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache()
 });
 ReactDOM.render(

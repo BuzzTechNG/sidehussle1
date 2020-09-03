@@ -6,7 +6,9 @@ import {
   SkillsViewModal,
   TitleViewModal,
 } from "../Modals/Modal";
-
+import Apollo from "../../../../apolloHelper";
+import lottie from "lottie-web";
+const apollo = new Apollo();
 const ModalBtn = ({ title, icon }) => {
   return (
     <button
@@ -19,15 +21,49 @@ const ModalBtn = ({ title, icon }) => {
     ></button>
   );
 };
+
 class Home extends Component {
+  constructor(props) {
+    super(props);
+
+    this.getUser();
+  }
+  state = {
+    loading: true,
+    data: "",
+  };
+  animation = lottie.loadAnimation({
+    container: document.getElementById("home-lottie"),
+    // container: '#lottie-view',
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+    path: "/loading3.json",
+  });
+  componentDidMount() {
+    
+  }
+  async getUser() {
+    const userReponse = await apollo.getUser();
+    console.log(userReponse);
+    this.setState({ data: userReponse.data.getUser, loading:false });
+    this.animation.hide()
+  }
   render() {
-    return (
+    return this.state.loading ? (
+      <div className="full-width" style={{minHeight:"90vh",opacity:0.5}}>
+        <div className="container-m">
+          <div className="mx-auto mt-5" id="home-lottie" style={{width:"150px"}}></div>
+        </div>
+      </div>
+    ) : (
       <div className="full-width column mt-4">
         <div className="container-v custom-shadow row">
           <div className="row bdr justify-content-center align-items-center px-4 ml-0">
             {" "}
             <i className="fa fa-warning text-info"></i>
           </div>
+
           <div className="col">
             <div
               title="complete profile details"
@@ -47,9 +83,15 @@ class Home extends Component {
         <div className="col column container-v custom-shadow mb-5 mt-4">
           {/* Top container  */}
           <div className="col row padding-m py-4 bdb align-items-center">
-            <div className="avatar" title="Your display picture"></div>
-            <div className="col">
-              <div className="title1">User Name</div>
+            {this.state.data.pictureUrl ? (
+              <div className="avatar" title="Your display picture">
+                <img style={{borderRadius:"50%"}} src={this.state.data.pictureUrl} alt="profile pic" />
+              </div>
+            ) : (
+              <div className="avatar" title="Your display picture"></div>
+            )}
+            <div className="ml-3 col">
+              <div className="title1">{`${this.state.data.firstName} ${this.state.data.lastName}`}</div>
               <div className="subtitle1">
                 {" "}
                 <i className="fa fa-location"></i> User location

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./Register.css";
-import { register } from "../../apolloHelper";
+import Apollo from "../../apolloHelper";
+const apollo =  new Apollo()
 
 class SignUp extends Component {
   state = {
@@ -72,7 +73,7 @@ class SignUp extends Component {
 
     this.setState({ loading: true, response: {} });
     // uncomment block after testing validation
-    const response = await register(
+    const response = await apollo.register(
       this.state.firstName,
       this.state.middleName,
       this.state.lastName,

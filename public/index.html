@@ -43,6 +43,7 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <!-- <script  src="%PUBLIC_URL%/bodymovin.js"></script> -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>
@@ -54,6 +55,111 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
     integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
     crossorigin="anonymous"></script>
+    
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1041581502942134',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v1.0'
+    });
+      
+    FB.AppEvents.logPageView();   
+      
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<!-- google oauth code -->
+<script>
+  var GoogleAuth;
+  var SCOPE = 'https://www.googleapis.com/auth/drive.metadata.readonly';
+  function handleClientLoad() {
+    // Load the API's client and auth2 modules.
+    // Call the initClient function after the modules load.
+    gapi.load('client:auth2', initClient);
+  }
+
+  function initClient() {
+    // Retrieve the discovery document for version 3 of Google Drive API.
+    // In practice, your app can retrieve one or more discovery documents.
+    var discoveryUrl = 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest';
+
+    // Initialize the gapi.client object, which app uses to make API requests.
+    // Get API key and client ID from API Console.
+    // 'scope' field specifies space-delimited list of access scopes.
+    gapi.client.init({
+        'apiKey': 'AIzaSyA6IQym2fkTeMNvka0UX10ExMCCfMP__EI',
+        'clientId': '624109940910-c1vn57omif1ufh8nburgsv3q2jmi4am3.apps.googleusercontent.com',
+        'discoveryDocs': [discoveryUrl],
+        'scope': SCOPE
+    }).then(function () {
+      GoogleAuth = gapi.auth2.getAuthInstance();
+
+      // Listen for sign-in state changes.
+      GoogleAuth.isSignedIn.listen(updateSigninStatus);
+
+      // Handle initial sign-in state. (Determine if user is already signed in.)
+      var user = GoogleAuth.currentUser.get();
+      setSigninStatus();
+
+      // Call handleAuthClick function when user clicks on
+      //      "Sign In/Authorize" button.
+      // $('#sign-in-or-out-button').click(function() {
+      //   handleAuthClick();
+      // });
+      // $('#revoke-access-button').click(function() {
+      //   revokeAccess();
+      // });
+    });
+  }
+
+  function handleAuthClick() {
+    if (GoogleAuth.isSignedIn.get()) {
+      // User is authorized and has clicked "Sign out" button.
+      GoogleAuth.signOut();
+    } else {
+      // User is not signed in. Start Google auth flow.
+      GoogleAuth.signIn();
+    }
+  }
+
+  function revokeAccess() {
+    GoogleAuth.disconnect();
+  }
+
+  function setSigninStatus(isSignedIn) {
+    var user = GoogleAuth.currentUser.get();
+    var isAuthorized = user.hasGrantedScopes(SCOPE);
+    // if (isAuthorized) {
+    //   $('#sign-in-or-out-button').html('Sign out');
+    //   $('#revoke-access-button').css('display', 'inline-block');
+    //   $('#auth-status').html('You are currently signed in and have granted ' +
+    //       'access to this app.');
+    // } else {
+    //   $('#sign-in-or-out-button').html('Sign In/Authorize');
+    //   $('#revoke-access-button').css('display', 'none');
+    //   $('#auth-status').html('You have not authorized this app or you are ' +
+    //       'signed out.');
+    // }
+  }
+
+  function updateSigninStatus(isSignedIn) {
+    setSigninStatus();
+  }
+</script>
+<script async defer src="https://apis.google.com/js/api.js"
+        onload="this.onload=function(){};handleClientLoad()"
+        onreadystatechange="if (this.readyState === 'complete') this.onload()">
+</script>
 </body>
 
 </html>

@@ -1,15 +1,22 @@
 import React, { Component } from "react";
-
+import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 import "./Login.css";
 import "./logindark.scss";
-import { login } from "../../apolloHelper";
+import Apollo from "../../apolloHelper";
+const apollo =  new Apollo()
 class LogIn extends Component {
+  constructor(props){
+    super(props)
+    const tkt = "ade"
+    // console.log(this.props)
+  }
   state = {
     Username: "",
     Password: "",
     loading: false,
     response: "",
+    
   };
   line() {
     return <div className="line"></div>;
@@ -23,14 +30,111 @@ class LogIn extends Component {
 
   login = async () => {
     this.setState({ loading: true, response: "" });
-    const response = await login(this.state.Username, this.state.Password);
+    const response = await apollo.login(
+      this.state.Username,
+      this.state.Password
+    );
 
     console.log(response);
     this.setState({ loading: false, response: response.data.login.message });
   };
 
+  loginWithFacebook = async () => {
+    console.log("login with fb");
+    const that = this;
+    // eslint-disable-next-line no-undef
+    FB.getLoginStatus(function (response) {
+     
+
+      if (response.status === "not_authorized") {
+        
+        that.facebookLoginPopUp();
+      }
+      if (response.status === "connected") {
+        
+        that.facebookUserDetails(response.authResponse.accessToken)
+      }
+      
+    });
+  };
+  loginWithGoogle = async () => {
+    console.log("login-with-google");
+    let googleResponse = null;
+    
+    // eslint-disable-next-line no-undef
+    if (GoogleAuth.isSignedIn.get()){
+      // eslint-disable-next-line no-undef
+      googleResponse = await GoogleAuth.currentUser.get()
+    }else{
+      // eslint-disable-next-line no-undef
+      googleResponse = await GoogleAuth.signIn({
+        scope: 'profile email'
+      });
+    }
+    
+    // eslint-disable-next-line no-undef
+    var user = googleResponse.getBasicProfile();
+    console.log(user.getName());
+
+    
+    const firstName = user.getName().split(" ")[0];
+    
+    const socialResponse =  await apollo.socialAuth({
+      firstName,
+      lastName: user.getFamilyName(),
+      socialId: user.getId(),
+      pictureUrl: user.getImageUrl(),
+      socialType: apollo.GOOGLE,
+      socialMail: user.getEmail(),
+    });
+     console.log(socialResponse)
+    if (socialResponse.data.socialAuth.message === "verify-user"){
+      this.props.history.push(`/verifyUser/${socialResponse.data.socialAuth.id}`);
+    }
+    if (socialResponse.data.socialAuth.message === "login-sucessful" ){
+      localStorage.setItem("token",socialResponse.data.socialAuth.token)
+      this.props.history.push("/dashboard");
+    }
+  };
+  facebookLoginPopUp = () => {
+    // eslint-disable-next-line no-undef
+    FB.login(
+      (response) => {
+        console.log(response);
+      },
+      { scope: "public_profile,email" }
+    );
+  };
+  facebookUserDetails = async (token) => {
+    fetch(
+      `https://graph.facebook.com/me?fields=id,picture,email,first_name,gender,last_name,link,locale,name,timezone,updated_time,verified&&access_token=${token}`
+    )
+      .then(async (response) => {
+        let data = await response.json();
+        const socialResponse = await apollo.socialAuth({
+          firstName: data.first_name,
+          lastName: data.last_name,
+          socialId: data.id,
+          socialMail: data.email,
+          socialType: apollo.FACEBOOK,
+          pictureUrl: data.picture.data.url,
+        });
+        console.log(socialResponse)
+        if (socialResponse.data.socialAuth.message === "verify-user"){
+          this.props.history.push(`/verifyUser/${socialResponse.data.socialAuth.id}`);
+        }
+        if (socialResponse.data.socialAuth.message === "login-sucessful" ){
+          localStorage.setItem("token",socialResponse.data.socialAuth.token)
+          this.props.history.push("/dashboard");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // console.log(response.json())
+  };
   render() {
-    // const [login, { data , loading, error }] =  useMutation(LOGIN)
+    console.log(this.props)
     return (
       <div>
         <input
@@ -40,7 +144,8 @@ class LogIn extends Component {
           type="mail"
           placeholder="Email or Phone Number"
           onChange={this.inputHandler}
-        />{" "}
+        />
+        {" "}
         <input
           name="Password"
           className="inputElement"
@@ -81,6 +186,7 @@ class LogIn extends Component {
         </div>
         <div className="row justify-content-center my-4 text-white">
           <div
+            onClick={this.loginWithFacebook}
             className="col-5 facebook padding link"
             title="Log in with your facebook account"
           >
@@ -89,6 +195,7 @@ class LogIn extends Component {
           </div>
           <div className="col-1"></div>
           <div
+            onClick={this.loginWithGoogle}
             className="col-5 google padding link"
             title="Log in with your google account"
           >
@@ -104,6 +211,7 @@ class LogIn extends Component {
             style={{ color: "#44c" }}
           >
             Sign up
+
           </span>
         </div>
         <div className="row justify-content-center my-4">
@@ -122,4 +230,4 @@ class LogIn extends Component {
   }
 }
 
-export default LogIn;
+export default withRouter(LogIn);
