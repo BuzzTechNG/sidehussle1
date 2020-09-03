@@ -193,12 +193,14 @@ function Token(props) {
 function VerifyMobileNumber(props) {
   const [mode, setMode] = useState(false);
 
-  const { loading, data, err } = useQuery(apollo.GET_USER, {
+  const { loading, data, err } = useQuery(apollo.GET_USER_WITHOUT_AUTH, {
     variables: { id: props.match.params.id },
   });
   console.log(props.match.params.id);
   console.log("this object");
   console.log(data);
+  console.log(loading);
+  console.log(err);
   return (
     !loading && (
       <div className="full-width page" style={{ height: "100vh" }}>
@@ -212,16 +214,16 @@ function VerifyMobileNumber(props) {
               style={{ width: "250px", height: "100%" }}
             ></img>
           </div>
-          {undefined === undefined ? (
+          {data.getUserWithoutAuth?.pictureUrl ? (
             <div className="avatar"></div>
           ) : (
-            // <img src={data.getUser.pictureUrl
-            // } />
-            <div></div>
+            <img src={data.getUserWithoutAuth.pictureUrl
+            } />
+            // <div></div>
             // <></div>
           )}
           <div className="subtitle1 mt-4">
-            {/* Welcome {`${data.getUser.firstName} ${data.getUser.lastName}`} */}
+            Welcome {`${data.getUserWithoutAuth.firstName} ${data.getUserWithoutAuth.lastName}`}
           </div>
           {!mode ? (
             <MobileNumber setMode={setMode} userId={props.match.params.id} />

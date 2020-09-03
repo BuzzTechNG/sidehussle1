@@ -14,6 +14,17 @@ class apollaHelperClass {
       }
     }
   `;
+  GET_USER_WITHOUT_AUTH = gql`
+    query getUserWithoutAuth($id: String) {
+      getUserWithoutAuth(id: $id) {
+        id
+        pictureUrl
+        firstName
+        lastName
+      }
+    }
+  `;
+  
   //login logic
   LOGIN = gql`
     mutation login($userId: String, $userPassword: String) {
@@ -162,6 +173,14 @@ class apollaHelperClass {
   async getUser(id) {
     return await client.query({
       query: this.GET_USER,
+      variables: {
+        id,
+      },
+    });
+  }
+  async getUserwithoutAuth(id) {
+    return await client.query({
+      query: this.GET_USER_WITHOUT_AUTH,
       variables: {
         id,
       },
