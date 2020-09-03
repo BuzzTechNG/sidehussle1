@@ -8,8 +8,8 @@ import { ApolloClient, InMemoryCache,createHttpLink, ApolloProvider } from '@apo
 import { setContext } from '@apollo/client/link/context';
 
 const httpLink = createHttpLink({
-  // uri: 'https://hussleserver.herokuapp.com/graphql',
-  uri: 'http://192.168.1.117:3001/graphql',
+  uri: 'https://hussleserver.herokuapp.com/graphql',
+  // uri: 'http://192.168.1.117:3001/graphql',
 });
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists

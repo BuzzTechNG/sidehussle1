@@ -6,11 +6,7 @@ import "./logindark.scss";
 import Apollo from "../../apolloHelper";
 const apollo =  new Apollo()
 class LogIn extends Component {
-  constructor(props){
-    super(props)
-    const tkt = "ade"
-    // console.log(this.props)
-  }
+  
   state = {
     Username: "",
     Password: "",
@@ -18,6 +14,7 @@ class LogIn extends Component {
     response: "",
     
   };
+  
   line() {
     return <div className="line"></div>;
   }
