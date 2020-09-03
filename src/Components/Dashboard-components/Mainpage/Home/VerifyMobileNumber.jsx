@@ -11,6 +11,7 @@ const MobileNumber = (props) => {
   const [message, setMessage] = useState("");
   const [userLocation, setUserLocation] = useState(countryCode["NG"]);
   const [selectLocation, setSelectLocation] = useState(countryCode["NG"]);
+  const [timer, timerCountdown] = useState(60);
 
   const sendMessage = async () => {
     if (mobileNumber.length < 10 || isSending) {
@@ -141,10 +142,9 @@ function Token(props) {
       if (resp.data.comfirmUserMobile.message === "mobileNumber-confirmed") {
         setTimeout(() => {
           props.route.push("/dashboard");
-          localStorage.setItem("token",resp.data.comfirmUserMobile.token)
+          localStorage.setItem("token", resp.data.comfirmUserMobile.token);
         }, 3000);
       } else {
-
       }
     } catch (error) {
       console.log(error);
@@ -196,6 +196,8 @@ function VerifyMobileNumber(props) {
   const { loading, data, err } = useQuery(apollo.GET_USER, {
     variables: { id: props.match.params.id },
   });
+  console.log(props.match.params.id);
+  console.log("this object");
   console.log(data);
   return (
     !loading && (
@@ -210,13 +212,16 @@ function VerifyMobileNumber(props) {
               style={{ width: "250px", height: "100%" }}
             ></img>
           </div>
-          {data.getUser.pictureUrl === undefined ? (
+          {undefined === undefined ? (
             <div className="avatar"></div>
           ) : (
-            <img src={data.getUser.pictureUrl} />
+            // <img src={data.getUser.pictureUrl
+            // } />
+            <div></div>
+            // <></div>
           )}
           <div className="subtitle1 mt-4">
-            Welcome {`${data.getUser.firstName} ${data.getUser.lastName}`}
+            {/* Welcome {`${data.getUser.firstName} ${data.getUser.lastName}`} */}
           </div>
           {!mode ? (
             <MobileNumber setMode={setMode} userId={props.match.params.id} />

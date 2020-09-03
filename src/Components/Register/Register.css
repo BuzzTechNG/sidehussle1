@@ -1,9 +1,9 @@
-.register > div{
+.register>div {
     position: relative;
 }
 
-.register .validation-message::after{
-    content:" This Field is Required*";
+.register .validation-message::after {
+    content: " This Field is Required*";
     font-size: x-small;
     margin-top: -100px;
     text-align: left;
@@ -12,6 +12,7 @@
     left: 0;
     color: red;
 }
-[show-validation-error="true"]{
+
+[show-validation-error="true"] {
     border-bottom: crimson 1px solid;
 }
