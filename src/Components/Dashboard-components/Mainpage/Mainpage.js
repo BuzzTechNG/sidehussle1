@@ -10,7 +10,11 @@ import Availablejobs from "./Availablejobs/Availablejobs";
 import Home from "./Home/Home.jsx";
 import Thistory from "./Transactionhistory/Transactionhistory";
 import jobPage from "./Jobprogress/JobPage";
+
+import Message from "./MessageModule/Message";
+
 import Findperson from "./Findperson/Findpersons";
+
 
 class Mainpage extends Component {
   render() {
@@ -23,6 +27,8 @@ class Mainpage extends Component {
           <Route path="/dashboard/postjob" component={PostJob} />
           <Route path="/dashboard/avaliablejobs/:id" component={jobPage} />
           <Route path="/dashboard/previousjobs" component={Previousjobs} />
+          <Route path="/dashboard/message" component={Message} />
+
           <Route path="/dashboard/finduser" component={Findperson} />
           <Route
             path="/dashboard/avaliablejobs"

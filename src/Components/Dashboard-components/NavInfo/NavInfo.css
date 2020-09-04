@@ -5,7 +5,10 @@
 }
 
 .toggler {
-    background: #070707;
+    background: #eee;
+}
+.toggler span{
+    color: red;
 }
 
 .custom-nav:hover {
@@ -46,9 +49,10 @@
 .post-a-job {
     /* background-color: orangered; */
     background-image: linear-gradient(to right, #c42252 100%, #fe3852 100%);
-    padding: 0 5px;
+    padding: 0 10px;
     border-radius: 2px;
     border: 0;
     color: white;
+    max-width: max-content;
     font-size: 14px;
 }

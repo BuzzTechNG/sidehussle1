@@ -1,3 +1,6 @@
+.container-fluid{
+ background-color: #fff9fa;
+}
 a {
   text-decoration: none;
   color: black;
@@ -283,11 +286,15 @@ font-size: 14px;
 
 /* input  */
 .custom-input {}
-
+.scale{
+  transform: scale(3);
+}
 :root {
   --dark-primary: #1F1A24;
   --dark-secondary: #332940;
   --dark-shadow: #1F1A24
 }
+/* Verify CSS */
+
 
 /* Dark Mode */

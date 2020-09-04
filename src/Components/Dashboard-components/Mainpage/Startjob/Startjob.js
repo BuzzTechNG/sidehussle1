@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import Startjobmodal from "./StartJobModel";
+import MessageApp from "../MessageModule/Message"
+
 class Startjob extends Component {
   state = {
     titles: [
@@ -282,7 +284,7 @@ class Startjob extends Component {
           body={startJobModal5}
         />
         {button}
-        
+        <MessageApp/>
       </div>
     );
   }
