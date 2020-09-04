@@ -6,11 +6,14 @@ import {
   SkillsViewModal,
   TitleViewModal,
 } from "../Modals/Modal";
-
+import Apollo from "../../../../apolloHelper";
+import lottie from "lottie-web";
+const apollo = new Apollo();
 const ModalBtn = ({ title, icon }) => {
   return (
     <button
       type="button"
+      title={title}
       className={`round-btn ${icon}`}
       data-toggle="modal"
       data-target={`#${title}`}
@@ -18,17 +21,52 @@ const ModalBtn = ({ title, icon }) => {
     ></button>
   );
 };
+
 class Home extends Component {
+  constructor(props) {
+    super(props);
+
+    this.getUser();
+  }
+  state = {
+    loading: true,
+    data: "",
+  };
+  animation = lottie.loadAnimation({
+    container: document.getElementById("home-lottie"),
+    // container: '#lottie-view',
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+    path: "/loading3.json",
+  });
+  componentDidMount() {
+    
+  }
+  async getUser() {
+    const userReponse = await apollo.getUser();
+    console.log(userReponse);
+    this.setState({ data: userReponse.data.getUser, loading:false });
+    this.animation.hide()
+  }
   render() {
-    return (
+    return this.state.loading ? (
+      <div className="full-width" style={{minHeight:"90vh",opacity:0.5}}>
+        <div className="container-m">
+          <div className="mx-auto mt-5" id="home-lottie" style={{width:"150px"}}></div>
+        </div>
+      </div>
+    ) : (
       <div className="full-width column mt-4">
         <div className="container-v custom-shadow row">
           <div className="row bdr justify-content-center align-items-center px-4 ml-0">
             {" "}
             <i className="fa fa-warning text-info"></i>
           </div>
+
           <div className="col">
             <div
+              title="complete profile details"
               className="subtitle1 px-3"
               style={{ textDecoration: "underline" }}
             >
@@ -45,9 +83,15 @@ class Home extends Component {
         <div className="col column container-v custom-shadow mb-5 mt-4">
           {/* Top container  */}
           <div className="col row padding-m py-4 bdb align-items-center">
-            <div className="avatar"></div>
-            <div className="col">
-              <div className="title1">User Name</div>
+            {this.state.data.pictureUrl ? (
+              <div className="avatar" title="Your display picture">
+                <img style={{borderRadius:"50%"}} src={this.state.data.pictureUrl} alt="profile pic" />
+              </div>
+            ) : (
+              <div className="avatar" title="Your display picture"></div>
+            )}
+            <div className="ml-3 col">
+              <div className="title1">{`${this.state.data.firstName} ${this.state.data.lastName}`}</div>
               <div className="subtitle1">
                 {" "}
                 <i className="fa fa-location"></i> User location
@@ -60,19 +104,30 @@ class Home extends Component {
             <div className=" col-lg-3 col-md-12 col-sm-12 col-xs-12 bdr p-3">
               <p className="subtitle1">
                 {" "}
-                Video introduction <i className="round-btn fa fa-plus"></i>
+                Video introduction{" "}
+                <i
+                  className="round-btn fa fa-plus"
+                  title="Add introduction video"
+                ></i>
               </p>
               <p className="subtitle1">
                 {" "}
-                Availability <i className="round-btn fa fa-pen"></i>
+                Availability{" "}
+                <i
+                  className="round-btn fa fa-pen"
+                  title="Edit availability"
+                ></i>
               </p>
               <p className="subtitle1"> Avaliable Online</p>
               {/* Language */}
               <div className="mb-3">
                 <div className="subtitle1">
                   {" "}
-                  Languages <ModalBtn title="editLanguage" icon="fa fa-plus" />
-                  <i className="round-btn fa fa-pen"></i>
+                  Languages <ModalBtn title="Edit Language" icon="fa fa-plus" />
+                  <i
+                    className="round-btn fa fa-pen"
+                    title="Edit proficiency"
+                  ></i>
                 </div>
                 <ul className="list subtitle3">
                   <li>English</li>
@@ -82,10 +137,8 @@ class Home extends Component {
               <div className="mb-3">
                 <div className="subtitle1">
                   {" "}
-                  Education <ModalBtn
-                    title="editEducation"
-                    icon="fa fa-plus"
-                  />{" "}
+                  Education{" "}
+                  <ModalBtn title="Edit Education" icon="fa fa-plus" />{" "}
                 </div>
                 <ul className="list subtitle3">
                   <li>English</li>
@@ -98,12 +151,12 @@ class Home extends Component {
               <div className="bdb pb-2">
                 <div className="title2">
                   Web and Mobile Developer{" "}
-                  <ModalBtn title="title" icon="fa fa-pen" />{" "}
+                  <ModalBtn title="Edit Title" icon="fa fa-pen" />{" "}
                 </div>
                 <p className="title3">
                   {" "}
                   Costing -- N200/hr{" "}
-                  <ModalBtn title="changeRate" icon="fa fa-pen" />
+                  <ModalBtn title="Change rate" icon="fa fa-pen" />
                 </p>
                 <p className="subtitle2">Info about user</p>
               </div>
@@ -111,7 +164,7 @@ class Home extends Component {
               <div className="bdb py-3">
                 <p className="title3">
                   {" "}
-                  Services <ModalBtn title="mySkills" icon="fa fa-pen" />
+                  Services <ModalBtn title="Edit Skills" icon="fa fa-pen" />
                 </p>
                 <ul className="subtitle3 list">
                   <li> My Skills and Services </li>
@@ -130,9 +183,10 @@ class Home extends Component {
                       style={{ width: "100%" }}
                       src={require("../../../../assets/hiring.png")}
                       alt="review"
+                      title="Work history"
                     />
                     <p className="text-center subtitle2">Work History</p>
-                    <div className="square-btn">
+                    <div className="square-btn" title="Find Work">
                       {" "}
                       <i className="fa fa-search my-auto mr-2"></i> Find Work{" "}
                     </div>
@@ -148,6 +202,7 @@ class Home extends Component {
                       style={{ width: "100%" }}
                       src={require("../../../../assets/reviews.png")}
                       alt="review"
+                      title="Reviews"
                     />
                     <p className="text-center subtitle2">No review avaliable</p>
                   </div>

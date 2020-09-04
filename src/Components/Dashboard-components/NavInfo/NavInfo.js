@@ -3,8 +3,13 @@ import "./NavInfo.css";
 import "./NavDarkMode.scss";
 import { NavLink } from "react-router-dom";
 import { DarkModeToggler } from "../../../DarkModeContext";
-
+import { useQuery } from "@apollo/client";
+import Apollo from "../../../apolloHelper";
+const apollo = new Apollo()
 const NavInfo = () => {
+  const { loading, data, err } = useQuery(apollo.GET_USER, {
+  });
+  console.log(data)
   return (
     <div className="navinfo">
       <div className="col">
@@ -19,6 +24,7 @@ const NavInfo = () => {
                   <img
                     src={require("../../../assets/logo-with-name.png")}
                     alt="SideHussle Logo"
+                    title="SideHussle logo"
                     style={{ width: "150px", height: "100%" }}
                   ></img>
                 </span>
@@ -29,8 +35,9 @@ const NavInfo = () => {
                 type="button"
                 data-toggle="collapse"
                 data-target="#navbarLinks"
+                title="click to toggle navbar"
               >
-                <span className="navbar-toggler-icon"></span>
+                <span className="p-1 fa fa-bars" ></span>
               </button>
 
               <div
@@ -101,33 +108,37 @@ const NavInfo = () => {
                     </NavLink>
                   </li>
                   <li
-                    className="nav-item"
+                    className="nav-item "
                     data-toggle="collapse"
                     data-target=".navbar-collapse.show"
                   >
                     <NavLink
                       to="/dashboard/"
                       exact
-                      className="nav-link ml-3 custom-nav"
+                      className="nav-link ml-3 custom-nav d-flex"
                     >
-                      UserName
+                    { loading ? <div id="nav-lottie"></div>:
+                    <>
+                    <img className="mr-2" width="20px" height="20px" src={data.getUser.pictureUrl} />
+                    {data.getUser.firstName}
+                    </>}
                     </NavLink>
                   </li>
                   <li
-                    className="post-a-job ml-3"
+                    className="mx-3 post-a-job"
                     data-toggle="collapse"
                     data-target=".navbar-collapse.show"
                   >
                     <NavLink
                       to="/dashboard/postjob"
                       exact
-                      className="nav-link text-light"
+                      className="nav-link   text-light"
                     >
                       Post A Job
                     </NavLink>
                   </li>
                   <li
-                    className="my-auto ml-4"
+                    className="my-auto ml-4 my-md-auto my-sm-4"
                     data-toggle="collapse"
                     data-target=".navbar-collapse.show"
                   >

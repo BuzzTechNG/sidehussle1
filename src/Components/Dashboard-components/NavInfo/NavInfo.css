@@ -5,7 +5,10 @@
 }
 
 .toggler {
-    background: #070707;
+    background: #eee;
+}
+.toggler span{
+    color: red;
 }
 
 .custom-nav:hover {
