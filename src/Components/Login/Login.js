@@ -40,12 +40,13 @@ class LogIn extends Component {
     console.log("login with fb");
     const that = this;
     // eslint-disable-next-line no-undef
-    FB.getLoginStatus(function (response) {
+    FB.getLoginStatus(async function (response) {
      
-
+      console.log(response)
       if (response.status === "not_authorized") {
         
-        that.facebookLoginPopUp();
+        const POP_UP_RESPONSE = await that.facebookLoginPopUp();
+        console.log(POP_UP_RESPONSE)
       }
       if (response.status === "connected") {
         
