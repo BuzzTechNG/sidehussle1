@@ -51,7 +51,7 @@ display: none;
   border-radius: 10px;
 }
 .thumb::-webkit-scrollbar-thumb{
-  background: $custom_primary;
+  background: $dark_secondary;
   border-radius: 5px;
 }
 
@@ -273,8 +273,8 @@ width: 99%;
     margin: auto;
     margin-bottom: 20px;
     @if($isDarkMode){
-        background-color: lighten($dark-primary,1);
-    box-shadow: -2px 0 13px 0 darken($dark-primary,1);
+        background-color: lighten($dark-secondary2,0);
+    box-shadow: -2px 0 13px 0 darken($dark-shadow,0);
     }@else{
         background-color: #eeeeee88;
     box-shadow: -2px 0 13px 0 #cccccc88;
@@ -299,7 +299,7 @@ width: 99%;
         @include messageBox(true)
        }
 }
-@media screen and ( max-width: 750px){
+@media screen and ( max-width: 991px){
     .no-show{
         display: none;
         visibility: hidden;

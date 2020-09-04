@@ -8,7 +8,6 @@ import "./css/App.css";
 
 import "./css/styles.scss";
 
-import "./css/customSelect.scss";
 
 
 function App() {

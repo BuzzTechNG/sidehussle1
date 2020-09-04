@@ -20,16 +20,23 @@ function MessageApp() {
                 return ""
             }
     },[complainGroup])
+    function selectMessage(){
+      if(window.innerWidth < 992){
+        // eslint-disable-next-line no-undef
+        $('#message-box').modal('toggle');
+        console.log(window.innerWidth)
+      }
+    }
     function complaintToggle(){
         setComplainGroup(prev => prev +1);
     }
     return (
         <div className="full-width">
-            <div className="container-lg">
-            <div className="page-title my-4">Message <button type="button" data-toggle="modal" data-target="#message-box">Launch modal</button></div>
+            <div className="container-v">
+            <div className="page-title my-4">Message</div>
         <div 
         // style="overflow: hidden;" 
-        className="complaint-container shadow-2 row">
+        className="complaint-container  row">
             {/* <!-- complain list --> */}
             <div className="col col-md-3 complaint-list">
                 <div className="search-bar-container row align-items-center justify-content-center">
@@ -47,7 +54,7 @@ function MessageApp() {
                 </div>
                 <div className="xlist thumb2">
                             {[0,1,2].map(index => (
-                                    <div key={index} className="item row align-items-center ustify-content-center">
+                                    <div onClick={selectMessage} key={index} className="item row align-items-center ustify-content-center">
                                     <div className="avatar q-mx-md">M</div>
                                     <div className="column">
                                         <div className="col-3">
@@ -78,7 +85,7 @@ function MessageApp() {
 const MessageBox = ({item, noShow}) => {
     return (
         <div className={[`col message-box ${noShow ? 'no-show' : ''}`]}>
-                <div className="message-box-area row align-items-center justify-content-center">
+                <div className="message-box-area d-flex align-items-center justify-content-center">
                     <i className="fa fa-user" />
                     <input className="col-11 q-mx-sm" type="text" placeholder="Reply a complaint"/>
                     <i className="fa fa-paper-plane"/>
@@ -90,22 +97,26 @@ const MessageBox = ({item, noShow}) => {
                    <div key={item} className={ index%2 === 0 ? 'message message-left' : 'message message-right'}>{index} Ade is a boy and a girl</div>
                   ))}  
                 </div>
-                <div className="message-box-header row align-items-center">
-                    <div className="col-6 q-pl-md">
-                        Name
-                    </div>
+                <div className="message-box-header d-flex align-items-center">
+                    {window.innerWidth < 991 ?<div  className="my-auto mx-2">
+
+                       
+                        <i className="fa fa-arrow-left my-auto" onClick={()=>{     
+                             
+                             // eslint-disable-next-line no-undef
+                             $('#message-box').modal('toggle');}
+                             }></i>
+                    </div>: <></>}
+                  <div className="col-6 q-pl-md">
+                    Name
+                  </div>
                     <div 
                     // style="font-size:12px" 
-                    className="col-3 menu">
+                    className="col-6 menu">
                         <i className="fa fa-book"></i>
-                        <div>Complaint Subject</div>
+                        <div>Subject</div>
                     </div>
-                    <div 
-                    // style="font-size:12px"
-                     className="col-3 menu">
-                        <i className="fa fa-times"></i>
-                        <div> Close Complaint</div>
-                    </div>
+                    
                 </div>
             </div>
 
@@ -127,17 +138,17 @@ const ModalView = ({ body, title, modalType }) => {
           style={{ border: 0, outline: 0 }}
         >
           <div class="modal-content modalbg" style={{ border: 0, outline: 0 }}>
-            <div className="model-body" style={{height:"90vh"}}>
+            <div className="model-body" style={{height:"95vh"}}>
                 <MessageBox noShow={false}/>
             </div>
-            <div class="modal-footer">
+            {/* <div class="modal-footer">
               <button type="button" class="modal-close-btn" data-dismiss="modal">
                 Close
               </button>
               <button type="button" class="modal-save-btn square-btn m-0">
                 Save changes
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
