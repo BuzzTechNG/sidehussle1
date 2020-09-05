@@ -117,8 +117,19 @@ function Token(props) {
   const [userToken, setUserToken] = useState("");
   const [message, setMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
+  const [isActive, setIsActive] = useState(false);
+  const [counter, setCounter] = React.useState(60);
+
+  useEffect(() => {
+    const timer =
+      counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+    setIsActive(!isActive);
+
+    return () => clearInterval(timer);
+  }, [counter, isActive]);
 
   const comfirmFunc = async () => {
+    setIsActive(!isActive);
     if (userToken.length < 6 || isSending) {
       return;
     }
@@ -171,20 +182,27 @@ function Token(props) {
       </div>
       <div style={{ width: "100%" }}>
         <div className="float-left">{message}</div>
-        <div className="square-btn float-right" onClick={comfirmFunc}>
-          {isSending ? (
-            <div
-              id="lottie-view"
-              className="scale"
-              style={{ width: "80px", height: "26px" }}
-            ></div>
-          ) : (
-            <>
-              {" "}
-              Verify <i className="fa fa-check my-auto ml-1"></i>
-            </>
-          )}
-        </div>
+        {!isActive ? (
+          <div className="square-btn float-right" onClick={comfirmFunc}>
+            {isSending ? (
+              <div
+                id="lottie-view"
+                className="scale"
+                style={{ width: "80px", height: "26px" }}
+              ></div>
+            ) : (
+              <>
+                {" "}
+                Verify <i className="fa fa-check my-auto ml-1"></i>
+              </>
+            )}
+          </div>
+        ) : (
+          <h5>
+            You have to wait for {counter} seconds before you can request
+            another token
+          </h5>
+        )}
       </div>
     </>
   );
@@ -217,13 +235,13 @@ function VerifyMobileNumber(props) {
           {data.getUserWithoutAuth?.pictureUrl ? (
             <div className="avatar"></div>
           ) : (
-            <img src={data.getUserWithoutAuth.pictureUrl
-            } />
+            <img src={data.getUserWithoutAuth.pictureUrl} />
             // <div></div>
             // <></div>
           )}
           <div className="subtitle1 mt-4">
-            Welcome {`${data.getUserWithoutAuth.firstName} ${data.getUserWithoutAuth.lastName}`}
+            Welcome{" "}
+            {`${data.getUserWithoutAuth.firstName} ${data.getUserWithoutAuth.lastName}`}
           </div>
           {!mode ? (
             <MobileNumber setMode={setMode} userId={props.match.params.id} />
