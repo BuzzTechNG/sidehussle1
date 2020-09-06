@@ -5,6 +5,25 @@ import { useQuery } from "@apollo/client";
 import Apollo from "../../../../apolloHelper.js";
 import lottie from "lottie-web";
 const apollo = new Apollo();
+let userLocationX = "";
+let mobileNumberX = "";
+
+const verifyFunc = async ({ userLocation = "", mobileNumber = "", id }) => {
+  const CONCAT_MOBILE_NUMBER_COUNTRY_CODE = `${userLocation}${mobileNumber}`;
+  try {
+    const resp = await apollo.verifyUserMobile({
+      mobileNumber: CONCAT_MOBILE_NUMBER_COUNTRY_CODE,
+      id,
+    });
+    console.log(resp);
+    userLocationX = userLocation;
+    mobileNumberX = mobileNumber;
+    return resp.data.verifyUserMobile.message;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const MobileNumber = (props) => {
   const [mobileNumber, setmobileNumber] = useState("");
   const [isSending, setIsSending] = useState(false);
@@ -27,7 +46,11 @@ const MobileNumber = (props) => {
       path: "/loading2.json",
     });
 
-    const SMS_RESPONSE = await verifyFunc();
+    const SMS_RESPONSE = await verifyFunc({
+      userLocation,
+      mobileNumber,
+      id: props.id,
+    });
     if (SMS_RESPONSE === "confirm-token") {
       setIsSending(false);
       props.setMode(true);
@@ -49,19 +72,6 @@ const MobileNumber = (props) => {
     return () => {};
   }, []);
 
-  const verifyFunc = async () => {
-    const CONCAT_MOBILE_NUMBER_COUNTRY_CODE = `${userLocation}${mobileNumber}`;
-    try {
-      const resp = await apollo.verifyUserMobile({
-        mobileNumber: CONCAT_MOBILE_NUMBER_COUNTRY_CODE,
-        id: props.userId,
-      });
-      console.log(resp);
-      return resp.data.verifyUserMobile.message;
-    } catch (error) {
-      console.log(error);
-    }
-  };
   console.log(props);
   return (
     <>
@@ -117,16 +127,22 @@ function Token(props) {
   const [userToken, setUserToken] = useState("");
   const [message, setMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
-  const [isActive, setIsActive] = useState(false);
-  const [counter, setCounter] = React.useState(60);
+  const [isActive, setIsActive] = useState(true);
+  const [counter, setCounter] = React.useState(5);
 
   useEffect(() => {
-    const timer =
-      counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
-    setIsActive(!isActive);
+    const timer = setInterval(() => {
+      if (counter > 1) {
+        setCounter((counter) => counter - 1);
+        console.log(counter);
+      } else {
+        setIsActive((isActive) => !isActive);
+        clearInterval(timer);
+      }
+    }, 1000);
 
     return () => clearInterval(timer);
-  }, [counter, isActive]);
+  }, [counter]);
 
   const comfirmFunc = async () => {
     setIsActive(!isActive);
@@ -182,26 +198,47 @@ function Token(props) {
       </div>
       <div style={{ width: "100%" }}>
         <div className="float-left">{message}</div>
-        {!isActive ? (
-          <div className="square-btn float-right" onClick={comfirmFunc}>
-            {isSending ? (
-              <div
-                id="lottie-view"
-                className="scale"
-                style={{ width: "80px", height: "26px" }}
-              ></div>
-            ) : (
-              <>
-                {" "}
-                Verify <i className="fa fa-check my-auto ml-1"></i>
-              </>
-            )}
-          </div>
-        ) : (
+
+        <div className="square-btn float-right" onClick={comfirmFunc}>
+          {isSending ? (
+            <div
+              id="lottie-view"
+              className="scale"
+              style={{ width: "80px", height: "26px" }}
+            ></div>
+          ) : (
+            <>
+              {" "}
+              Verify <i className="fa fa-check my-auto ml-1"></i>
+            </>
+          )}
+        </div>
+        {isActive ? (
           <h5>
             You have to wait for {counter} seconds before you can request
             another token
           </h5>
+        ) : (
+          <div>
+            {/* div to render change mobile number and resend token */}
+            <div className="verifie" onClick={() => props.setMode(false)}>
+              {" "}
+              Change mobile number
+            </div>
+            <div
+              className="verifie"
+              onClick={() =>
+                verifyFunc({
+                  userLocation: userLocationX,
+                  mobileNumber: mobileNumberX,
+                  id: props.userID,
+                })
+              }
+            >
+              {" "}
+              Resend token
+            </div>
+          </div>
         )}
       </div>
     </>
@@ -246,7 +283,11 @@ function VerifyMobileNumber(props) {
           {!mode ? (
             <MobileNumber setMode={setMode} userId={props.match.params.id} />
           ) : (
-            <Token userId={props.match.params.id} route={props.history} />
+            <Token
+              userId={props.match.params.id}
+              route={props.history}
+              setMode={setMode}
+            />
           )}
         </div>
       </div>

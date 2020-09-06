@@ -1,6 +1,7 @@
-.container-fluid{
- background-color: #fff9fa;
+.container-fluid {
+  background-color: #fff9fa;
 }
+
 a {
   text-decoration: none;
   color: black;
@@ -184,24 +185,21 @@ a:hover {
 .subtitle6 {
   color: #666;
 }
-.title4{
 
-}
-.title5{
+.title4 {}
 
-}
-.title6{
+.title5 {}
 
-}
-.subtitle4{
-font-size: 14px;
-}
-.subtitle5{
+.title6 {}
 
+.subtitle4 {
+  font-size: 14px;
 }
-.subtitle6{
-  
-}
+
+.subtitle5 {}
+
+.subtitle6 {}
+
 .bdr {
   border-color: #aaa;
   border-right-width: 1px;
@@ -286,15 +284,38 @@ font-size: 14px;
 
 /* input  */
 .custom-input {}
-.scale{
+
+.scale {
   transform: scale(3);
 }
+
 :root {
   --dark-primary: #1F1A24;
   --dark-secondary: #332940;
   --dark-shadow: #1F1A24
 }
+
 /* Verify CSS */
+.verifie {
+
+  width: max-content;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 5px 8px;
+  color: grey;
+  margin: 5px;
+  padding: 9px;
+  cursor: pointer;
+  background-color: #fff;
+  transition: all 500ms;
+
+}
+
+.verifie:hover {
+  text-decoration: underline orangered;
+  color: #1F1A24;
+
+}
 
 
 /* Dark Mode */
