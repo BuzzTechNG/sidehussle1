@@ -1,187 +1,227 @@
-
 @import "./variables";
 
-.top-bg{
-    z-index: -1;
-    top: 0;
-    left: 0;
-    position: absolute;
-    height: 40vh;
-    width: 100%;
-    background-image: linear-gradient(145deg, red, orange);
+.top-bg {
+  z-index: -1;
+  top: 0;
+  left: 0;
+  position: absolute;
+  height: 40vh;
+  width: 100%;
+  background-image: linear-gradient(145deg, red, orange);
 
 }
-.logo-watermark{
-    background-image: url('../assets/logo-icon.png');
-    background-size: cover;
-    height: 70vh;
-    width: 70vh;
-    position: absolute;
-    top: 10px;
-    right: 0;
-    // z-index: -1;
-    opacity: 0.07;
-    pointer-events: none;
-}
-.page{
-    background-color: #fffcff;
-}
-.verify{
-    z-index: 100;
-    margin-top: 7%;
-    margin-bottom: 7%;
-    padding: 15px;
-    padding-bottom: 2%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: #ffffffcc !important;
-    box-shadow: 1px 1px 7px 1px #eee, -1px -1px 15px 0 #eee;
-    max-width: 480px;
 
-    .job-form{
-        input{
-            // width: 40px;
-            font-size: 25px;
-            padding: 5px 13px;
-        }
+.logo-watermark {
+  background-image: url('../assets/logo-icon.png');
+  background-size: cover;
+  height: 70vh;
+  width: 70vh;
+  position: absolute;
+  top: 10px;
+  right: 0;
+  // z-index: -1;
+  opacity: 0.07;
+  pointer-events: none;
+}
+
+.page {
+  background-color: #fffcff;
+}
+
+.verify {
+  z-index: 100;
+  margin-top: 7%;
+  margin-bottom: 7%;
+  padding: 15px;
+  padding-bottom: 2%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffffcc !important;
+  box-shadow: 1px 1px 7px 1px #eee, -1px -1px 15px 0 #eee;
+  max-width: 480px;
+
+  .job-form {
+    input {
+      // width: 40px;
+      font-size: 25px;
+      padding: 5px 13px;
     }
+  }
 
 
-    select, input{
+  select,
+  input {
     /* width: 100px; */
-    
+
     padding: 10px;
     border: 0;
     border-bottom: 1px red solid;
     font-size: 25px;
-    
-  }
-  
 
-  .title{
-    
   }
-  select{
-      width: fit-content;
-      padding: 5px 0;
-      option{
-          font-size: 15px;
-          border: 0;
-          outline: 0;
-          
-          
-      }
-      option:active{
-          background-color: red;
-        box-shadow: 0 0 100px 0 red;
-      }
+
+
+  .title {}
+
+  select {
+    width: fit-content;
+    padding: 5px 0;
+
+    option {
+      font-size: 15px;
+      border: 0;
+      outline: 0;
+
+
+    }
+
+    option:active {
+      background-color: red;
+      box-shadow: 0 0 100px 0 red;
+    }
   }
-  input{
+
+  input {
     margin: 0 5px;
     padding: 10px 2px;
   }
-  input:hover, input:focus, select:hover{
-      outline: 0;
+
+  input:hover,
+  input:focus,
+  select:hover {
+    outline: 0;
   }
-  .square-btn{
-      
-      font-size: medium;
-      border-radius: 3px;
-      color: white;
-      padding: 8px 30px;
-      margin: 0;
-      margin-top: 15px;
-      background-image: linear-gradient(145deg, red, orange);
+
+  .square-btn {
+
+    font-size: medium;
+    border-radius: 3px;
+    color: white;
+    padding: 8px 30px;
+    margin: 0;
+    margin-top: 15px;
+    background-image: linear-gradient(145deg, red, orange);
   }
 }
 
-[dark="dark"]{
-    background-color: $dark-primary;
-    color: #fff;
-  
-  a{  
+[dark="dark"] {
+  background-color: $dark-primary;
+  color: #fff;
+
+  a {
     color: #ccc;
   }
-  a:hover{  
+
+  a:hover {
     color: #ccc;
   }
-  .avatar{
-    background-color:#ccc;
-    
+
+  .avatar {
+    background-color: #ccc;
+
   }
-  @keyframes shimerEffect{
-    from{
+
+  @keyframes shimerEffect {
+    from {
       transform: translateX(45px);
       background-color: #ccc;
     }
-    to{
+
+    to {
       background-color: #eee;
       transform: translateX(-30px);
     }
   }
-  .modal-close-btn{
+
+  .modal-close-btn {
     background-color: #00000000;
     color: white;
   }
-  .modal-close-btn:hover{
+
+  .modal-close-btn:hover {
     background-color: #000000cc;
   }
-  .avatar-mini{
-    background-image: linear-gradient(145deg,#ccc,#fcfcfc);
+
+  .avatar-mini {
+    background-image: linear-gradient(145deg, #ccc, #fcfcfc);
   }
-  .avatar-mini::after{
+
+  .avatar-mini::after {
     background-color: #ddd;
   }
-    .title1, .title2, .title3{
+
+  .title1,
+  .title2,
+  .title3 {
     color: #ddd;
   }
-  .subtitle1, .subtitle2, .subtitle3{
+
+  .subtitle1,
+  .subtitle2,
+  .subtitle3 {
     color: #bbb;
-  } 
-  .bdr{
-    border-color: darken($dark-primary,4);
+  }
+
+  .bdr {
+    border-color: darken($dark-primary, 4);
     border-right-width: 1px;
-    box-shadow: 1px 0px 0px 0 darken($dark-primary,4);
+    box-shadow: 1px 0px 0px 0 darken($dark-primary, 4);
   }
-  .bdl{
-    border-color: darken($dark-primary,4);
-    box-shadow: -1px 0px 0px 0 darken($dark-primary,4);
+
+  .bdl {
+    border-color: darken($dark-primary, 4);
+    box-shadow: -1px 0px 0px 0 darken($dark-primary, 4);
   }
-  .bdb{
-    border-color: darken($dark-primary,4);
-    box-shadow: 0px 1px 0px 0 darken($dark-primary,4);
-  
+
+  .bdb {
+    border-color: darken($dark-primary, 4);
+    box-shadow: 0px 1px 0px 0 darken($dark-primary, 4);
+
   }
-  .bdt{
-    border-color: darken($dark-primary,4);
+
+  .bdt {
+    border-color: darken($dark-primary, 4);
     /* border-top-width: 1px; */
-    box-shadow: 0px -1px 0px 0 darken($dark-primary,4);
+    box-shadow: 0px -1px 0px 0 darken($dark-primary, 4);
   }
+
   /* Botton */
-  .round-btn, .square-btn{
-    background-color: lighten($dark-secondary,100);
-    box-shadow: 1px 1px 8px 1px darken($dark-primary,3);
+  .round-btn,
+  .square-btn {
+    background-color: lighten($dark-secondary, 100);
+    box-shadow: 1px 1px 8px 1px darken($dark-primary, 3);
   }
-  .square-btn{
+
+  .square-btn {
     color: red;
   }
-  .round-btn{
+
+  .round-btn {
     color: red;
   }
-  .round-btn:hover, .square-btn:hover{
+
+  .round-btn:hover,
+  .square-btn:hover {
     box-shadow: 0px 2px 11px 1px #1c1820;
     background-color: #aaa;
   }
-  .list li{
+
+  .list li {
     background-color: $dark-secondary;
   }
-  .custom-shadow{
-    background-color:$dark-secondary2;  
-    box-shadow: 2px 1px 5px 0px $dark-shadow,-2px -1px 5px 0px $dark-shadow;
+
+  .custom-shadow {
+    background-color: $dark-secondary2;
+    box-shadow: 2px 1px 5px 0px $dark-shadow, -2px -1px 5px 0px $dark-shadow;
   }
-  .filter-input{
-      color: white;
+
+  .filter-input {
+    color: white;
+  }
+
+  .postsperpage {
+    color: grey;
   }
 }
