@@ -16,7 +16,7 @@ const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
 
   return (
     <nav>
-      <ul className="pagination">{pagination}</ul>
+      <ul className="pagination ">{pagination}</ul>
     </nav>
   );
 };

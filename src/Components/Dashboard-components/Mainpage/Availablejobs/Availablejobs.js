@@ -8,9 +8,18 @@ class Availablejobs extends Component {
   state = {
     availableJobs: availableJobs,
     isGrid: false,
-    currentPage: [],
-    postsPerPage: 4,
+    currentPage: 1,
+    postsPerPage: 5,
   };
+
+  changePPP = (event) => {
+    const { name, value } = event.target;
+
+    this.setState({
+      [name]: +value,
+    });
+  };
+
   render() {
     const indexLastPost = this.state.currentPage * this.state.postsPerPage;
     const indexFirstPost = indexLastPost - this.state.postsPerPage;
@@ -18,6 +27,7 @@ class Availablejobs extends Component {
       indexFirstPost,
       indexLastPost
     );
+
     const aJobs = currentPosts.map((aJob) => (
       <Card
         isGrid={this.state.isGrid}
@@ -102,6 +112,32 @@ class Availablejobs extends Component {
                     {" "}
                     <i className="fa fa-layer-group ml-1"> </i>{" "}
                   </span>{" "}
+                </div>{" "}
+                {/*Posts Per Page */}
+                <div
+                  className=" p-2 mt-md-3 col-sm-12 col-md-4 col-lg-12 ml-md-4 ml-lg-0 mb-lg-4 mb-md-0 "
+                  style={{
+                    border: "1px solid #aaa",
+                  }}
+                >
+                  <select
+                    style={{
+                      outline: "none",
+                      border: "none",
+                      backgroundColor: "transparent",
+                    }}
+                    className="postsperpage"
+                    name="postsPerPage"
+                    value={this.state.postsPerPage}
+                    onChange={this.changePPP}
+                  >
+                    <option value="5">Posts Per Page</option>
+                    <option value="5">5 Posts</option>
+                    <option value="10">10 Posts</option>
+                    <option value="20">20 Posts</option>
+                    <option value="30">30 Posts</option>
+                    <option value="50">50 Posts</option>
+                  </select>
                 </div>{" "}
               </div>{" "}
             </div>{" "}
