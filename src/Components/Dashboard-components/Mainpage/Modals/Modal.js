@@ -1,6 +1,8 @@
 import React from "react";
 import "./Modal.scss";
 import "./Modal.css";
+import Apollo from "../../../../apolloHelper";
+const apollo = new Apollo();
 const state = {
   titles: [
     { id: 1, title: "Edit Your Title", modalType: "title" },
@@ -11,18 +13,46 @@ const state = {
   ],
   yourRate: 0,
   servicefee: 0,
-  yourPay: 0,
+  userPricePerHour: 0,
+  services: [],
+  languages: [],
+  userTitle: "",
+  userInfo: "",
+  address: "",
+  logAndLat: "",
+  videoUrl: "",
+  response: {},
 };
 const inputHandler = (event) => {
   let servicefee = state.yourRate * 0.1;
-  let yourPay = state.yourRate - servicefee;
+  let userPricePerHour = state.yourRate - servicefee;
   const { name, value } = event.target;
   this.setState({
     [name]: value,
     servicefee: servicefee,
-    yourPay: yourPay,
+    userPricePerHour: userPricePerHour,
   });
 };
+
+const updateUser = async () => {
+  this.setState({
+    response: {},
+  });
+  const response = await apollo.updateUser(
+    state.address,
+    state.logAndLat,
+    state.services,
+    state.languages,
+    state.videoUrl,
+    state.userTitle,
+    state.userPricePerHour,
+    state.userInfo
+  );
+  this.setState((prevState) => {
+    prevState.response = response.data.updateUser.userDetail;
+  });
+};
+
 const ModalView = ({ body, title, modalType }) => {
   return (
     <div
@@ -57,7 +87,11 @@ const ModalView = ({ body, title, modalType }) => {
             <button type="button" class="modal-close-btn" data-dismiss="modal">
               Close
             </button>
-            <button type="button" class="modal-save-btn square-btn m-0">
+            <button
+              type="button"
+              class="modal-save-btn square-btn m-0"
+              onClick={updateUser}
+            >
               Save changes
             </button>
           </div>
@@ -81,6 +115,8 @@ const TitleModal = (
           class="form-control job-form modalshadow"
           id="title"
           placeholder="Title"
+          onChange={inputHandler}
+          value={state.services}
         />
       </div>
     </form>
@@ -120,7 +156,7 @@ const ChangeRateModal = (
     <p>
       You'll Receive{" "}
       <span>
-        <strong>{state.yourPay}</strong>
+        <strong>{state.userPricePerHour}</strong>
       </span>
       /hr
     </p>
@@ -268,10 +304,10 @@ const EducationModal = (
 
 // percentCalc = () => {
 //   let servicefee = +state.servicefee * 0.1;
-//   let yourPay = +state.yourRate - servicefee;
+//   let userPricePerHour = +state.yourRate - servicefee;
 //   this.setState({
 //     servicefee: servicefee,
-//     yourPay: yourPay,
+//     userPricePerHour: userPricePerHour,
 //   });
 // };
 

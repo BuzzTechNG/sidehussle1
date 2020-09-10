@@ -40,20 +40,22 @@ class Home extends Component {
     autoplay: true,
     path: "/loading3.json",
   });
-  componentDidMount() {
-    
-  }
+  componentDidMount() {}
   async getUser() {
     const userReponse = await apollo.getUser();
     console.log(userReponse);
-    this.setState({ data: userReponse.data.getUser, loading:false });
-    this.animation.hide()
+    this.setState({ data: userReponse.data.getUser, loading: false });
+    this.animation.hide();
   }
   render() {
     return this.state.loading ? (
-      <div className="full-width" style={{minHeight:"90vh",opacity:0.5}}>
+      <div className="full-width" style={{ minHeight: "90vh", opacity: 0.5 }}>
         <div className="container-m">
-          <div className="mx-auto mt-5" id="home-lottie" style={{width:"150px"}}></div>
+          <div
+            className="mx-auto mt-5"
+            id="home-lottie"
+            style={{ width: "150px" }}
+          ></div>
         </div>
       </div>
     ) : (
@@ -85,7 +87,11 @@ class Home extends Component {
           <div className="col row padding-m py-4 bdb align-items-center">
             {this.state.data.pictureUrl ? (
               <div className="avatar" title="Your display picture">
-                <img style={{borderRadius:"50%"}} src={this.state.data.pictureUrl} alt="profile pic" />
+                <img
+                  style={{ borderRadius: "50%" }}
+                  src={this.state.data.pictureUrl}
+                  alt="profile pic"
+                />
               </div>
             ) : (
               <div className="avatar" title="Your display picture"></div>
@@ -123,10 +129,10 @@ class Home extends Component {
               <div className="mb-3">
                 <div className="subtitle1">
                   {" "}
-                  Languages <ModalBtn title="Edit Language" icon="fa fa-plus" />
+                  Languages <ModalBtn title="editLanguage" icon="fa fa-plus" />
                   <i
                     className="round-btn fa fa-pen"
-                    title="Edit proficiency"
+                    title="editProficiency"
                   ></i>
                 </div>
                 <ul className="list subtitle3">
@@ -137,8 +143,10 @@ class Home extends Component {
               <div className="mb-3">
                 <div className="subtitle1">
                   {" "}
-                  Education{" "}
-                  <ModalBtn title="Edit Education" icon="fa fa-plus" />{" "}
+                  Education <ModalBtn
+                    title="editEducation"
+                    icon="fa fa-plus"
+                  />{" "}
                 </div>
                 <ul className="list subtitle3">
                   <li>English</li>
@@ -151,12 +159,12 @@ class Home extends Component {
               <div className="bdb pb-2">
                 <div className="title2">
                   Web and Mobile Developer{" "}
-                  <ModalBtn title="Edit Title" icon="fa fa-pen" />{" "}
+                  <ModalBtn title="editTitle" icon="fa fa-pen" />{" "}
                 </div>
                 <p className="title3">
                   {" "}
                   Costing -- N200/hr{" "}
-                  <ModalBtn title="Change rate" icon="fa fa-pen" />
+                  <ModalBtn title="changeRate" icon="fa fa-pen" />
                 </p>
                 <p className="subtitle2">Info about user</p>
               </div>
@@ -164,7 +172,7 @@ class Home extends Component {
               <div className="bdb py-3">
                 <p className="title3">
                   {" "}
-                  Services <ModalBtn title="Edit Skills" icon="fa fa-pen" />
+                  Services <ModalBtn title="mySkills" icon="fa fa-pen" />
                 </p>
                 <ul className="subtitle3 list">
                   <li> My Skills and Services </li>
