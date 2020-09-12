@@ -5,6 +5,7 @@ import {
   LanguageViewModal,
   SkillsViewModal,
   TitleViewModal,
+  DescriptionViewModal,
 } from "../Modals/Modal";
 import Apollo from "../../../../apolloHelper";
 import lottie from "lottie-web";
@@ -166,7 +167,10 @@ class Home extends Component {
                   Costing -- N200/hr{" "}
                   <ModalBtn title="changeRate" icon="fa fa-pen" />
                 </p>
-                <p className="subtitle2">Info about user</p>
+                <p className="subtitle2">
+                  Info about user
+                  <ModalBtn title="editDescription" icon="fa fa-pen" />
+                </p>
               </div>
               {/* User Skills */}
               <div className="bdb py-3">
@@ -224,6 +228,7 @@ class Home extends Component {
         <LanguageViewModal />
         <SkillsViewModal />
         <TitleViewModal />
+        <DescriptionViewModal />
       </div>
     );
   }
