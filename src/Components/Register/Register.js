@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./Register.css";
 import Apollo from "../../apolloHelper";
-const apollo =  new Apollo()
+const apollo = new Apollo();
 
 class SignUp extends Component {
   state = {
