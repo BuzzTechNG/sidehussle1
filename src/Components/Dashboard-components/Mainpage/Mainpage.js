@@ -9,6 +9,9 @@ import { Route, Switch } from "react-router-dom";
 import Availablejobs from "./Availablejobs/Availablejobs";
 import Home from "./Home/Home.jsx";
 import Thistory from "./Transactionhistory/Transactionhistory";
+import DepositFund from "./Transactionhistory/DepositFund";
+import AccountSetUp from "./Transactionhistory/AccountSetUp";
+import WithdrawFund from "./Transactionhistory/WithdrawFund";
 import jobPage from "./Jobprogress/JobPage";
 
 import Message from "./MessageModule/Message";
@@ -28,6 +31,9 @@ class Mainpage extends Component {
           <Route path="/dashboard/avaliablejobs/:id" component={jobPage} />
           <Route path="/dashboard/previousjobs" component={Previousjobs} />
           <Route path="/dashboard/message" component={Message} />
+          <Route path="/dashboard/deposit" component={DepositFund} />
+          <Route path="/dashboard/account_setup" component={AccountSetUp} />
+          <Route path="/dashboard/withdraw" component={WithdrawFund} />
 
           <Route path="/dashboard/finduser" component={Findperson} />
           <Route

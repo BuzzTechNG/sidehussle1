@@ -2,10 +2,12 @@
 
 [dark="dark"] {
     .modalbg {
-        background-color: $dark-primary
+        background-color: lighten($dark-primary,0);
+        // background-color: red
+        color: #ccc;
     }
 
     .modalframe {
-        background-color: $dark-shadow;
+        background-color:  rgba($color: $dark-secondary, $alpha: 0.8) ;
     }
 }

@@ -90,10 +90,10 @@ const NavInfo = () => {
                       Finances
                     </NavLink>
                     <div className="nav-link-container">
-                      <NavLink to="" className="item" key="1">
+                      <NavLink to="/dashboard/deposit" className="item" key="1">
                       Deposit Fund
                       </NavLink>
-                      <NavLink to="" className="item" key="1">
+                      <NavLink to="/dashboard/withdraw" className="item" key="1">
                       Withdraw Fund
                       </NavLink>
                       <NavLink to="/dashboard/transactionhistory" className="item" key="1">

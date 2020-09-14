@@ -35,11 +35,12 @@ a:hover {
 }
 
 .page-title {
-  font-size: Clamp(15px, 22px, Calc(1vw + 10px));
+  font-size: Clamp(17px, 22px, Calc(1vw + 10px));
   font-weight: 700;
   position: relative;
   width: max-content;
-  margin-left: -0px;
+  margin-left: 5px;
+  margin-top: 26px;
 }
 
 .page-title::after {

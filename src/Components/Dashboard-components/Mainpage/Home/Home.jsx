@@ -9,14 +9,14 @@ import {
 import Apollo from "../../../../apolloHelper";
 import lottie from "lottie-web";
 const apollo = new Apollo();
-const ModalBtn = ({ title, icon }) => {
+const ModalBtn = ({title, titleX, icon }) => {
   return (
     <button
       type="button"
       title={title}
       className={`round-btn ${icon}`}
       data-toggle="modal"
-      data-target={`#${title}`}
+      data-target={`#${titleX}`}
       style={{ border: 0, outline: 0, transform: "translateY(-5px)" }}
     ></button>
   );
@@ -27,37 +27,42 @@ class Home extends Component {
     super(props);
 
     this.getUser();
+    
   }
   state = {
     loading: true,
     data: "",
   };
-  animation = lottie.loadAnimation({
-    container: document.getElementById("home-lottie"),
-    // container: '#lottie-view',
-    renderer: "svg",
-    loop: true,
-    autoplay: true,
-    path: "/loading3.json",
-  });
+  
+
   componentDidMount() {
-    
+    this.animation = lottie.loadAnimation({
+      container: this.el,
+      // container: '#lottie-view',
+      renderer: "svg",
+      loop: true,
+      autoplay: true,
+      path: "/loading3.json",
+    });  
   }
   async getUser() {
     const userReponse = await apollo.getUser();
     console.log(userReponse);
     this.setState({ data: userReponse.data.getUser, loading:false });
-    this.animation.hide()
+    // this.animation.hide()
   }
   render() {
+    
     return this.state.loading ? (
-      <div className="full-width" style={{minHeight:"90vh",opacity:0.5}}>
+      <div key="loading-screen" className="full-width" style={{minHeight:"50vh",opacity:0.5}}>
         <div className="container-m">
-          <div className="mx-auto mt-5" id="home-lottie" style={{width:"150px"}}></div>
+          <div className="mx-auto mt-5" ref={(c) => {
+          this.el = c;
+        }} style={{width:"150px"}}></div>
         </div>
       </div>
     ) : (
-      <div className="full-width column mt-4">
+      <div key="home-screen" className="full-width column mt-4">
         <div className="container-v custom-shadow row">
           <div className="row bdr justify-content-center align-items-center px-4 ml-0">
             {" "}
@@ -85,7 +90,7 @@ class Home extends Component {
           <div className="col row padding-m py-4 bdb align-items-center">
             {this.state.data.pictureUrl ? (
               <div className="avatar" title="Your display picture">
-                <img style={{borderRadius:"50%"}} src={this.state.data.pictureUrl} alt="profile pic" />
+                <img style={{borderRadius:"50%",width:"100%"}} src={this.state.data.pictureUrl} alt="profile pic" />
               </div>
             ) : (
               <div className="avatar" title="Your display picture"></div>
@@ -151,7 +156,7 @@ class Home extends Component {
               <div className="bdb pb-2">
                 <div className="title2">
                   Web and Mobile Developer{" "}
-                  <ModalBtn title="Edit Title" icon="fa fa-pen" />{" "}
+                  <ModalBtn title="Edit Title" titleX="title" icon="fa fa-pen" />{" "}
                 </div>
                 <p className="title3">
                   {" "}
