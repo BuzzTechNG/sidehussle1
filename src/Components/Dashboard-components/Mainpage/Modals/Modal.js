@@ -221,9 +221,10 @@ const EducationModal = ({
   educationInfo,
   setEducationInfo,
  
-}) => (
+}) => {
+  
+  return(
   <div>
-    <form value={educationInfo} /* onSubmit={setEducationInfo}*/>
       <div>
         <h5>School</h5>
         <div>
@@ -233,7 +234,8 @@ const EducationModal = ({
               class="form-control"
               id="School"
               placeholder="Ex. Bowen University"
-              onChange={(e)=>setEducationInfo(()=>{return {...educationInfo, educationInfo.to:e.target.value}})}
+              value={educationInfo.school}
+              onChange={(e) => {e.persist(); setEducationInfo((educationInfo) =>  ({...educationInfo, school: e.target.value}))}}
             />
           </div>
         </div>
@@ -245,32 +247,32 @@ const EducationModal = ({
 
         <div className="row">
           <div className="col-sm-5">
-            <form>
+            {/* <form> */}
               <div class="form-group">
                 <input
                   type="text"
                   class="form-control"
                   id="dateFrom"
                   placeholder="From (Year)"
-                  value={from}
-                  onChange={(e) => setFrom(e.target.value)}
+                  value={educationInfo.from}
+                  onChange={(e) => {e.persist(); setEducationInfo((educationInfo) =>  ({...educationInfo, from: e.target.value}))}}
                 />
               </div>
-            </form>
+            {/* </form> */}
           </div>
           <div className="col-sm-6">
-            <form>
+            {/* <form> */}
               <div class="form-group">
                 <input
                   type="text"
                   class="form-control"
                   id="dateTo"
                   placeholder="To (or graduation year)"
-                  value={to}
-                  onChange={(e) => setTo(e.target.value)}
+                  value={educationInfo.to}
+                  onChange={(e) => {e.persist(); setEducationInfo((educationInfo) =>  ({...educationInfo, to: e.target.value}))}}
                 />
               </div>
-            </form>
+            {/* </form> */}
           </div>
         </div>
       </div>
@@ -284,8 +286,8 @@ const EducationModal = ({
           class="form-control"
           data-role="select-dropdown"
           data-profile="minimal"
-          value={desc}
-          onChange={(e) => setDesc(e.target.value)}
+          value={educationInfo.desc}
+          onChange={(e) => {e.persist(); setEducationInfo((educationInfo) =>  ({...educationInfo, desc: e.target.value}))}}
         >
           <option selected>Example Bachelor's</option>
           <option value="1">lorem</option>
@@ -306,15 +308,15 @@ const EducationModal = ({
               class="form-control"
               id="aos"
               placeholder="Ex Computer Science"
-              value={areaOfStudy}
-              onChange={(e) => setAreaOfDesc(e.target.value)}
+              value={educationInfo.areaOfStudy}
+              onChange={(e) => (e) => {e.persist(); setEducationInfo((educationInfo) =>  ({...educationInfo, areaOfStudy: e.target.value}))}}
             />
           </div>
         </div>
       </div>
-    </form>
+    
   </div>
-);
+)};
 
 const DescriptionModal = ({ description, setDescription }) => (
   <div>
@@ -357,7 +359,7 @@ const TitleViewModal = () => {
       title={state?.titles[0]?.title}
       modalType={state.titles[0].modalType}
       body={TitleModal(userTitle, setUserTitle)}
-      action={updateUser({ userTitle })}
+      action={()=>updateUser({ userTitle })}
     />
   );
 };
@@ -369,7 +371,7 @@ const ChangeRateViewModal = () => {
       title={state.titles[1].title}
       modalType={state.titles[1].modalType}
       body={ChangeRateModal(userPricePerHour, setUserPricePerHour)}
-      action={updateUser({ userPricePerHour })}
+      action={()=>updateUser({ userPricePerHour })}
     />
   );
 };
@@ -380,7 +382,7 @@ const SkillsViewModal = () => {
       title={state.titles[2].title}
       modalType={state.titles[2].modalType}
       body={SkillsModal(services, setServices)}
-      action={updateUser({ services })}
+      action={()=>updateUser({ services })}
     />
   );
 };
@@ -392,7 +394,7 @@ const LanguageViewModal = () => {
       title={state.titles[3].title}
       modalType={state.titles[3].modalType}
       body={LanguageModal(languages, setLanguages)}
-      action={updateUser({ languages })}
+      action={()=>updateUser({ languages })}
     />
   );
 };
@@ -411,20 +413,10 @@ const EducationViewModal = () => {
       title={state.titles[4].title}
       modalType={state.titles[4].modalType}
       body={EducationModal(
-        educationInfo,
-        setEducationInfo
-        // school,
-        // //setSchool,
-        // from,
-        // //setFrom,
-        // to,
-        // //setTo,
-        // desc,
-        // //setDesc,
-        // areaOfStudy
-        //setAreaOfDesc
+        {educationInfo,
+        setEducationInfo}
       )}
-      action={updateUser({ educationInfo })}
+      action={()=>updateUser({ education:educationInfo })}
     />
   );
 };
@@ -436,7 +428,7 @@ const DescriptionViewModal = () => {
       title={state.titles[5].title}
       modalType={state.titles[5].modalType}
       body={DescriptionModal(description, setDescription)}
-      action={updateUser({ description })}
+      action={()=>updateUser({ description })}
     />
   );
 };
