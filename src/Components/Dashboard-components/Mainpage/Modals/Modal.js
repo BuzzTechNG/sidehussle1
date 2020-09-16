@@ -9,7 +9,7 @@ const apollo = new Apollo();
 
 const state = {
   titles: [
-    { id: 1, title: "Edit Your Title", modalType: "title" },
+    { id: 1, title: "Edit Your Title", modalType: "editTitle" },
     { id: 2, title: "Charge Rate", modalType: "changeRate" },
     { id: 3, title: "My Skills", modalType: "mySkills" },
     { id: 4, title: "Add Language", modalType: "editLanguage" },
@@ -89,7 +89,8 @@ const ModalView = ({ body, title, modalType, action }) => {
             <button
               type="button"
               class="modal-save-btn square-btn m-0"
-              onClick={()=>action()}
+              //data-dismiss="modal"
+              onClick={() => action()}
             >
               Save changes
             </button>
@@ -114,7 +115,11 @@ const TitleModal = ({ userTitle, setUserTitle }) => (
           class="form-control job-form modalshadow"
           id="title"
           placeholder="Title"
-          onChange={(e) => setUserTitle(e.target.value)}
+          //onChange={(e) => setUserTitle(e.target.value)}
+          onChange={(e) => {
+            e.persist();
+            setUserTitle(e.target.value);
+          }}
           value={userTitle}
         />
       </div>
@@ -137,7 +142,11 @@ const ChangeRateModal = ({ userPricePerHour, setUserPricePerHour }) => (
         <input
           type="number"
           name="yourRate"
-          onChange={(e) => setUserPricePerHour(e.target.value)}
+          // onChange={(e) => setUserPricePerHour(e.target.value)}
+          onChange={(e) => {
+            e.persist();
+            setUserPricePerHour(e.target.value);
+          }}
           value={userPricePerHour}
         />
       </span>
@@ -147,7 +156,7 @@ const ChangeRateModal = ({ userPricePerHour, setUserPricePerHour }) => (
     <p>
       10% SideHussle Service fee{" "}
       <span>
-        <strong>-{state.servicefee}</strong>
+        <strong>- {state.servicefee}</strong>
       </span>
       /hr
     </p>
@@ -166,13 +175,29 @@ const SkillsModal = ({ services, setServices }) => (
     <h5>Enter skills:</h5>
     <form>
       <div class="form-group">
-        <textarea
+        <select
+          multi
           type="text"
           // onChange={(e) => setServices.concat(e.target.value)}
           value={services}
           class="form-control"
           id="skills"
-        />
+          onChange={(e) => {
+            e.persist();
+            setServices((services) => ({
+              ...services,
+              services: services.concat(e.target.value),
+            }));
+          }}
+        >
+          <option>Select Services</option>
+          <option value="lorem">lorem</option>
+          <option value="lorem">lorem</option>
+          <option value="lorem">lorem</option>
+          <option value="lorem">lorem</option>
+          <option value="lorem">lorem</option>
+          <option value="lorem">lorem</option>
+        </select>
       </div>
     </form>
   </div>
@@ -186,8 +211,16 @@ const LanguageModal = ({ languages, setLanguages }) => (
         class="form-control"
         data-role="select-dropdown"
         data-profile="minimal"
-        onChange={(e) => languages.concat(setLanguages)}
-        value={languages}
+        //onChange={(e) => languages.concat(setLanguages)}
+        onChange={(e) => {
+          e.persist();
+          setLanguages((languages) => ({
+            ...languages,
+            //language: languages.concat(e.target.value),
+            language: e.target.value,
+          }));
+        }}
+        value={languages.language}
       >
         <option selected>Search for Language</option>
         <option value="English">English</option>
@@ -205,6 +238,15 @@ const LanguageModal = ({ languages, setLanguages }) => (
         class="form-control"
         data-role="select-dropdown"
         data-profile="minimal"
+        value={languages.proficiency}
+        onChange={(e) => {
+          e.persist();
+          setLanguages((languages) => ({
+            ...languages,
+            // proficiency: languages.concat(e.target.value),
+            proficiency: e.target.value,
+          }));
+        }}
       >
         <option selected>Select Proficiency</option>
         <option value="1">1</option>
@@ -217,14 +259,9 @@ const LanguageModal = ({ languages, setLanguages }) => (
   </div>
 );
 
-const EducationModal = ({
-  educationInfo,
-  setEducationInfo,
- 
-}) => {
-  
-  return(
-  <div>
+const EducationModal = ({ educationInfo, setEducationInfo }) => {
+  return (
+    <div>
       <div>
         <h5>School</h5>
         <div>
@@ -235,7 +272,13 @@ const EducationModal = ({
               id="School"
               placeholder="Ex. Bowen University"
               value={educationInfo.school}
-              onChange={(e) => {e.persist(); setEducationInfo((educationInfo) =>  ({...educationInfo, school: e.target.value}))}}
+              onChange={(e) => {
+                e.persist();
+                setEducationInfo((educationInfo) => ({
+                  ...educationInfo,
+                  school: e.target.value,
+                }));
+              }}
             />
           </div>
         </div>
@@ -248,30 +291,42 @@ const EducationModal = ({
         <div className="row">
           <div className="col-sm-5">
             {/* <form> */}
-              <div class="form-group">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="dateFrom"
-                  placeholder="From (Year)"
-                  value={educationInfo.from}
-                  onChange={(e) => {e.persist(); setEducationInfo((educationInfo) =>  ({...educationInfo, from: e.target.value}))}}
-                />
-              </div>
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                id="dateFrom"
+                placeholder="From (Year)"
+                value={educationInfo.from}
+                onChange={(e) => {
+                  e.persist();
+                  setEducationInfo((educationInfo) => ({
+                    ...educationInfo,
+                    from: e.target.value,
+                  }));
+                }}
+              />
+            </div>
             {/* </form> */}
           </div>
           <div className="col-sm-6">
             {/* <form> */}
-              <div class="form-group">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="dateTo"
-                  placeholder="To (or graduation year)"
-                  value={educationInfo.to}
-                  onChange={(e) => {e.persist(); setEducationInfo((educationInfo) =>  ({...educationInfo, to: e.target.value}))}}
-                />
-              </div>
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                id="dateTo"
+                placeholder="To (or graduation year)"
+                value={educationInfo.to}
+                onChange={(e) => {
+                  e.persist();
+                  setEducationInfo((educationInfo) => ({
+                    ...educationInfo,
+                    to: e.target.value,
+                  }));
+                }}
+              />
+            </div>
             {/* </form> */}
           </div>
         </div>
@@ -287,7 +342,13 @@ const EducationModal = ({
           data-role="select-dropdown"
           data-profile="minimal"
           value={educationInfo.desc}
-          onChange={(e) => {e.persist(); setEducationInfo((educationInfo) =>  ({...educationInfo, desc: e.target.value}))}}
+          onChange={(e) => {
+            e.persist();
+            setEducationInfo((educationInfo) => ({
+              ...educationInfo,
+              desc: e.target.value,
+            }));
+          }}
         >
           <option selected>Example Bachelor's</option>
           <option value="1">lorem</option>
@@ -309,14 +370,20 @@ const EducationModal = ({
               id="aos"
               placeholder="Ex Computer Science"
               value={educationInfo.areaOfStudy}
-              onChange={(e) => (e) => {e.persist(); setEducationInfo((educationInfo) =>  ({...educationInfo, areaOfStudy: e.target.value}))}}
+              onChange={(e) => (e) => {
+                e.persist();
+                setEducationInfo((educationInfo) => ({
+                  ...educationInfo,
+                  areaOfStudy: e.target.value,
+                }));
+              }}
             />
           </div>
         </div>
       </div>
-    
-  </div>
-)};
+    </div>
+  );
+};
 
 const DescriptionModal = ({ description, setDescription }) => (
   <div>
@@ -353,13 +420,12 @@ const DescriptionModal = ({ description, setDescription }) => (
 
 const TitleViewModal = () => {
   const [userTitle, setUserTitle] = useState("");
-  //setUserTitle()
   return (
     <ModalView
-      title={state?.titles[0]?.title}
+      title={state?.titles[0].title}
       modalType={state.titles[0].modalType}
-      body={TitleModal(userTitle, setUserTitle)}
-      action={()=>updateUser({ userTitle })}
+      body={TitleModal({ userTitle, setUserTitle })}
+      action={() => updateUser({ userTitle })}
     />
   );
 };
@@ -370,8 +436,8 @@ const ChangeRateViewModal = () => {
     <ModalView
       title={state.titles[1].title}
       modalType={state.titles[1].modalType}
-      body={ChangeRateModal(userPricePerHour, setUserPricePerHour)}
-      action={()=>updateUser({ userPricePerHour })}
+      body={ChangeRateModal({ userPricePerHour, setUserPricePerHour })}
+      action={() => updateUser({ userPricePerHour })}
     />
   );
 };
@@ -381,42 +447,32 @@ const SkillsViewModal = () => {
     <ModalView
       title={state.titles[2].title}
       modalType={state.titles[2].modalType}
-      body={SkillsModal(services, setServices)}
-      action={()=>updateUser({ services })}
+      body={SkillsModal({ services, setServices })}
+      action={() => updateUser({ services })}
     />
   );
 };
 
 const LanguageViewModal = () => {
-  const [languages, setLanguages] = useState([]);
+  const [languages, setLanguages] = useState({});
   return (
     <ModalView
       title={state.titles[3].title}
       modalType={state.titles[3].modalType}
-      body={LanguageModal(languages, setLanguages)}
-      action={()=>updateUser({ languages })}
+      body={LanguageModal({ languages, setLanguages })}
+      action={() => updateUser({ languages })}
     />
   );
 };
 
 const EducationViewModal = () => {
   const [educationInfo, setEducationInfo] = useState({});
-
-  /* const [school, setSchool] = useState("");
-  const [from, setFrom] = useState("");
-  const [to, setTo] = useState("");
-  const [desc, setDesc] = useState("");
-  const [areaOfStudy, setAreaOfDesc] = useState(""); */
-
   return (
     <ModalView
       title={state.titles[4].title}
       modalType={state.titles[4].modalType}
-      body={EducationModal(
-        {educationInfo,
-        setEducationInfo}
-      )}
-      action={()=>updateUser({ education:educationInfo })}
+      body={EducationModal({ educationInfo, setEducationInfo })}
+      action={() => updateUser({ education: educationInfo })}
     />
   );
 };
@@ -427,8 +483,8 @@ const DescriptionViewModal = () => {
     <ModalView
       title={state.titles[5].title}
       modalType={state.titles[5].modalType}
-      body={DescriptionModal(description, setDescription)}
-      action={()=>updateUser({ description })}
+      body={DescriptionModal({ description, setDescription })}
+      action={() => updateUser({ description })}
     />
   );
 };

@@ -222,7 +222,7 @@ class apollaHelperClass {
       $address: String
       $logAndLat: String
       $services: [String]
-      $languages: [String]
+      $languages: [LanguageInput]
       $videoUrl: String
       $education:[EducationInput]
       $userTitle: String
@@ -245,6 +245,7 @@ class apollaHelperClass {
         middleName
         lastName
         pictureUrl
+       
       }
     }
   `;
