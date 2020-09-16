@@ -131,21 +131,21 @@ function ProfileDetails() {
       <div className="title3">Account Information </div>
       <div className="row job-form">
         <div className="col-12 col-md-6">
-          <label className="subtitle2">First Name</label>
-          <input type="text" />
+          <label className="subtitle2 ">First Name</label>
+          <input  type="text" />
         </div>
         <div className="col-12 col-md-6">
-          <label className="subtitle2">Last Name</label>
-          <input type="text" />
+          <label className="subtitle2 ">Last Name</label>
+          <input  type="text" />
         </div>
         <div className="line mt-4 mb-2" style={{ width: "100%" }}></div>
         <div className="col-12 col-md-6">
-          <label className="subtitle2">Email</label>
-          <input type="text" />
+          <label className="subtitle2 ">Email</label>
+          <input  type="text" />
         </div>
         <div className="col-12 col-md-6">
-          <label className="subtitle2">Mobile Number</label>
-          <input type="text" />
+          <label className="subtitle2 ">Mobile Number</label>
+          <input  type="text" />
         </div>
       </div>
 
@@ -175,9 +175,83 @@ function ProfileDetails() {
     </div>
   );
 }
+function Password(){
+    return (
+        <div className="col custom-shadow py-3 px-3 ">
+          <div className="title3">Password</div>
+          <div className="column job-form">
+            
+            <div className="subtitle"><label > Current Password
+            <input className="hint" type="password"/>
+            </label></div>    
+            <div className="line mt-2" style={{width:"100%"}}></div>
+                
+                
+            <div className="subtitle mt-4"><label > New Password      
+            <input className="pr-5 hint" type="password"/>
+            </label></div>    
+            <div className="subtitle"><label > Comfirm Password
+            <input className="hint" type="password"/>
+            </label></div>    
+                <div className="action-btn">
+                    Save Password
+                </div>
+          </div>
+          
+          </div>
+              )
+}
+function NotificationSettings(){
+    return (
+        <div className="col custom-shadow p-3 pb-4 ">
+          <div className="title3">Notification Settings</div>
+          <div className="line mt-2" style={{width:"100%"}}></div>
+          <div className="column">
+              <div className="d-flex mt-4">
+                  <div className="col">
+                    <div className="subtitle2">Push Notification</div>
+                    <div className="hint">Receive instant jobs push notifications</div>
+                  </div>
+                  <div>
+                  <label class="switch">
+                <input type="checkbox"/>
+                <span class="slider round"></span>
+                </label>
 
+                  </div>
+              </div>
+              <div className="d-flex mt-4">
+                  <div className="col">
+                    <div className="subtitle2">Chat Notification</div>
+                    <div className="hint">Receive chat notifications</div>
+                  </div>
+                  <div>
+                  <label class="switch">
+                <input type="checkbox"/>
+                <span class="slider round"></span>
+                </label>
+
+                  </div>
+              </div>
+              <div className="d-flex mt-4">
+                  <div className="col">
+                    <div className="subtitle2">Payment Notification</div>
+                    <div className="hint">Receive payment push notifications</div>
+                  </div>
+                  <div>
+                  <label class="switch">
+                <input type="checkbox"/>
+                <span class="slider round"></span>
+                </label>
+
+                  </div>
+              </div>
+           </div>
+           </div>)
+
+}
 function AccountSetUp() {
-  const [navigation, setNavigation] = React.useState(0);
+  const [navigation, setNavigation] = React.useState(1);
   return (
     <div className="full-width" style={{ minHeight: "70vh" }}>
       <div className="container-m settings-page">
@@ -186,7 +260,7 @@ function AccountSetUp() {
           <div className="col-12 col-lg-3 settings-navigation">
             <ul className="mt-3">
                 <li className="p-0 m-0"></li>
-              <li key="Profile" className={navigation === 0 ? 'active' : ''} onClick={()=>setNavigation(0)}>Profile</li>
+              <li key="Profile" className={navigation === 0 ? 'active' : ''} onClick={()=>setNavigation(0)}>Account</li>
               <li className={navigation === 1 ? 'active' : ''} onClick={()=>setNavigation(1)}>Notification</li>
               <li key="bank" className={navigation === 2 ? 'active' : ''} onClick={()=>setNavigation(2)}>Bank Details</li>
               <li className={navigation === 3 ? 'active' : ''} onClick={()=>setNavigation(3)}>Password</li>
@@ -199,10 +273,22 @@ function AccountSetUp() {
               <ProfileDetails />
             </div>
           )}
+          {navigation === 1 && (
+            <div className="col">
+              {" "}
+              <NotificationSettings />
+            </div>
+          )}
           {navigation === 2 && (
             <div className="col">
               {" "}
               <BankAccount />
+            </div>
+          )}
+          {navigation === 3 && (
+            <div className="col">
+              {" "}
+              <Password />
             </div>
           )}
         </div>

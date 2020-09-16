@@ -137,7 +137,7 @@ const NavInfo = () => {
                       <NavLink to="" className="item" key="1">
                       View Profile
                       </NavLink>
-                      <NavLink to="" className="item" key="1">
+                      <NavLink to="/dashboard/account_setup" className="item" key="1">
                       User Settings
                       </NavLink>
                      
