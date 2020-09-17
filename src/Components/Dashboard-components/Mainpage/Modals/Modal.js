@@ -1,12 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Modal.scss";
 import "./Modal.css";
-
+import lottie from "lottie-web";
 import Apollo from "../../../../apolloHelper";
 const apollo = new Apollo();
 
 //const [response, updateUserResponse] = useState({});
-
+function LottieView(){
+  const lottieRef = useRef(null)
+  // useEffect(() => {
+  //   let animation = lottie.loadAnimation({
+  //     container: lottieRef,
+  //     // container: '#lottie-view',
+  //     renderer: "svg",
+  //     loop: true,
+  //     autoplay: true,
+  //     path: "/loading3.json",
+  //   });
+  //   return () => {
+  //     animation.destroy()
+  //      animation = ""
+  //   }
+  // }, [])
+  return (<div ref={lottieRef} id="lottiemodalview">
+    
+    </div>)
+} 
 const state = {
   titles: [
     { id: 1, title: "Edit Your Title", modalType: "editTitle" },
@@ -49,10 +68,19 @@ const updateUser = async ({
     userPricePerHour,
     userDesc,
   });
-  console.log({ response });
+  return response;
 };
 
-const ModalView = ({ body, title, modalType, action }) => {
+const ModalView = ({ body, title, modalType, action, reload }) => {
+  const [modalLoading, setModalLoading] = useState(false)
+  const updateModalLogic = async() => {
+    setModalLoading(true)
+    const result = await action()
+    console.log(result)
+    reload(result.data.updateUser)
+    console.log("done")
+    // setModalLoading(false)
+  }
   return (
     <div
       class="modal fade modalframe"
@@ -89,10 +117,10 @@ const ModalView = ({ body, title, modalType, action }) => {
             <button
               type="button"
               class="modal-save-btn square-btn m-0"
-              //data-dismiss="modal"
-              onClick={() => action()}
+              disabled={modalLoading}
+              onClick={() => updateModalLogic()}
             >
-              Save changes
+            { modalLoading ? LottieView() : 'Save changes'}
             </button>
           </div>
         </div>
@@ -418,7 +446,7 @@ const DescriptionModal = ({ description, setDescription }) => (
 
 //   />
 
-const TitleViewModal = ({data}) => {
+const TitleViewModal = ({data, reload}) => {
   const [userTitle, setUserTitle] = useState(data);
   return (
     <ModalView
@@ -426,6 +454,7 @@ const TitleViewModal = ({data}) => {
       modalType={state.titles[0].modalType}
       body={TitleModal({ userTitle, setUserTitle })}
       action={() => updateUser({ userTitle })}
+      reload={reload}
     />
   );
 };

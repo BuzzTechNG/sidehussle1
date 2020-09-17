@@ -26,8 +26,9 @@ const ModalBtn = ({ title, icon }) => {
 class Home extends Component {
   constructor(props) {
     super(props);
-
+    console.log("object work")
     this.getUser();
+    // this.getUserAfterModalSuccess = this.getUserAfterModalSuccess.bind(this)
   }
   state = {
     loading: true,
@@ -44,9 +45,16 @@ class Home extends Component {
   componentDidMount() {}
   async getUser() {
     const userReponse = await apollo.getUser();
-    console.log(userReponse);
+    console.log(this);
     this.setState({ data: userReponse.data.getUser, loading: false });
     this.animation.hide();
+  }
+  getUserAfterModalSuccess = async (userReponse) => {
+    //  this.state.data = userReponse;
+     console.log(userReponse)
+     await this.setState({ data: userReponse});
+    //  console.log(this)
+    
   }
   render() {
     return this.state.loading ? (
@@ -223,11 +231,11 @@ class Home extends Component {
             </div>
           </div>
         </div>
-        <ChangeRateViewModal />
-        <EducationViewModal />
+        <ChangeRateViewModal reload={this.getUserAfterModalSuccess} />
+        <EducationViewModal  />
         <LanguageViewModal />
         <SkillsViewModal />
-        <TitleViewModal data={this.state.data.userDetails?.userTitle} />
+        <TitleViewModal data={this.state.data.userDetails?.userTitle} reload={this.getUserAfterModalSuccess}/>
         <DescriptionViewModal />
       </div>
     );
