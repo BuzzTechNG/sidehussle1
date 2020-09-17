@@ -15,6 +15,33 @@ class apollaHelperClass {
         pictureUrl
         firstName
         lastName
+        userDetails{
+          logAndLat
+          address
+          userPricePerHour
+          userDesc
+          languages{
+            language
+            proficiency
+          }
+          userTitle
+          videoUrl
+          avaliability
+          education{
+            school
+            from
+            to
+            desc
+            areaOfStudy
+          }
+          services
+          accountDetails{
+            accountNumber
+            accountName
+            paystackRSP
+          }
+          
+        }
       }
     }
   `;
@@ -245,6 +272,32 @@ class apollaHelperClass {
         middleName
         lastName
         pictureUrl
+        userDetails{
+          logAndLat
+          address
+          userPricePerHour
+          userDesc
+          languages{
+            language
+            proficiency
+          }
+          userTitle
+          videoUrl
+          avaliability
+          education{
+            school
+            from
+            to
+            desc
+            areaOfStudy
+          }
+          services
+          accountDetails{
+            accountNumber
+            accountName
+            paystackRSP
+          } 
+        }
        
       }
     }

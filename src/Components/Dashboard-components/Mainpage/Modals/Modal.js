@@ -184,10 +184,10 @@ const SkillsModal = ({ services, setServices }) => (
           id="skills"
           onChange={(e) => {
             e.persist();
-            setServices((services) => ({
+            setServices((services) => ([
               ...services,
-              services: services.concat(e.target.value),
-            }));
+              e.target.value,
+            ]));
           }}
         >
           <option>Select Services</option>
@@ -418,8 +418,8 @@ const DescriptionModal = ({ description, setDescription }) => (
 
 //   />
 
-const TitleViewModal = () => {
-  const [userTitle, setUserTitle] = useState("");
+const TitleViewModal = ({data}) => {
+  const [userTitle, setUserTitle] = useState(data);
   return (
     <ModalView
       title={state?.titles[0].title}

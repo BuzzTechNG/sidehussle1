@@ -159,7 +159,7 @@ class Home extends Component {
               {/* Title and user info */}
               <div className="bdb pb-2">
                 <div className="title2">
-                  Web and Mobile Developer{" "}
+                  {this.state.data.userDetails?.userTitle }
                   <ModalBtn title="editTitle" icon="fa fa-pen" />{" "}
                 </div>
                 <p className="title3">
@@ -227,7 +227,7 @@ class Home extends Component {
         <EducationViewModal />
         <LanguageViewModal />
         <SkillsViewModal />
-        <TitleViewModal />
+        <TitleViewModal data={this.state.data.userDetails?.userTitle} />
         <DescriptionViewModal />
       </div>
     );
