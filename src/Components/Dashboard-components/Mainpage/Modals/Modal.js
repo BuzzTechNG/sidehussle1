@@ -7,22 +7,25 @@ const apollo = new Apollo();
 
 //const [response, updateUserResponse] = useState({});
 function LottieView(){
-  const lottieRef = useRef(null)
-  // useEffect(() => {
-  //   let animation = lottie.loadAnimation({
-  //     container: lottieRef,
-  //     // container: '#lottie-view',
-  //     renderer: "svg",
-  //     loop: true,
-  //     autoplay: true,
-  //     path: "/loading3.json",
-  //   });
-  //   return () => {
-  //     animation.destroy()
-  //      animation = ""
-  //   }
-  // }, [])
-  return (<div ref={lottieRef} id="lottiemodalview">
+  // const lottieRef = useRef(null)
+  let el = ""
+  useEffect(() => {
+    let animation = lottie.loadAnimation({
+      container: el,
+      // container: '#lottie-view',
+      renderer: "svg",
+      loop: true,
+      autoplay: true,
+      path: "/loading3.json",
+    });
+    return () => {
+      animation.destroy()
+       animation = ""
+    }
+  },[])
+  return (<div style={{width:"90px",height:"30px"}} ref={(c) => {
+    el = c;
+  }} >
     
     </div>)
 } 
@@ -76,10 +79,10 @@ const ModalView = ({ body, title, modalType, action, reload }) => {
   const updateModalLogic = async() => {
     setModalLoading(true)
     const result = await action()
-    console.log(result)
+    
     reload(result.data.updateUser)
-    console.log("done")
-    // setModalLoading(false)
+    
+    setModalLoading(false)
   }
   return (
     <div
@@ -120,8 +123,9 @@ const ModalView = ({ body, title, modalType, action, reload }) => {
               disabled={modalLoading}
               onClick={() => updateModalLogic()}
             >
-            { modalLoading ? LottieView() : 'Save changes'}
+            { modalLoading ? <LottieView/> : 'Save changes'}
             </button>
+            
           </div>
         </div>
       </div>
