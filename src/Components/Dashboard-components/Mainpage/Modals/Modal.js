@@ -6,9 +6,9 @@ import Apollo from "../../../../apolloHelper";
 const apollo = new Apollo();
 
 //const [response, updateUserResponse] = useState({});
-function LottieView(){
+function LottieView() {
   // const lottieRef = useRef(null)
-  let el = ""
+  let el = "";
   useEffect(() => {
     let animation = lottie.loadAnimation({
       container: el,
@@ -19,16 +19,19 @@ function LottieView(){
       path: "/loading3.json",
     });
     return () => {
-      animation.destroy()
-       animation = ""
-    }
-  },[])
-  return (<div style={{width:"90px",height:"30px"}} ref={(c) => {
-    el = c;
-  }} >
-    
-    </div>)
-} 
+      animation.destroy();
+      animation = "";
+    };
+  }, []);
+  return (
+    <div
+      style={{ width: "90px", height: "30px" }}
+      ref={(c) => {
+        el = c;
+      }}
+    ></div>
+  );
+}
 const state = {
   titles: [
     { id: 1, title: "Edit Your Title", modalType: "editTitle" },
@@ -75,15 +78,15 @@ const updateUser = async ({
 };
 
 const ModalView = ({ body, title, modalType, action, reload }) => {
-  const [modalLoading, setModalLoading] = useState(false)
-  const updateModalLogic = async() => {
-    setModalLoading(true)
-    const result = await action()
-    
-    reload(result.data.updateUser)
-    
-    setModalLoading(false)
-  }
+  const [modalLoading, setModalLoading] = useState(false);
+  const updateModalLogic = async () => {
+    setModalLoading(true);
+    const result = await action();
+
+    reload(result.data.updateUser);
+
+    setModalLoading(false);
+  };
   return (
     <div
       class="modal fade modalframe"
@@ -123,9 +126,8 @@ const ModalView = ({ body, title, modalType, action, reload }) => {
               disabled={modalLoading}
               onClick={() => updateModalLogic()}
             >
-            { modalLoading ? <LottieView/> : 'Save changes'}
+              {modalLoading ? <LottieView /> : "Save changes"}
             </button>
-            
           </div>
         </div>
       </div>
@@ -174,6 +176,7 @@ const ChangeRateModal = ({ userPricePerHour, setUserPricePerHour }) => (
         <input
           type="number"
           name="yourRate"
+          id="rate"
           // onChange={(e) => setUserPricePerHour(e.target.value)}
           onChange={(e) => {
             e.persist();
@@ -208,7 +211,7 @@ const SkillsModal = ({ services, setServices }) => (
     <form>
       <div class="form-group">
         <select
-          multi
+          multiple
           type="text"
           // onChange={(e) => setServices.concat(e.target.value)}
           value={services}
@@ -216,10 +219,7 @@ const SkillsModal = ({ services, setServices }) => (
           id="skills"
           onChange={(e) => {
             e.persist();
-            setServices((services) => ([
-              ...services,
-              e.target.value,
-            ]));
+            setServices((services) => [...services, e.target.value]);
           }}
         >
           <option>Select Services</option>
@@ -417,17 +417,19 @@ const EducationModal = ({ educationInfo, setEducationInfo }) => {
   );
 };
 
-const DescriptionModal = ({ description, setDescription }) => (
+const DescriptionModal = ({ userDesc, setDescription }) => (
   <div>
     <h5>Description (Optional)</h5>
     <form>
       <div class="form-group">
         <textarea
           rows="4"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          class="form-control"
-          id="description"
+          value={userDesc}
+          onChange={(e) => {
+            e.persist();
+            setDescription(e.target.value);
+          }}
+          id="userDesc"
         />
       </div>
     </form>
@@ -450,7 +452,7 @@ const DescriptionModal = ({ description, setDescription }) => (
 
 //   />
 
-const TitleViewModal = ({data, reload}) => {
+const TitleViewModal = ({ data, reload }) => {
   const [userTitle, setUserTitle] = useState(data);
   return (
     <ModalView
@@ -463,61 +465,66 @@ const TitleViewModal = ({data, reload}) => {
   );
 };
 
-const ChangeRateViewModal = () => {
-  const [userPricePerHour, setUserPricePerHour] = useState("");
+const ChangeRateViewModal = ({ data, reload }) => {
+  const [userPricePerHour, setUserPricePerHour] = useState(data);
   return (
     <ModalView
-      title={state.titles[1].title}
+      title={state?.titles[1].title}
       modalType={state.titles[1].modalType}
       body={ChangeRateModal({ userPricePerHour, setUserPricePerHour })}
       action={() => updateUser({ userPricePerHour })}
+      reload={reload}
     />
   );
 };
-const SkillsViewModal = () => {
-  const [services, setServices] = useState([]);
+const SkillsViewModal = ({ data, reload }) => {
+  const [services, setServices] = useState(data);
   return (
     <ModalView
       title={state.titles[2].title}
       modalType={state.titles[2].modalType}
       body={SkillsModal({ services, setServices })}
       action={() => updateUser({ services })}
+      reload={reload}
     />
   );
 };
 
-const LanguageViewModal = () => {
-  const [languages, setLanguages] = useState({});
+const LanguageViewModal = ({ data, reload }) => {
+  const [languages, setLanguages] = useState(data);
   return (
     <ModalView
       title={state.titles[3].title}
       modalType={state.titles[3].modalType}
       body={LanguageModal({ languages, setLanguages })}
       action={() => updateUser({ languages })}
+      reload={reload}
     />
   );
 };
 
-const EducationViewModal = () => {
-  const [educationInfo, setEducationInfo] = useState({});
+const EducationViewModal = ({ data, reload }) => {
+  const [educationInfo, setEducationInfo] = useState(data);
   return (
     <ModalView
       title={state.titles[4].title}
       modalType={state.titles[4].modalType}
       body={EducationModal({ educationInfo, setEducationInfo })}
       action={() => updateUser({ education: educationInfo })}
+      reload={reload}
     />
   );
 };
 
-const DescriptionViewModal = () => {
-  const [description, setDescription] = useState("");
+const DescriptionViewModal = ({ data, reload }) => {
+  const [userDesc, setDescription] = useState(data);
   return (
     <ModalView
       title={state.titles[5].title}
       modalType={state.titles[5].modalType}
-      body={DescriptionModal({ description, setDescription })}
-      action={() => updateUser({ description })}
+      body={DescriptionModal({ userDesc, setDescription })}
+      action={() => updateUser({ userDesc })}
+      reload={reload}
     />
   );
 };

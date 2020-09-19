@@ -26,7 +26,7 @@ const ModalBtn = ({ title, icon }) => {
 class Home extends Component {
   constructor(props) {
     super(props);
-    console.log("object work")
+    console.log("object work");
     this.getUser();
     // this.getUserAfterModalSuccess = this.getUserAfterModalSuccess.bind(this)
   }
@@ -51,11 +51,10 @@ class Home extends Component {
   }
   getUserAfterModalSuccess = async (userReponse) => {
     //  this.state.data = userReponse;
-     console.log(userReponse)
-     await this.setState({ data: userReponse});
+    console.log(userReponse);
+    await this.setState({ data: userReponse });
     //  console.log(this)
-    
-  }
+  };
   render() {
     return this.state.loading ? (
       <div className="full-width" style={{ minHeight: "90vh", opacity: 0.5 }}>
@@ -145,7 +144,13 @@ class Home extends Component {
                   ></i>
                 </div>
                 <ul className="list subtitle3">
-                  <li>English</li>
+                  <li>
+                    language:{this.state.data.userDetails?.languages.language}
+                  </li>
+                  <li>
+                    proficiency:
+                    {this.state.data.userDetails?.languages.proficiency}
+                  </li>
                 </ul>
               </div>
               {/* Education */}
@@ -158,7 +163,14 @@ class Home extends Component {
                   />{" "}
                 </div>
                 <ul className="list subtitle3">
-                  <li>English</li>
+                  <li>
+                    School:{this.state.data.userDetails?.education.school}
+                  </li>
+                  <li>Degree:{this.state.data.userDetails?.education.desc}</li>
+                  <li>
+                    Area of Study:
+                    {this.state.data.userDetails?.education.areaOfStudy}
+                  </li>
                 </ul>
               </div>
             </div>
@@ -167,13 +179,16 @@ class Home extends Component {
               {/* Title and user info */}
               <div className="bdb pb-2">
                 <div className="title2">
-                  {this.state.data.userDetails?.userTitle }
+                  {this.state.data.userDetails?.userTitle}
                   <ModalBtn title="editTitle" icon="fa fa-pen" />{" "}
                 </div>
                 <p className="title3">
                   {" "}
-                  Costing -- N200/hr{" "}
-                  <ModalBtn title="changeRate" icon="fa fa-pen" />
+                  Costing --{" "}
+                  {this.state.data.userDetails?.userPricePerHour
+                    ? this.state.data.userDetails?.userPricePerHour
+                    : "0"}
+                  /hr <ModalBtn title="changeRate" icon="fa fa-pen" />
                 </p>
                 <p className="subtitle2">
                   Info about user
@@ -228,15 +243,34 @@ class Home extends Component {
                   </div>
                 </div>
               </div>
+              /
             </div>
           </div>
         </div>
-        <ChangeRateViewModal reload={this.getUserAfterModalSuccess} />
-        <EducationViewModal  />
-        <LanguageViewModal />
-        <SkillsViewModal />
-        <TitleViewModal data={this.state.data.userDetails?.userTitle} reload={this.getUserAfterModalSuccess}/>
-        <DescriptionViewModal />
+        <ChangeRateViewModal
+          reload={this.getUserAfterModalSuccess}
+          data={this.state.data.userDetails?.userPricePerHour}
+        />
+        <EducationViewModal
+          reload={this.getUserAfterModalSuccess}
+          data={this.state.data.userDetails?.education}
+        />
+        <LanguageViewModal
+          reload={this.getUserAfterModalSuccess}
+          data={this.state.data.userDetails?.languages}
+        />
+        <SkillsViewModal
+          reload={this.getUserAfterModalSuccess}
+          data={this.state.data.userDetails?.services}
+        />
+        <TitleViewModal
+          data={this.state.data.userDetails?.userTitle}
+          reload={this.getUserAfterModalSuccess}
+        />
+        <DescriptionViewModal
+          reload={this.getUserAfterModalSuccess}
+          data={this.state.data.userDetails?.userDesc}
+        />
       </div>
     );
   }
