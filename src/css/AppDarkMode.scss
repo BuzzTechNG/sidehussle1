@@ -40,15 +40,25 @@
   align-items: center;
   background-color: #ffffffcc !important;
   box-shadow: 1px 1px 7px 1px #eee, -1px -1px 15px 0 #eee;
+  width: 100%;
   max-width: 480px;
 
-  .job-form {
-    input {
-      // width: 40px;
-      font-size: 25px;
-      padding: 5px 13px;
-    }
+  .sidehussle-select{
+
+    font-size: Clamp(16px, 2vw , 24px);
+    min-width: max-content;
+    padding-top: 10px;
+    padding-bottom: 9px;
+
   }
+  // .job-form {
+  //   input {
+  //     // width: 40px;
+  //     // font-size: Clamp(16px, 2vw , 23px);
+  //     font-size: 10px;
+  //     padding: 5px 13px;
+  //   // }
+  // }
 
 
   select,
@@ -58,7 +68,7 @@
     padding: 10px;
     border: 0;
     border-bottom: 1px red solid;
-    font-size: 25px;
+    font-size: Clamp(16px, 2vw , 22px);
 
   }
 

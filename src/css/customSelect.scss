@@ -1,4 +1,9 @@
 $fontSize: 25px;
+#customSelect{
+    .modal-backdrop{
+        position: relative !important;
+    }
+}
 .sidehussle-select{
     cursor: pointer;
     border-bottom: 1px solid red;
@@ -9,6 +14,7 @@ $fontSize: 25px;
     font-weight: 500;
     // position: relative;
     padding: 5px 10px 10px 1px;
+    
     i{
         
         font-size: medium;
@@ -20,6 +26,26 @@ $fontSize: 25px;
         height: 95vh;
         background-color: #00000000;
         cursor: default;
+    }
+    &-modal{
+        height: 70vh;
+        width: 60vh;
+        overflow-y: scroll;
+
+        &::-webkit-scrollbar {
+            width: 10px;
+          }
+        
+        &::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px rgb(243, 203, 203);
+            border-radius: 10px;
+          }
+          
+          /* Handle */
+          &::-webkit-scrollbar-thumb {
+            background: red;
+            border-radius: 10px;
+          }
     }
     &-option{
         position: absolute;

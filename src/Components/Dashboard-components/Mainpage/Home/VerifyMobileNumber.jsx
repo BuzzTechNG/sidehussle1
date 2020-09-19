@@ -78,7 +78,7 @@ const MobileNumber = (props) => {
       <div className="title1 my-2">Kindly Verify Your Mobile Number</div>
 
       <div className="row px-2 my-3">
-        <div>
+        <div style={{zIndex:"5"}}>
           <CustomSelect selected={selectLocation}>
             {Object.keys(countryCode).map((Itemoption, index) => (
               <option
@@ -93,11 +93,12 @@ const MobileNumber = (props) => {
             ))}
           </CustomSelect>
         </div>
-        <div className="col">
+        <div className="col" style={{zIndex:"4"}}>
           <input
             type="number"
             maxLength="10"
             value={mobileNumber}
+            placeholder="Mobile Number"
             onChange={(e) => setmobileNumber(e.target.value)}
           />
         </div>
@@ -181,8 +182,8 @@ function Token(props) {
     <>
       {/* <div className="avatar"></div>
         <div className="subtitle1 mt-4">Welcome User</div> */}
-      <div className="title1 mt-2">Kindly Enter The Token Sent</div>
-      <div className="mb-2">
+      {/* <div className=" mt-2">Kindly Enter The Token Sent</div> */}
+      <div className="mb-2 title1 text-center">
         kindly enter the token sent to your mobile device
       </div>
       <div className=" job-form row px-2 my-3">
@@ -213,13 +214,15 @@ function Token(props) {
             </>
           )}
         </div>
+        </div>
+        <div className="mt-3">
         {isActive ? (
-          <h5>
-            You have to wait for {counter} seconds before you can request
-            another token
-          </h5>
+          <p className="subtitle3">
+            Didn't receive a token?, resend token in {counter} 
+            
+          </p>
         ) : (
-          <div>
+          <div className="d-flex">
             {/* div to render change mobile number and resend token */}
             <div className="verifie" onClick={() => props.setMode(false)}>
               {" "}
@@ -231,7 +234,7 @@ function Token(props) {
                 verifyFunc({
                   userLocation: userLocationX,
                   mobileNumber: mobileNumberX,
-                  id: props.userID,
+                  id: props.userId,
                 })
               }
             >
@@ -240,7 +243,7 @@ function Token(props) {
             </div>
           </div>
         )}
-      </div>
+     </div>
     </>
   );
 }
@@ -269,13 +272,11 @@ function VerifyMobileNumber(props) {
               style={{ width: "250px", height: "100%" }}
             ></img>
           </div>
-          {data.getUserWithoutAuth?.pictureUrl ? (
-            <div className="avatar"></div>
-          ) : (
-            <img src={data.getUserWithoutAuth.pictureUrl} />
-            // <div></div>
-            // <></div>
-          )}
+          
+            <div className="avatar" >
+              {data.getUserWithoutAuth?.pictureUrl  &&  <img style={{width:"100%",height:"100%"}} className="avatar" src={data.getUserWithoutAuth?.pictureUrl} />}
+            </div>
+          
           <div className="subtitle1 mt-4">
             Welcome{" "}
             {`${data.getUserWithoutAuth.firstName} ${data.getUserWithoutAuth.lastName}`}

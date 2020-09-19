@@ -138,34 +138,32 @@ a:hover {
 }
 
 .title1 {
-  font-size: Clamp(20px, Calc(1vw + 10px), 23px);
-  ;
+  font-size: Clamp(18px, 1vw, 23px);
   font-weight: 500;
 }
 
 .subtitle1 {
-  font-size: 14px;
+  font-size: Clamp(12px, 1vw, 14px);
   font-weight: 700;
 }
 
 .title2 {
-  font-size: Clamp(20px, Calc(1vw + 10px), 23px);
-  ;
+  font-size: Clamp(16px, 1vw,  21px);
   font-weight: 500;
 }
 
 .subtitle2 {
-  font-size: 14px;
+  font-size: Clamp(11px, 1vw, 13px);
   font-weight: 500;
 }
 
 .title3 {
-  font-size: Clamp(15px, Calc(1vw + 7px), 20px);
+  font-size: Clamp(15px, 1vw, 20px);
   font-weight: 500;
 }
 
 .subtitle3 {
-  font-size: 12px;
+  font-size: Clamp(10px, 1vw, 12px);
   font-weight: 500;
 }
 
