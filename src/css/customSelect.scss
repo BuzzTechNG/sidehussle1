@@ -1,12 +1,22 @@
 $fontSize: 25px;
+#customSelect{
+    .modal-backdrop{
+        position: relative !important;
+    }
+}
 .sidehussle-select{
     cursor: pointer;
     border-bottom: 1px solid red;
     width: max-content;
-    font-size: $fontSize;
+    min-width: 150px;
+    
+    font-size: Clamp(15px, 1vw , 20px);
+    font-weight: 500;
     // position: relative;
-    padding: 10px 10px 10px 1px;
+    padding: 5px 10px 10px 1px;
+    
     i{
+        
         font-size: medium;
     }
     &-overlay{
@@ -17,6 +27,26 @@ $fontSize: 25px;
         background-color: #00000000;
         cursor: default;
     }
+    &-modal{
+        height: 70vh;
+        width: 60vh;
+        overflow-y: scroll;
+
+        &::-webkit-scrollbar {
+            width: 10px;
+          }
+        
+        &::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px rgb(243, 203, 203);
+            border-radius: 10px;
+          }
+          
+          /* Handle */
+          &::-webkit-scrollbar-thumb {
+            background: red;
+            border-radius: 10px;
+          }
+    }
     &-option{
         position: absolute;
         // left: 0;
@@ -26,7 +56,8 @@ $fontSize: 25px;
         // width: 10%;
         height: max-content;
         max-height: 40vh;
-        font-size: 15px;
+        font-size: Clamp(12px, 1vw , 15px);
+        // font-size: 10px;
         overflow-y: scroll;
         padding: 0 3px;
         
@@ -57,4 +88,14 @@ $fontSize: 25px;
 
     }
     
+}
+[dark="dark"]{
+    .sidehussle-select .sidehussle-select-option{
+        background-color: $dark-primary;
+        box-shadow: 1px 1px 15px 0 $dark-shadow;
+        option:hover{
+            background-color: $dark-secondary;
+            color: #ccc;
+        }
+    }
 }

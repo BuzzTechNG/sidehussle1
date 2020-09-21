@@ -1,6 +1,7 @@
-.container-fluid{
- background-color: #fff9fa;
+.container-fluid {
+  background-color: #fff9fa;
 }
+
 a {
   text-decoration: none;
   color: black;
@@ -34,11 +35,12 @@ a:hover {
 }
 
 .page-title {
-  font-size: Clamp(15px, 22px, Calc(1vw + 10px));
+  font-size: Clamp(17px, 22px, Calc(1vw + 10px));
   font-weight: 700;
   position: relative;
   width: max-content;
-  margin-left: -0px;
+  margin-left: 5px;
+  margin-top: 26px;
 }
 
 .page-title::after {
@@ -136,34 +138,32 @@ a:hover {
 }
 
 .title1 {
-  font-size: Clamp(20px, Calc(1vw + 10px), 23px);
-  ;
+  font-size: Clamp(18px, 1vw, 23px);
   font-weight: 500;
 }
 
 .subtitle1 {
-  font-size: 14px;
+  font-size: Clamp(12px, 1vw, 14px);
   font-weight: 700;
 }
 
 .title2 {
-  font-size: Clamp(20px, Calc(1vw + 10px), 23px);
-  ;
+  font-size: Clamp(16px, 1vw,  21px);
   font-weight: 500;
 }
 
 .subtitle2 {
-  font-size: 14px;
+  font-size: Clamp(11px, 1vw, 13px);
   font-weight: 500;
 }
 
 .title3 {
-  font-size: Clamp(15px, Calc(1vw + 7px), 20px);
+  font-size: Clamp(15px, 1vw, 20px);
   font-weight: 500;
 }
 
 .subtitle3 {
-  font-size: 12px;
+  font-size: Clamp(10px, 1vw, 12px);
   font-weight: 500;
 }
 
@@ -184,24 +184,21 @@ a:hover {
 .subtitle6 {
   color: #666;
 }
-.title4{
 
-}
-.title5{
+.title4 {}
 
-}
-.title6{
+.title5 {}
 
-}
-.subtitle4{
-font-size: 14px;
-}
-.subtitle5{
+.title6 {}
 
+.subtitle4 {
+  font-size: 14px;
 }
-.subtitle6{
-  
-}
+
+.subtitle5 {}
+
+.subtitle6 {}
+
 .bdr {
   border-color: #aaa;
   border-right-width: 1px;
@@ -286,15 +283,38 @@ font-size: 14px;
 
 /* input  */
 .custom-input {}
-.scale{
+
+.scale {
   transform: scale(3);
 }
+
 :root {
   --dark-primary: #1F1A24;
   --dark-secondary: #332940;
   --dark-shadow: #1F1A24
 }
+
 /* Verify CSS */
+.verifie {
+
+  width: max-content;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 5px 8px;
+  color: grey;
+  margin: 5px;
+  padding: 9px;
+  cursor: pointer;
+  background-color: #fff;
+  transition: all 500ms;
+
+}
+
+.verifie:hover {
+  text-decoration: underline orangered;
+  color: #1F1A24;
+
+}
 
 
 /* Dark Mode */

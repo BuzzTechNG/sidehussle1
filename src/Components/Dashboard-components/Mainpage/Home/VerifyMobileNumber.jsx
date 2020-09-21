@@ -5,6 +5,25 @@ import { useQuery } from "@apollo/client";
 import Apollo from "../../../../apolloHelper.js";
 import lottie from "lottie-web";
 const apollo = new Apollo();
+let userLocationX = "";
+let mobileNumberX = "";
+
+const verifyFunc = async ({ userLocation = "", mobileNumber = "", id }) => {
+  const CONCAT_MOBILE_NUMBER_COUNTRY_CODE = `${userLocation}${mobileNumber}`;
+  try {
+    const resp = await apollo.verifyUserMobile({
+      mobileNumber: CONCAT_MOBILE_NUMBER_COUNTRY_CODE,
+      id,
+    });
+    console.log(resp);
+    userLocationX = userLocation;
+    mobileNumberX = mobileNumber;
+    return resp.data.verifyUserMobile.message;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const MobileNumber = (props) => {
   const [mobileNumber, setmobileNumber] = useState("");
   const [isSending, setIsSending] = useState(false);
@@ -27,7 +46,11 @@ const MobileNumber = (props) => {
       path: "/loading2.json",
     });
 
-    const SMS_RESPONSE = await verifyFunc();
+    const SMS_RESPONSE = await verifyFunc({
+      userLocation,
+      mobileNumber,
+      id: props.id,
+    });
     if (SMS_RESPONSE === "confirm-token") {
       setIsSending(false);
       props.setMode(true);
@@ -49,26 +72,13 @@ const MobileNumber = (props) => {
     return () => {};
   }, []);
 
-  const verifyFunc = async () => {
-    const CONCAT_MOBILE_NUMBER_COUNTRY_CODE = `${userLocation}${mobileNumber}`;
-    try {
-      const resp = await apollo.verifyUserMobile({
-        mobileNumber: CONCAT_MOBILE_NUMBER_COUNTRY_CODE,
-        id: props.userId,
-      });
-      console.log(resp);
-      return resp.data.verifyUserMobile.message;
-    } catch (error) {
-      console.log(error);
-    }
-  };
   console.log(props);
   return (
     <>
       <div className="title1 my-2">Kindly Verify Your Mobile Number</div>
 
       <div className="row px-2 my-3">
-        <div>
+        <div style={{zIndex:"5"}}>
           <CustomSelect selected={selectLocation}>
             {Object.keys(countryCode).map((Itemoption, index) => (
               <option
@@ -83,11 +93,12 @@ const MobileNumber = (props) => {
             ))}
           </CustomSelect>
         </div>
-        <div className="col">
+        <div className="col" style={{zIndex:"4"}}>
           <input
             type="number"
             maxLength="10"
             value={mobileNumber}
+            placeholder="Mobile Number"
             onChange={(e) => setmobileNumber(e.target.value)}
           />
         </div>
@@ -117,8 +128,25 @@ function Token(props) {
   const [userToken, setUserToken] = useState("");
   const [message, setMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
+  const [isActive, setIsActive] = useState(true);
+  const [counter, setCounter] = React.useState(5);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (counter > 1) {
+        setCounter((counter) => counter - 1);
+        console.log(counter);
+      } else {
+        setIsActive((isActive) => !isActive);
+        clearInterval(timer);
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [counter]);
 
   const comfirmFunc = async () => {
+    setIsActive(!isActive);
     if (userToken.length < 6 || isSending) {
       return;
     }
@@ -154,8 +182,8 @@ function Token(props) {
     <>
       {/* <div className="avatar"></div>
         <div className="subtitle1 mt-4">Welcome User</div> */}
-      <div className="title1 mt-2">Kindly Enter The Token Sent</div>
-      <div className="mb-2">
+      {/* <div className=" mt-2">Kindly Enter The Token Sent</div> */}
+      <div className="mb-2 title1 text-center">
         kindly enter the token sent to your mobile device
       </div>
       <div className=" job-form row px-2 my-3">
@@ -171,6 +199,7 @@ function Token(props) {
       </div>
       <div style={{ width: "100%" }}>
         <div className="float-left">{message}</div>
+
         <div className="square-btn float-right" onClick={comfirmFunc}>
           {isSending ? (
             <div
@@ -185,7 +214,36 @@ function Token(props) {
             </>
           )}
         </div>
-      </div>
+        </div>
+        <div className="mt-3">
+        {isActive ? (
+          <p className="subtitle3">
+            Didn't receive a token?, resend token in {counter} 
+            
+          </p>
+        ) : (
+          <div className="d-flex">
+            {/* div to render change mobile number and resend token */}
+            <div className="verifie" onClick={() => props.setMode(false)}>
+              {" "}
+              Change mobile number
+            </div>
+            <div
+              className="verifie"
+              onClick={() =>
+                verifyFunc({
+                  userLocation: userLocationX,
+                  mobileNumber: mobileNumberX,
+                  id: props.userId,
+                })
+              }
+            >
+              {" "}
+              Resend token
+            </div>
+          </div>
+        )}
+     </div>
     </>
   );
 }
@@ -214,21 +272,23 @@ function VerifyMobileNumber(props) {
               style={{ width: "250px", height: "100%" }}
             ></img>
           </div>
-          {data.getUserWithoutAuth?.pictureUrl ? (
-            <div className="avatar"></div>
-          ) : (
-            <img src={data.getUserWithoutAuth.pictureUrl
-            } />
-            // <div></div>
-            // <></div>
-          )}
+          
+            <div className="avatar" >
+              {data.getUserWithoutAuth?.pictureUrl  &&  <img style={{width:"100%",height:"100%"}} className="avatar" src={data.getUserWithoutAuth?.pictureUrl} />}
+            </div>
+          
           <div className="subtitle1 mt-4">
-            Welcome {`${data.getUserWithoutAuth.firstName} ${data.getUserWithoutAuth.lastName}`}
+            Welcome{" "}
+            {`${data.getUserWithoutAuth.firstName} ${data.getUserWithoutAuth.lastName}`}
           </div>
           {!mode ? (
             <MobileNumber setMode={setMode} userId={props.match.params.id} />
           ) : (
-            <Token userId={props.match.params.id} route={props.history} />
+            <Token
+              userId={props.match.params.id}
+              route={props.history}
+              setMode={setMode}
+            />
           )}
         </div>
       </div>

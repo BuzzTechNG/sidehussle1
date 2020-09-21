@@ -18,6 +18,16 @@ class LogIn extends Component {
   line() {
     return <div className="line"></div>;
   }
+  authNavigation(Auth){
+    this.setState({loading: false})
+    if (Auth.message === "verify-user"){
+      this.props.history.push(`/verifyUser/${Auth.id}`);
+    }
+    if (Auth.message === "login-sucessful" ){
+      localStorage.setItem("token",Auth.token)
+      this.props.history.push("/dashboard");
+    }
+  }
   inputHandler = (event) => {
     const { name, value } = event.target;
     this.setState({
@@ -33,30 +43,39 @@ class LogIn extends Component {
     );
 
     console.log(response);
-    this.setState({ loading: false, response: response.data.login.message });
+    this.authNavigation(response.data.login);
   };
 
   loginWithFacebook = async () => {
+    if(this.state.loading) return
     console.log("login with fb");
+    this.setState({loading: true,response:""})
     const that = this;
     // eslint-disable-next-line no-undef
     FB.getLoginStatus(async function (response) {
      
       console.log(response)
+
       if (response.status === "not_authorized") {
         
         const POP_UP_RESPONSE = await that.facebookLoginPopUp();
         console.log(POP_UP_RESPONSE)
       }
       if (response.status === "connected") {
-        
+      
         that.facebookUserDetails(response.authResponse.accessToken)
+      }
+      if (response.status === "unknown") {
+      
+        that.setState({loading:false, response:"Facebook Sign In Error"})
       }
       
     });
   };
   loginWithGoogle = async () => {
+    if(this.state.loading) return
     console.log("login-with-google");
+    this.setState({loading: true,response:""})
     let googleResponse = null;
     
     // eslint-disable-next-line no-undef
@@ -86,13 +105,8 @@ class LogIn extends Component {
       socialMail: user.getEmail(),
     });
      console.log(socialResponse)
-    if (socialResponse.data.socialAuth.message === "verify-user"){
-      this.props.history.push(`/verifyUser/${socialResponse.data.socialAuth.id}`);
-    }
-    if (socialResponse.data.socialAuth.message === "login-sucessful" ){
-      localStorage.setItem("token",socialResponse.data.socialAuth.token)
-      this.props.history.push("/dashboard");
-    }
+     this.authNavigation(socialResponse.data.socialAuth);
+    
   };
   facebookLoginPopUp = () => {
     // eslint-disable-next-line no-undef
@@ -118,13 +132,8 @@ class LogIn extends Component {
           pictureUrl: data.picture.data.url,
         });
         console.log(socialResponse)
-        if (socialResponse.data.socialAuth.message === "verify-user"){
-          this.props.history.push(`/verifyUser/${socialResponse.data.socialAuth.id}`);
-        }
-        if (socialResponse.data.socialAuth.message === "login-sucessful" ){
-          localStorage.setItem("token",socialResponse.data.socialAuth.token)
-          this.props.history.push("/dashboard");
-        }
+        
+        this.authNavigation(socialResponse.data.socialAuth);
       })
       .catch((err) => {
         console.log(err);
@@ -140,6 +149,7 @@ class LogIn extends Component {
           className="inputElement"
           value={this.state.email}
           type="mail"
+          disabled={this.state.loading}
           placeholder="Email or Phone Number"
           onChange={this.inputHandler}
         />
@@ -149,6 +159,7 @@ class LogIn extends Component {
           className="inputElement"
           value={this.state.Password}
           placeholder="Password"
+          disabled={this.state.loading}
           onChange={this.inputHandler}
           type="password"
         />
@@ -157,14 +168,15 @@ class LogIn extends Component {
         </div>
         <div style={{ height: "50px" }}>
           {!this.state.loading ? (
-            <Link
-              // to="/dashboard"
+            <button
+            disabled={this.state.loading}
+            
               onClick={this.login}
               className="buttonLogin link text-white"
               title="Log in to your dashboard"
             >
               Log in
-            </Link>
+            </button>
           ) : (
             <img
               style={{ height: "100%" }}

@@ -8,10 +8,10 @@ export default class PostJob extends Component {
 
         <div className="form-width pt-4" style={{ zIndex: "0" }}>
           <div className="">
-            <div className="post-title" style={{ fontSize: "40px" }}>
+            <div className="post-title">
               Tell us what you need done
             </div>
-            <div className="subtitle1 post-subtitle">
+            <div className="post-subtitle">
               Contact skilled hussler within minutes. View profiles and ratings
               and chat with them. Pay the freelancer only when you are 100%
               satisfied with their work

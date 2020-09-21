@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import { DarkModeToggler } from "../../../DarkModeContext";
 import { useQuery } from "@apollo/client";
 import Apollo from "../../../apolloHelper";
+import Lottie from "../../../lottie";
 const apollo = new Apollo()
 const NavInfo = () => {
   const { loading, data, err } = useQuery(apollo.GET_USER, {
@@ -60,16 +61,16 @@ const NavInfo = () => {
                     </NavLink>
                     <div className="nav-link-container">
                       
-                      <NavLink to="" className="item" key="1">
+                      <NavLink to="" className="item" >
                       Current Job
                       </NavLink>
-                      <NavLink to="/dashboard/previousjobs" className="item" key="1">
+                      <NavLink to="/dashboard/previousjobs" className="item" >
                       Past Work
                       </NavLink>
-                      <NavLink to="" className="item" key="1">
+                      <NavLink to="" className="item" >
                        Posted Jobs
                       </NavLink>
-                      <NavLink to="" className="item" key="1">
+                      <NavLink to="/dashboard/finduser" className="item" >
                       Find Husslers
                       </NavLink>
                       
@@ -90,16 +91,16 @@ const NavInfo = () => {
                       Finances
                     </NavLink>
                     <div className="nav-link-container">
-                      <NavLink to="" className="item" key="1">
+                      <NavLink to="/dashboard/deposit" className="item" >
                       Deposit Fund
                       </NavLink>
-                      <NavLink to="" className="item" key="1">
+                      <NavLink to="/dashboard/withdraw" className="item" >
                       Withdraw Fund
                       </NavLink>
-                      <NavLink to="/dashboard/transactionhistory" className="item" key="1">
+                      <NavLink to="/dashboard/transactionhistory" className="item" >
                       Transaction History
                       </NavLink>
-                      <NavLink to="" className="item" key="1">
+                      <NavLink to="" className="item" >
                       Finance Report
                       </NavLink>
                       
@@ -126,22 +127,23 @@ const NavInfo = () => {
                       to="/dashboard/"
                       exact
                       className="nav-link ml-3 custom-nav d-flex"
+                      
                     >
-                    { loading ? <div id="nav-lottie"></div>:
+                    { loading ? <Lottie style={{width:"120px",height:"22px",transform:"scale(3)"}} animation="/loading1.json"/>:
                     <>
-                    <img className="mr-2" width="20px" height="20px" src={data.getUser.pictureUrl} />
-                    {` ${data.getUser.firstName} ${data.getUser.lastName} `}
+                    <img className="mr-2" width="20px" height="20px" src={data?.getUser?.pictureUrl} />
+                    {` ${data?.getUser?.firstName} ${data?.getUser?.lastName} `}
                     </>}
                     </NavLink>
                     <div className="nav-link-container">
-                      <NavLink to="" className="item" key="1">
+                      <NavLink to="" className="item" >
                       View Profile
                       </NavLink>
-                      <NavLink to="" className="item" key="1">
+                      <NavLink to="/dashboard/account_setup" className="item" >
                       User Settings
                       </NavLink>
                      
-                      <NavLink to="" className="item" key="1">
+                      <NavLink to="" className="item" >
                       Logout
                       </NavLink>
                       

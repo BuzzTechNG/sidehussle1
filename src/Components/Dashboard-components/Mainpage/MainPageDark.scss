@@ -6,8 +6,8 @@
     }
 
     .mcard {
-        background-color: lighten($dark-primary, 2);
-        box-shadow: 0 0 2px 0 $dark-shadow;
+        background-color: lighten($dark-primary, 3);
+        box-shadow: 1px 1px 2px 0 lighten($dark-primary, 2);
         border: $dark-shadow solid 0px;
     }
 
@@ -72,9 +72,9 @@
     .job-form input,
     .job-form textarea,
     .modal-body select {
-        background-color: $dark-primary;
+        background-color: lighten($dark-primary, 6);;
         box-shadow: -1px 1px 5px 0px $dark-shadow;
-        color: white;
+        color: #ccc;
         border-bottom: 1px #ccc solid;
     }
 
