@@ -19,7 +19,7 @@ class apollaHelperClass {
           logAndLat
           address
           userPricePerHour
-          userDesc
+          userInfo
           languages{
             language
             proficiency
@@ -254,7 +254,7 @@ class apollaHelperClass {
       $education:[EducationInput]
       $userTitle: String
       $userPricePerHour: String
-      $userDesc: String
+      $userInfo: String
     ) {
       updateUser(
         address: $address
@@ -265,7 +265,7 @@ class apollaHelperClass {
         education:$education
         userTitle: $userTitle
         userPricePerHour: $userPricePerHour
-        userDesc: $userDesc
+        userInfo: $userInfo
       ) {
         id
         firstName
@@ -276,7 +276,7 @@ class apollaHelperClass {
           logAndLat
           address
           userPricePerHour
-          userDesc
+          userInfo
           languages{
             language
             proficiency
@@ -311,7 +311,7 @@ class apollaHelperClass {
     education,
     userTitle,
     userPricePerHour,
-    userDesc
+    userInfo
   }) {
     return await client.mutate({
       mutation: this.UPDATE_USER,
@@ -324,7 +324,7 @@ class apollaHelperClass {
         education,
         userTitle,
         userPricePerHour,
-        userDesc
+        userInfo
       },
     });
   }

@@ -163,13 +163,9 @@ const TitleModal = ({ userTitle, setUserTitle }) => (
 const ChangeRateModal = ({ userPricePerHour, setUserPricePerHour }) => (
   <div>
     <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam quo
-      quos et amet sint illum totam, ad aut corrupti est dolorem voluptate harum
-      reprehenderit itaque at! Distinctio architecto quasi minima!
-    </p>
-    <p>
-      Your profile rate <strong>${state.yourRate}</strong>
-    </p>
+      Please note that your hourly rate will only apply to new contracts. At this time SideHussle is service fee is 0 NGN
+
+      </p>
     <p>
       Total Amount client will see{" "}
       <span>
@@ -189,15 +185,15 @@ const ChangeRateModal = ({ userPricePerHour, setUserPricePerHour }) => (
     </p>
     <hr />
     <p>
-      10% SideHussle Service fee{" "}
+      0% SideHussle Service fee{" "}
       <span>
-        <strong>- {state.servicefee}</strong>
+        <strong>- {userPricePerHour}</strong>
       </span>
       /hr
     </p>
     <hr />
     <p>
-      You'll Receive{" "}
+      You'll Receive {userPricePerHour}
       <span>
         <strong>{/*The amount the person will recieve*/}</strong>
       </span>
@@ -207,13 +203,13 @@ const ChangeRateModal = ({ userPricePerHour, setUserPricePerHour }) => (
 );
 const SkillsModal = ({ services, setServices }) => (
   <div>
-    <h5>Enter skills:</h5>
+    <h5>Select skills:</h5>
     <form>
       <div class="form-group">
+        
         <select
           multiple
           type="text"
-          // onChange={(e) => setServices.concat(e.target.value)}
           value={services}
           class="form-control"
           id="skills"
@@ -222,19 +218,21 @@ const SkillsModal = ({ services, setServices }) => (
             setServices((services) => [...services, e.target.value]);
           }}
         >
-          <option>Select Services</option>
-          <option value="lorem">lorem</option>
-          <option value="lorem">lorem</option>
-          <option value="lorem">lorem</option>
-          <option value="lorem">lorem</option>
-          <option value="lorem">lorem</option>
-          <option value="lorem">lorem</option>
+          <option value="transport">Transport</option>
+          <option value="plumbing">plumbing</option>
+          <option value="Electical">Electical</option>
+          
         </select>
+        
       </div>
     </form>
   </div>
 );
-const LanguageModal = ({ languages, setLanguages }) => (
+const LanguageModal = ({ languages, setLanguages })=> {
+  
+  
+  const [localLanguage, setLocalLanguage] = useState("")
+  return (
   <div>
     <div class="form-group">
       <label for="editLanguage">Select your preferred Language</label>
@@ -243,16 +241,9 @@ const LanguageModal = ({ languages, setLanguages }) => (
         class="form-control"
         data-role="select-dropdown"
         data-profile="minimal"
-        //onChange={(e) => languages.concat(setLanguages)}
-        onChange={(e) => {
-          e.persist();
-          setLanguages((languages) => ({
-            ...languages,
-            //language: languages.concat(e.target.value),
-            language: e.target.value,
-          }));
-        }}
-        value={languages.language}
+        onChange={(e) => setLocalLanguage(e.target.value)}
+        
+        value={localLanguage}
       >
         <option selected>Search for Language</option>
         <option value="English">English</option>
@@ -273,11 +264,13 @@ const LanguageModal = ({ languages, setLanguages }) => (
         value={languages.proficiency}
         onChange={(e) => {
           e.persist();
-          setLanguages((languages) => ({
-            ...languages,
-            // proficiency: languages.concat(e.target.value),
-            proficiency: e.target.value,
-          }));
+          const filteredLanguage = languages.map(lang => 
+            { const langX = {}; 
+            langX["proficiency"] = lang.proficiency; 
+            langX["language"] = lang.language; 
+            return langX })
+          setLanguages((languages) =>[...filteredLanguage,{proficiency: e.target.value,language: localLanguage}]);
+          console.log(languages)
         }}
       >
         <option selected>Select Proficiency</option>
@@ -289,9 +282,23 @@ const LanguageModal = ({ languages, setLanguages }) => (
       </select>
     </div>
   </div>
-);
+)};
 
-const EducationModal = ({ educationInfo, setEducationInfo }) => {
+const EducationModal = ({ localEducation, setLocalEducation }) => {
+  
+  const setEducation = (e,target) => {
+    
+    
+    // setEducationInfo((educationInfo) => ([...temp_education,{
+      
+    //   [target]: e.target.value,
+    // }]));
+    // console.log(educationInfo)
+    
+    setLocalEducation(edu => ({...edu,
+      [target]:e.target.value
+    }))
+  }
   return (
     <div>
       <div>
@@ -303,13 +310,10 @@ const EducationModal = ({ educationInfo, setEducationInfo }) => {
               class="form-control"
               id="School"
               placeholder="Ex. Bowen University"
-              value={educationInfo.school}
+              value={localEducation.school}
               onChange={(e) => {
                 e.persist();
-                setEducationInfo((educationInfo) => ({
-                  ...educationInfo,
-                  school: e.target.value,
-                }));
+                setEducation(e,"school")
               }}
             />
           </div>
@@ -324,40 +328,36 @@ const EducationModal = ({ educationInfo, setEducationInfo }) => {
           <div className="col-sm-5">
             {/* <form> */}
             <div class="form-group">
+              <label className="mr-2">
+              From
               <input
-                type="text"
+                type="date"
                 class="form-control"
                 id="dateFrom"
                 placeholder="From (Year)"
-                value={educationInfo.from}
+                value={localEducation.from}
                 onChange={(e) => {
                   e.persist();
-                  setEducationInfo((educationInfo) => ({
-                    ...educationInfo,
-                    from: e.target.value,
-                  }));
+                  setEducation(e,"from")
                 }}
-              />
+              /></label>
             </div>
             {/* </form> */}
           </div>
           <div className="col-sm-6">
             {/* <form> */}
-            <div class="form-group">
-              <input
-                type="text"
+            <div class="form-group ml-2">
+              <label>To <input
+                type="date"
                 class="form-control"
                 id="dateTo"
                 placeholder="To (or graduation year)"
-                value={educationInfo.to}
+                value={localEducation.to}
                 onChange={(e) => {
                   e.persist();
-                  setEducationInfo((educationInfo) => ({
-                    ...educationInfo,
-                    to: e.target.value,
-                  }));
+                  setEducation(e,"to")
                 }}
-              />
+              /></label>
             </div>
             {/* </form> */}
           </div>
@@ -373,13 +373,10 @@ const EducationModal = ({ educationInfo, setEducationInfo }) => {
           class="form-control"
           data-role="select-dropdown"
           data-profile="minimal"
-          value={educationInfo.desc}
+          value={localEducation.desc}
           onChange={(e) => {
             e.persist();
-            setEducationInfo((educationInfo) => ({
-              ...educationInfo,
-              desc: e.target.value,
-            }));
+            setEducation(e,"desc")
           }}
         >
           <option selected>Example Bachelor's</option>
@@ -401,13 +398,10 @@ const EducationModal = ({ educationInfo, setEducationInfo }) => {
               class="form-control"
               id="aos"
               placeholder="Ex Computer Science"
-              value={educationInfo.areaOfStudy}
+              value={localEducation.areaOfStudy}
               onChange={(e) => (e) => {
                 e.persist();
-                setEducationInfo((educationInfo) => ({
-                  ...educationInfo,
-                  areaOfStudy: e.target.value,
-                }));
+                setEducation(e,"areaOfStudy")
               }}
             />
           </div>
@@ -505,12 +499,29 @@ const LanguageViewModal = ({ data, reload }) => {
 
 const EducationViewModal = ({ data, reload }) => {
   const [educationInfo, setEducationInfo] = useState(data);
+  const [localEducation, setLocalEducation] = useState({})
+
+  async function updateEducation(){
+    const temp_info = educationInfo.map(info => {
+       
+      return {school:info.school, to: info.to, from: info.from, areaOfStudy: info.areaOfStudy, desc: info.desc } }
+       )
+    await setEducationInfo( infox => ([
+        ...temp_info,
+        localEducation
+      ]
+    )
+    )
+    
+    console.log([...temp_info,educationInfo])
+    return updateUser({ education: [...temp_info, localEducation] })
+  }
   return (
     <ModalView
       title={state.titles[4].title}
       modalType={state.titles[4].modalType}
-      body={EducationModal({ educationInfo, setEducationInfo })}
-      action={() => updateUser({ education: educationInfo })}
+      body={EducationModal({ localEducation, setLocalEducation })}
+      action={() => updateEducation()}
       reload={reload}
     />
   );

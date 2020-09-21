@@ -144,13 +144,11 @@ class Home extends Component {
                   ></i>
                 </div>
                 <ul className="list subtitle3">
-                  <li>
-                    language:{this.state.data.userDetails?.languages.language}
+                {this.state.data.userDetails?.languages.map((language,index)=>(
+                  <li key={index}>
+                    {`${language.language} - ${language.proficiency}`}
                   </li>
-                  <li>
-                    proficiency:
-                    {this.state.data.userDetails?.languages.proficiency}
-                  </li>
+                )) }
                 </ul>
               </div>
               {/* Education */}
@@ -163,14 +161,11 @@ class Home extends Component {
                   />{" "}
                 </div>
                 <ul className="list subtitle3">
-                  <li>
-                    School:{this.state.data.userDetails?.education.school}
+                {this.state.data.userDetails?.education.map((school,index)=>(
+                  <li key={index}>
+                    {school.school}
                   </li>
-                  <li>Degree:{this.state.data.userDetails?.education.desc}</li>
-                  <li>
-                    Area of Study:
-                    {this.state.data.userDetails?.education.areaOfStudy}
-                  </li>
+                ))}
                 </ul>
               </div>
             </div>
@@ -191,7 +186,7 @@ class Home extends Component {
                   /hr <ModalBtn title="changeRate" icon="fa fa-pen" />
                 </p>
                 <p className="subtitle2">
-                  Info about user
+                  {this.state.data.userDetails?.userInfo ? this.state.data.userDetails?.userInfo : "kindly tell us about you" }
                   <ModalBtn title="editDescription" icon="fa fa-pen" />
                 </p>
               </div>
@@ -202,11 +197,11 @@ class Home extends Component {
                   Services <ModalBtn title="mySkills" icon="fa fa-pen" />
                 </p>
                 <ul className="subtitle3 list">
-                  <li> My Skills and Services </li>
-                  <li> My Skills and Services </li>
-                  <li> My Skills and Services </li>
-                  <li> My Skills and Services </li>
-                  <li> My Skills and Services </li>
+                  {this.state.data.userDetails?.services.map((services,index) => (
+
+                  <li key={index}> {services} </li>
+                  )) }
+                  
                 </ul>
               </div>
               {/* Work history and Reviews */}
@@ -269,7 +264,7 @@ class Home extends Component {
         />
         <DescriptionViewModal
           reload={this.getUserAfterModalSuccess}
-          data={this.state.data.userDetails?.userDesc}
+          data={this.state.data.userDetails?.userInfo}
         />
       </div>
     );
