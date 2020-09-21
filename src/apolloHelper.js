@@ -1,20 +1,51 @@
-import { gql } from "@apollo/client";
-import { client } from "./index";
+import {
+  gql
+} from "@apollo/client";
+import {
+  client
+} from "./index";
 
 class apollaHelperClass {
   GOOGLE = "googleId";
   FACEBOOK = "facebookId";
-  GET_USER = gql`
+  GET_USER = gql `
     query getUser($id: String) {
       getUser(id: $id) {
         id
         pictureUrl
         firstName
         lastName
+        userDetails{
+          logAndLat
+          address
+          userPricePerHour
+          userInfo
+          languages{
+            language
+            proficiency
+          }
+          userTitle
+          videoUrl
+          avaliability
+          education{
+            school
+            from
+            to
+            desc
+            areaOfStudy
+          }
+          services
+          accountDetails{
+            accountNumber
+            accountName
+            paystackRSP
+          }
+          
+        }
       }
     }
   `;
-  GET_USER_WITHOUT_AUTH = gql`
+  GET_USER_WITHOUT_AUTH = gql `
     query getUserWithoutAuth($id: String) {
       getUserWithoutAuth(id: $id) {
         id
@@ -24,9 +55,9 @@ class apollaHelperClass {
       }
     }
   `;
-  
+
   //login logic
-  LOGIN = gql`
+  LOGIN = gql `
     mutation login($userId: String, $userPassword: String) {
       login(userId: $userId, userPassword: $userPassword) {
         token
@@ -44,7 +75,7 @@ class apollaHelperClass {
       },
     });
   }
-  VERFITY_USER_MOBILE = gql`
+  VERFITY_USER_MOBILE = gql `
   mutation verifyUserMobile(
     $id: String 
     $mobileNumber: String
@@ -57,7 +88,7 @@ class apollaHelperClass {
     }
     }
   `;
-  COMFIRM_USER_MOBILE = gql`
+  COMFIRM_USER_MOBILE = gql `
   mutation comfirmUserMobile(
     $user: String 
     $token: String
@@ -74,7 +105,7 @@ class apollaHelperClass {
     }
   `;
   //register logic
-  REGISTER = gql`
+  REGISTER = gql `
     mutation register(
       $firstName: String
       $middleName: String
@@ -102,7 +133,7 @@ class apollaHelperClass {
       }
     }
   `;
-  SOCIAL_AUTH = gql`
+  SOCIAL_AUTH = gql `
     mutation socialAuth(
       $firstName: String
       $lastName: String
@@ -186,7 +217,10 @@ class apollaHelperClass {
       },
     });
   }
-  async verifyUserMobile({ id, mobileNumber }) {
+  async verifyUserMobile({
+    id,
+    mobileNumber
+  }) {
     return await client.mutate({
       mutation: this.VERFITY_USER_MOBILE,
       variables: {
@@ -195,7 +229,10 @@ class apollaHelperClass {
       },
     });
   }
-  async comfirmUserMobile({ user, token }) {
+  async comfirmUserMobile({
+    user,
+    token
+  }) {
     const tokenType = "MOBILE_VERIFICATION"
     return await client.mutate({
       mutation: this.COMFIRM_USER_MOBILE,
@@ -203,6 +240,91 @@ class apollaHelperClass {
         user,
         token,
         tokenType
+      },
+    });
+  }
+  //update modal logic
+  UPDATE_USER = gql `
+    mutation updateUser(
+      $address: String
+      $logAndLat: String
+      $services: [String]
+      $languages: [LanguageInput]
+      $videoUrl: String
+      $education:[EducationInput]
+      $userTitle: String
+      $userPricePerHour: String
+      $userInfo: String
+    ) {
+      updateUser(
+        address: $address
+        logAndLat: $logAndLat
+        services: $services
+        languages: $languages
+        videoUrl: $videoUrl
+        education:$education
+        userTitle: $userTitle
+        userPricePerHour: $userPricePerHour
+        userInfo: $userInfo
+      ) {
+        id
+        firstName
+        middleName
+        lastName
+        pictureUrl
+        userDetails{
+          logAndLat
+          address
+          userPricePerHour
+          userInfo
+          languages{
+            language
+            proficiency
+          }
+          userTitle
+          videoUrl
+          avaliability
+          education{
+            school
+            from
+            to
+            desc
+            areaOfStudy
+          }
+          services
+          accountDetails{
+            accountNumber
+            accountName
+            paystackRSP
+          } 
+        }
+       
+      }
+    }
+  `;
+  async updateUser({
+    address,
+    logAndLat,
+    services,
+    languages,
+    videoUrl,
+    education,
+    userTitle,
+    userPricePerHour,
+    userInfo
+  }) {
+    return await client.mutate({
+      mutation: this.UPDATE_USER,
+      variables: {
+        address,
+        logAndLat,
+        services,
+        languages,
+        videoUrl,
+        education,
+        userTitle,
+        userPricePerHour,
+        userInfo
       },
     });
   }

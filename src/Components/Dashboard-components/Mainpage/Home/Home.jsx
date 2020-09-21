@@ -5,6 +5,7 @@ import {
   LanguageViewModal,
   SkillsViewModal,
   TitleViewModal,
+  DescriptionViewModal,
 } from "../Modals/Modal";
 import Apollo from "../../../../apolloHelper";
 import lottie from "lottie-web";
@@ -25,14 +26,17 @@ const ModalBtn = ({title, titleX, icon }) => {
 class Home extends Component {
   constructor(props) {
     super(props);
-
+    console.log("object work");
     this.getUser();
-    
+
+    // this.getUserAfterModalSuccess = this.getUserAfterModalSuccess.bind(this)
+
   }
   state = {
     loading: true,
     data: "",
   };
+
   
 
   componentDidMount() {
@@ -47,21 +51,30 @@ class Home extends Component {
   }
   async getUser() {
     const userReponse = await apollo.getUser();
-    console.log(userReponse);
+   
     this.setState({ data: userReponse.data.getUser, loading:false });
     // this.animation.hide()
+
+  
   }
+  getUserAfterModalSuccess = async (userReponse) => {
+    //  this.state.data = userReponse;
+    console.log(userReponse);
+    await this.setState({ data: userReponse });
+    //  console.log(this)
+  };
+
   render() {
     
     return this.state.loading ? (
+
       <div key="loading-screen" className="full-width" style={{minHeight:"50vh",opacity:0.5}}>
         <div className="container-m">
           <div className="mx-auto mt-5" ref={(c) => {
           this.el = c;
-        }} style={{width:"150px"}}></div>
-        </div>
-      </div>
-    ) : (
+        }} style={{width:"150px"}}></div></div></div>) :
+
+       (
       <div key="home-screen" className="full-width column mt-4">
         <div className="container-v custom-shadow row">
           <div className="row bdr justify-content-center align-items-center px-4 ml-0">
@@ -90,6 +103,7 @@ class Home extends Component {
           <div className="col row padding-m py-4 bdb align-items-center">
             {this.state.data.pictureUrl ? (
               <div className="avatar" title="Your display picture">
+
                 <img style={{borderRadius:"50%",width:"100%"}} src={this.state.data.pictureUrl} alt="profile pic" />
               </div>
             ) : (
@@ -128,25 +142,35 @@ class Home extends Component {
               <div className="mb-3">
                 <div className="subtitle1">
                   {" "}
-                  Languages <ModalBtn title="Edit Language" icon="fa fa-plus" />
+                  Languages <ModalBtn title="editLanguage" icon="fa fa-plus" />
                   <i
                     className="round-btn fa fa-pen"
-                    title="Edit proficiency"
+                    title="editProficiency"
                   ></i>
                 </div>
                 <ul className="list subtitle3">
-                  <li>English</li>
+                {this.state.data.userDetails?.languages.map((language,index)=>(
+                  <li key={index}>
+                    {`${language.language} - ${language.proficiency}`}
+                  </li>
+                )) }
                 </ul>
               </div>
               {/* Education */}
               <div className="mb-3">
                 <div className="subtitle1">
                   {" "}
-                  Education{" "}
-                  <ModalBtn title="Edit Education" icon="fa fa-plus" />{" "}
+                  Education <ModalBtn
+                    title="editEducation"
+                    icon="fa fa-plus"
+                  />{" "}
                 </div>
                 <ul className="list subtitle3">
-                  <li>English</li>
+                {this.state.data.userDetails?.education.map((school,index)=>(
+                  <li key={index}>
+                    {school.school}
+                  </li>
+                ))}
                 </ul>
               </div>
             </div>
@@ -155,28 +179,36 @@ class Home extends Component {
               {/* Title and user info */}
               <div className="bdb pb-2">
                 <div className="title2">
-                  Web and Mobile Developer{" "}
-                  <ModalBtn title="Edit Title" titleX="title" icon="fa fa-pen" />{" "}
+
+                  {this.state.data.userDetails?.userTitle}
+                  <ModalBtn title="editTitle" icon="fa fa-pen" />{" "}
+
                 </div>
                 <p className="title3">
                   {" "}
-                  Costing -- N200/hr{" "}
-                  <ModalBtn title="Change rate" icon="fa fa-pen" />
+                  Costing --{" "}
+                  {this.state.data.userDetails?.userPricePerHour
+                    ? this.state.data.userDetails?.userPricePerHour
+                    : "0"}
+                  /hr <ModalBtn title="changeRate" icon="fa fa-pen" />
                 </p>
-                <p className="subtitle2">Info about user</p>
+                <p className="subtitle2">
+                  {this.state.data.userDetails?.userInfo ? this.state.data.userDetails?.userInfo : "kindly tell us about you" }
+                  <ModalBtn title="editDescription" icon="fa fa-pen" />
+                </p>
               </div>
               {/* User Skills */}
               <div className="bdb py-3">
                 <p className="title3">
                   {" "}
-                  Services <ModalBtn title="Edit Skills" icon="fa fa-pen" />
+                  Services <ModalBtn title="mySkills" icon="fa fa-pen" />
                 </p>
                 <ul className="subtitle3 list">
-                  <li> My Skills and Services </li>
-                  <li> My Skills and Services </li>
-                  <li> My Skills and Services </li>
-                  <li> My Skills and Services </li>
-                  <li> My Skills and Services </li>
+                  {this.state.data.userDetails?.services.map((services,index) => (
+
+                  <li key={index}> {services} </li>
+                  )) }
+                  
                 </ul>
               </div>
               {/* Work history and Reviews */}
@@ -213,16 +245,38 @@ class Home extends Component {
                   </div>
                 </div>
               </div>
+              /
             </div>
           </div>
         </div>
-        <ChangeRateViewModal />
-        <EducationViewModal />
-        <LanguageViewModal />
-        <SkillsViewModal />
-        <TitleViewModal />
+        <ChangeRateViewModal
+          reload={this.getUserAfterModalSuccess}
+          data={this.state.data.userDetails?.userPricePerHour}
+        />
+        <EducationViewModal
+          reload={this.getUserAfterModalSuccess}
+          data={this.state.data.userDetails?.education}
+        />
+        <LanguageViewModal
+          reload={this.getUserAfterModalSuccess}
+          data={this.state.data.userDetails?.languages}
+        />
+        <SkillsViewModal
+          reload={this.getUserAfterModalSuccess}
+          data={this.state.data.userDetails?.services}
+        />
+        <TitleViewModal
+          data={this.state.data.userDetails?.userTitle}
+          reload={this.getUserAfterModalSuccess}
+        />
+        <DescriptionViewModal
+          reload={this.getUserAfterModalSuccess}
+          data={this.state.data.userDetails?.userInfo}
+        />
       </div>
-    );
+      
+    )
   }
 }
+
 export default Home;
