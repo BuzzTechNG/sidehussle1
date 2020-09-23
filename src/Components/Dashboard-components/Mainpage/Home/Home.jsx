@@ -53,6 +53,7 @@ class Home extends Component {
     const userReponse = await apollo.getUser();
    
     this.setState({ data: userReponse.data.getUser, loading:false });
+    document.title = userReponse.data.getUser.firstName
     // this.animation.hide()
 
   
