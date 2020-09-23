@@ -53,6 +53,7 @@ class Home extends Component {
     const userReponse = await apollo.getUser();
    
     this.setState({ data: userReponse.data.getUser, loading:false });
+    document.title = userReponse.data.getUser.firstName
     // this.animation.hide()
 
   
@@ -142,7 +143,7 @@ class Home extends Component {
               <div className="mb-3">
                 <div className="subtitle1">
                   {" "}
-                  Languages <ModalBtn title="editLanguage" icon="fa fa-plus" />
+                  Languages <ModalBtn titleX="editLanguage" icon="fa fa-plus" />
                   <i
                     className="round-btn fa fa-pen"
                     title="editProficiency"
@@ -161,7 +162,7 @@ class Home extends Component {
                 <div className="subtitle1">
                   {" "}
                   Education <ModalBtn
-                    title="editEducation"
+                    titleX="editEducation"
                     icon="fa fa-plus"
                   />{" "}
                 </div>
@@ -181,7 +182,7 @@ class Home extends Component {
                 <div className="title2">
 
                   {this.state.data.userDetails?.userTitle}
-                  <ModalBtn title="editTitle" icon="fa fa-pen" />{" "}
+                  <ModalBtn titleX="editTitle" icon="fa fa-pen" />{" "}
 
                 </div>
                 <p className="title3">
@@ -190,18 +191,18 @@ class Home extends Component {
                   {this.state.data.userDetails?.userPricePerHour
                     ? this.state.data.userDetails?.userPricePerHour
                     : "0"}
-                  /hr <ModalBtn title="changeRate" icon="fa fa-pen" />
+                  /hr <ModalBtn titleX="changeRate" icon="fa fa-pen" />
                 </p>
                 <p className="subtitle2">
                   {this.state.data.userDetails?.userInfo ? this.state.data.userDetails?.userInfo : "kindly tell us about you" }
-                  <ModalBtn title="editDescription" icon="fa fa-pen" />
+                  <ModalBtn titleX="editDescription" icon="fa fa-pen" />
                 </p>
               </div>
               {/* User Skills */}
               <div className="bdb py-3">
                 <p className="title3">
                   {" "}
-                  Services <ModalBtn title="mySkills" icon="fa fa-pen" />
+                  Services <ModalBtn titleX="mySkills" icon="fa fa-pen" />
                 </p>
                 <ul className="subtitle3 list">
                   {this.state.data.userDetails?.services.map((services,index) => (

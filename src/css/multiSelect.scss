@@ -1,0 +1,151 @@
+.multiselect{
+    position: relative;
+    outline: none;
+    box-shadow: -1px 1px 5px 0px #bbbbbbdd;
+    border: none;
+    padding: 10px 20px;
+    margin: 7px 0;
+    // width: max-content !important;
+    // background-color: red;
+    font-size: Clamp(13px, 2vw , 16px);
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+    flex-wrap: wrap;
+
+    &-select-list{
+        position: absolute;
+        // left: 0;
+        top: 0;
+        // bottom:-130%;
+        margin-left:2%;
+        margin-top:7%;
+        background-color: #fff;
+        // width: 10%;
+        height: max-content;
+        max-height: 40vh;
+        font-size: Clamp(12px, 1vw , 15px);
+        // font-size: 10px;
+        overflow-y: scroll;
+        padding: 0 3px;
+        
+        box-shadow: 1px 1px 15px 0 #ddd;
+        padding:0 35px ;
+        &-item{
+            cursor: pointer;
+            margin: 5px 10px;
+            padding: 2px 10px;
+            &:hover{
+                opacity: 0.7;
+            }
+        }
+
+        option:hover{
+            background-color: #ccc;
+        }
+        &::-webkit-scrollbar {
+            width: 10px;
+          }
+        
+        &::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px rgb(243, 203, 203);
+            border-radius: 10px;
+          }
+          
+          /* Handle */
+          &::-webkit-scrollbar-thumb {
+            background: red;
+            border-radius: 10px;
+          }
+
+    }
+
+    &-option{
+        border-radius: 15px;
+        background-color: #cccccc;
+        padding: 0 7px;
+        font-size: Clamp(12px, 1vw , 15px) !important;
+        font-weight: 500 !important;
+        width: max-content;
+        i{
+            padding: 5px;
+            border-radius: 50%;
+            background-color: #bbb;
+            font-size: 12px !important;
+        }
+    }
+    &-filter{
+    input{
+        background-color: blue;
+        border:0;
+        outline:0;
+        box-shadow: none;
+    }}
+    @keyframes modalOpen {
+        from{
+            opacity: 0.5;
+            transform: translateY(10px);
+        }
+        to{
+            opacity: 1.0;
+            transform: translateY(0px);
+        }
+    }
+    .modal{
+        // animation: modalOpen 500ms ease-in-out;
+        position: fixed;
+        width: 100vw;
+        height: 90vh;
+        // bottom: 100px;
+        margin-top: 10%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #ddddddcc;
+        &-container{
+            padding: 20px ;
+            margin: 0 auto;
+            background-color: #ffffff;
+            width: 90%;
+            border-radius: 10px;
+            &-body{
+                height: 40vh;
+                overflow-y: scroll;
+                &::-webkit-scrollbar {
+                    width: 10px;
+                  }
+                
+                &::-webkit-scrollbar-track {
+                    box-shadow: inset 0 0 5px rgb(243, 203, 203);
+                    border-radius: 10px;
+                  }
+                  
+                  /* Handle */
+                  &::-webkit-scrollbar-thumb {
+                    background: red;
+                    border-radius: 10px;
+                  }
+            }
+        }
+    }
+}
+[dark="dark"]{
+    .multiselect{
+        background-color: lighten($dark-primary, 6);;
+        box-shadow: -1px 1px 5px 0px $dark-shadow;
+        color: #ccc;
+        border-bottom: 1px #ccc solid;
+    &-option{
+        background-color: lighten($dark-secondary, 9);
+        color: #ccc;
+    }
+    &-select-list{
+        background-color: lighten($dark-primary, 6);;
+        box-shadow: -1px 1px 5px 0px $dark-shadow;  
+    }
+    }
+    
+}
