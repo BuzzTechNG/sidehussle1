@@ -91,7 +91,7 @@ function CustomSelect(props) {
               ))}
 
               {props.options
-                .filter((optionx)=> !Object.keys(selected).includes(optionx))
+                
                 .filter((option) => option.includes(filter))
                 .map((optionx, index) => (
                   <div
@@ -154,6 +154,7 @@ function CustomSelect(props) {
               </div>
               <div className="modal-container-body">
               {props.options
+                .filter((optionx)=> !Object.keys(selected).includes(optionx))
                 .filter((option) => option.includes(filter))
                 .map((optionx, index) => (
                   <div

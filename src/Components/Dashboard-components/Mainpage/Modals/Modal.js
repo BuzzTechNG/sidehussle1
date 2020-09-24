@@ -208,19 +208,30 @@ const SkillsModal = ({ services, setServices }) => (
       <div class="form-group">
         
         <select
-          multiple
+        multiple={true}
+        required
           type="text"
           value={services}
           class="form-control"
           id="skills"
           onChange={(e) => {
             e.persist();
-            setServices((services) => [...services, e.target.value]);
-          }}
+          console.log(services)
+          if(services.includes(e.target.value)){
+            console.log(true)
+          return setServices(services.filter(name => name !== e.target.value)); 
+        }else{
+          console.log(false)
+          return  setServices([...services, e.target.value])
+          }
+
+        }
+        }
         >
           <option value="transport">Transport</option>
           <option value="plumbing">plumbing</option>
           <option value="Electical">Electical</option>
+          <option value="Engineer">Engineer</option>
           
         </select>
         
@@ -245,7 +256,7 @@ const LanguageModal = ({ languages, setLanguages })=> {
         
         value={localLanguage}
       >
-        <option selected>Search for Language</option>
+        
         <option value="English">English</option>
         <option value="Yoruba">Yoruba</option>
         <option value="French">French</option>
