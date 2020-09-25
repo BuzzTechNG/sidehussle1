@@ -328,5 +328,58 @@ class apollaHelperClass {
       },
     });
   }
+  //createJob
+  CREATE_JOB = gql `
+    mutation createJob(
+      $userId: String
+      $jobTitle: String
+      $jobDescription: String
+      $jobLocation:String
+      $jobSpecification: [String]
+      $locationSensitive: String
+      $jobBudget: int
+            ) {
+      createJob(
+       userId:$userId
+       jobTitle:$jobTitle
+       jobDescription:$jobDescription
+       jobLocation:$jobLocation
+       jobSpecification:$jobSpecification
+       locationSensitive:$locationSensitive
+       jobBudget:$jobBudget
+      ) {
+        userId
+        jobTitle
+        jobDescription
+        jobLocation
+        jobSpecification
+        locationSensitive
+        jobBudget
+        }
+    }
+  `;
+  async createJob({
+    userId,
+    jobTitle,
+    jobDescription,
+    jobLocation,
+    jobSpecification,
+    locationSensitive,
+    jobBudget
+
+  }) {
+    return await client.mutate({
+      mutation: this.CREATE_JOB,
+      variables: {
+        userId,
+        jobTitle,
+        jobDescription,
+        jobLocation,
+        jobSpecification,
+        locationSensitive,
+        jobBudget
+      },
+    });
+  }
 }
 export default apollaHelperClass;
