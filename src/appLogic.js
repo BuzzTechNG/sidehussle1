@@ -1,4 +1,22 @@
 class AppLogic{
+    async getUserLocationFromHERE(lat,log){
+      const response = await fetch(
+          `https://revgeocode.search.hereapi.com/v1/revgeocode?at=${lat}%2C${log}&apiKey=GSD3NW4vKzP7noIdGGjUf-CQ9WsisTNYGHvv_jiWaOU&lang=en`,
+        //   {
+        //     method:"GET",
+            
+        //     headers:{
+        //       "Host": "config.data.api.platform.here.com",
+        //       "Cache-Control": "no-cache",
+        //     "Authorization": "Bearer GSD3NW4vKzP7noIdGGjUf-CQ9WsisTNYGHvv_jiWaOU"
+        //   }
+        // }
+        );
+        const data = await response.json();
+        console.log(data);  
+    }
+      
+    
     numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
@@ -9,6 +27,7 @@ class AppLogic{
 
            async function showPosition(position) {
                 console.log(position.coords)
+                that.getUserLocationFromHERE(position.coords.latitude,position.coords.longitude)
             //    await that.getAddressFromLogandLat(`${position.coords.latitude},${position.coords.longitude}`)
               const data = await that.getUserLocation()
                 resolve(`${data.city}, ${data.region}`)

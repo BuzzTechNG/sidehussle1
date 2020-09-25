@@ -23,7 +23,7 @@ function LocationComponent() {
 export default class PostJob extends Component {
   constructor(props){
     super(props)
-    
+    appLogic.getUserLocationFromHERE()
     this.state = {
       locationCheck: false,
       moneyRangeValue: 1000
