@@ -42,34 +42,33 @@ export default class PostJob extends Component {
   };
 
   validateForm = () => {
-    //let error = 0;
-    let requiredCounter = 0;
+    // const inputItems = [
+    //   "jobTitle",
+    //   "jobDescription",
+    //   //"jobLocation",
+    //   "locationSensitive",
+    //   "jobSpecification",
+    //   "jobBudget",
+    // ];
 
-    const validationItems = [
-      "jobTitle",
-      "jobDescription",
-      //"jobLocation",
-      "locationSensitive",
-      "jobSpecification",
-      "jobBudget",
-    ];
-
-    validationItems.forEach((item) => {
-      if (this.state[item].length >= 1) {
-        // error++;
-        requiredCounter++;
-        console.log(requiredCounter);
-
-        // this.state[`${item}Required`] = true;
-      }
-    });
-    if (requiredCounter >= 1) {
-      this.setState({ showBtn: true });
+    // inputItems.forEach((item) => {
+    if (
+      this.state.jobTitle &&
+      this.state.jobDescription &&
+      this.state.locationSensitive &&
+      this.state.jobSpecification &&
+      this.state.jobBudget
+    ) {
+      //this.setState({ showBtn: true });
+      return true;
+    } else {
+      return false;
     }
+    // });
   };
 
   createJob = async () => {
-    if (this.state.showBtn !== true) return;
+    if (this.validateForm() !== true) return;
 
     this.setState({ loading: true, response: {} });
     // uncomment block after testing validation
@@ -88,6 +87,7 @@ export default class PostJob extends Component {
       loading: false,
       response: response.data.createJob.Job,
     });
+    console.log(response);
   };
 
   render() {
@@ -242,7 +242,7 @@ export default class PostJob extends Component {
               </div>{" "}
               {/*  */}{" "}
             </div>{" "}
-            {this.state.showBtn && (
+            {this.validateForm() && (
               <button
                 className="buttonLogin link"
                 title="Post Job"
