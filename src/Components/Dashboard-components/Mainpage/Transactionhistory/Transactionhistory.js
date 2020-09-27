@@ -31,13 +31,13 @@ class Transactionhistory extends Component {
           <div className="row">
             <div className="col-12">
               <table className="table table-bordered mb-5">
-                <thead className=" tablehead">
+                <thead className="custom-shadow tablehead subtitle1">
                   <tr>
                     <th scope="col">#</th>
                     <th>Date & Time</th>
-                    <th>Client Name</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Location</th>
+                    
+                    <th scope="col">Amount</th>
+                    <th scope="col">Transaction Id</th>
                     <th scope="col">Transaction status</th>
                   </tr>
                 </thead>

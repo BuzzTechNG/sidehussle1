@@ -1,33 +1,29 @@
-import {
-  gql
-} from "@apollo/client";
-import {
-  client
-} from "./index";
+import { gql } from "@apollo/client";
+import { client } from "./index";
 
 class apollaHelperClass {
   GOOGLE = "googleId";
   FACEBOOK = "facebookId";
-  GET_USER = gql `
+  GET_USER = gql`
     query getUser($id: String) {
       getUser(id: $id) {
         id
         pictureUrl
         firstName
         lastName
-        userDetails{
+        userDetails {
           logAndLat
           address
           userPricePerHour
           userInfo
-          languages{
+          languages {
             language
             proficiency
           }
           userTitle
           videoUrl
           avaliability
-          education{
+          education {
             school
             from
             to
@@ -35,17 +31,16 @@ class apollaHelperClass {
             areaOfStudy
           }
           services
-          accountDetails{
+          accountDetails {
             accountNumber
             accountName
             paystackRSP
           }
-          
         }
       }
     }
   `;
-  GET_USER_WITHOUT_AUTH = gql `
+  GET_USER_WITHOUT_AUTH = gql`
     query getUserWithoutAuth($id: String) {
       getUserWithoutAuth(id: $id) {
         id
@@ -57,7 +52,7 @@ class apollaHelperClass {
   `;
 
   //login logic
-  LOGIN = gql `
+  LOGIN = gql`
     mutation login($userId: String, $userPassword: String) {
       login(userId: $userId, userPassword: $userPassword) {
         token
@@ -75,37 +70,27 @@ class apollaHelperClass {
       },
     });
   }
-  VERFITY_USER_MOBILE = gql `
-  mutation verifyUserMobile(
-    $id: String 
-    $mobileNumber: String
-    ){
-      verifyUserMobile(
-    id: $id
-    mobileNumber: $mobileNumber
-    ){
-      message
-    }
+  VERFITY_USER_MOBILE = gql`
+    mutation verifyUserMobile($id: String, $mobileNumber: String) {
+      verifyUserMobile(id: $id, mobileNumber: $mobileNumber) {
+        message
+      }
     }
   `;
-  COMFIRM_USER_MOBILE = gql `
-  mutation comfirmUserMobile(
-    $user: String 
-    $token: String
-    $tokenType: String
-    ){
-      comfirmUserMobile(
-    user: $user
-    tokenType: $tokenType
-    token: $token
-    ){
-      message
-      token
-    }
+  COMFIRM_USER_MOBILE = gql`
+    mutation comfirmUserMobile(
+      $user: String
+      $token: String
+      $tokenType: String
+    ) {
+      comfirmUserMobile(user: $user, tokenType: $tokenType, token: $token) {
+        message
+        token
+      }
     }
   `;
   //register logic
-  REGISTER = gql `
+  REGISTER = gql`
     mutation register(
       $firstName: String
       $middleName: String
@@ -133,7 +118,7 @@ class apollaHelperClass {
       }
     }
   `;
-  SOCIAL_AUTH = gql `
+  SOCIAL_AUTH = gql`
     mutation socialAuth(
       $firstName: String
       $lastName: String
@@ -156,6 +141,92 @@ class apollaHelperClass {
       }
     }
   `;
+  //update modal logic
+  UPDATE_USER = gql`
+    mutation updateUser(
+      $address: String
+      $logAndLat: String
+      $services: [String]
+      $languages: [LanguageInput]
+      $videoUrl: String
+      $education: [EducationInput]
+      $userTitle: String
+      $userPricePerHour: String
+      $userInfo: String
+    ) {
+      updateUser(
+        address: $address
+        logAndLat: $logAndLat
+        services: $services
+        languages: $languages
+        videoUrl: $videoUrl
+        education: $education
+        userTitle: $userTitle
+        userPricePerHour: $userPricePerHour
+        userInfo: $userInfo
+      ) {
+        id
+        firstName
+        middleName
+        lastName
+        pictureUrl
+        userDetails {
+          logAndLat
+          address
+          userPricePerHour
+          userInfo
+          languages {
+            language
+            proficiency
+          }
+          userTitle
+          videoUrl
+          avaliability
+          education {
+            school
+            from
+            to
+            desc
+            areaOfStudy
+          }
+          services
+          accountDetails {
+            accountNumber
+            accountName
+            paystackRSP
+          }
+        }
+      }
+    }
+  `;
+  //  Job
+  GET_AVALIABLE_JOBS = gql`
+    query getAvaliableJobs($location: String) {
+      getAvaliableJobs(location: $location) {
+        jobTitle
+        jobDescription
+        locationSensitive
+        jobBudget
+        isBudgetNegotiable
+        jobCompleted
+        jobStatus
+        jobLocation
+        jobSpecification
+        user {
+          firstName
+          lastName
+        }
+      }
+    }
+  `;
+  async getAvaliableJobs(location) {
+    return await client.query({
+      query: this.GET_AVALIABLE_JOBS,
+      variables: {
+        location,
+      },
+    });
+  }
   async register(
     firstName,
     middleName,
@@ -217,10 +288,7 @@ class apollaHelperClass {
       },
     });
   }
-  async verifyUserMobile({
-    id,
-    mobileNumber
-  }) {
+  async verifyUserMobile({ id, mobileNumber }) {
     return await client.mutate({
       mutation: this.VERFITY_USER_MOBILE,
       variables: {
@@ -229,79 +297,18 @@ class apollaHelperClass {
       },
     });
   }
-  async comfirmUserMobile({
-    user,
-    token
-  }) {
-    const tokenType = "MOBILE_VERIFICATION"
+  async comfirmUserMobile({ user, token }) {
+    const tokenType = "MOBILE_VERIFICATION";
     return await client.mutate({
       mutation: this.COMFIRM_USER_MOBILE,
       variables: {
         user,
         token,
-        tokenType
+        tokenType,
       },
     });
   }
-  //update modal logic
-  UPDATE_USER = gql `
-    mutation updateUser(
-      $address: String
-      $logAndLat: String
-      $services: [String]
-      $languages: [LanguageInput]
-      $videoUrl: String
-      $education:[EducationInput]
-      $userTitle: String
-      $userPricePerHour: String
-      $userInfo: String
-    ) {
-      updateUser(
-        address: $address
-        logAndLat: $logAndLat
-        services: $services
-        languages: $languages
-        videoUrl: $videoUrl
-        education:$education
-        userTitle: $userTitle
-        userPricePerHour: $userPricePerHour
-        userInfo: $userInfo
-      ) {
-        id
-        firstName
-        middleName
-        lastName
-        pictureUrl
-        userDetails{
-          logAndLat
-          address
-          userPricePerHour
-          userInfo
-          languages{
-            language
-            proficiency
-          }
-          userTitle
-          videoUrl
-          avaliability
-          education{
-            school
-            from
-            to
-            desc
-            areaOfStudy
-          }
-          services
-          accountDetails{
-            accountNumber
-            accountName
-            paystackRSP
-          } 
-        }
-       
-      }
-    }
-  `;
+
   async updateUser({
     address,
     logAndLat,
@@ -311,7 +318,7 @@ class apollaHelperClass {
     education,
     userTitle,
     userPricePerHour,
-    userInfo
+    userInfo,
   }) {
     return await client.mutate({
       mutation: this.UPDATE_USER,
@@ -324,9 +331,11 @@ class apollaHelperClass {
         education,
         userTitle,
         userPricePerHour,
-        userInfo
+        userInfo,
       },
     });
   }
 }
+const apolloHelper = new apollaHelperClass()
 export default apollaHelperClass;
+export { apolloHelper }

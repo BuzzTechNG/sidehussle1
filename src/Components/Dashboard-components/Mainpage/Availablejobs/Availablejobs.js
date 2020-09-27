@@ -3,15 +3,25 @@ import React, { Component } from "react";
 import availableJobs from "../AvailablejobsList";
 import Pagination from "./Pagination";
 import Card from "./Card/Card";
+import { apolloHelper } from "../../../..";
+
 
 class Availablejobs extends Component {
+  constructor(props){
+    super(props)
+    this.getAvaliableJobs("7.4444 3.1455")
+  }
   state = {
-    availableJobs: availableJobs,
+    availableJobs: [],
     isGrid: false,
     currentPage: 1,
     postsPerPage: 5,
   };
-
+  getAvaliableJobs = async () =>{
+   const jobs = await apolloHelper.getAvaliableJobs("")
+    console.log(jobs)
+    this.setState({availableJobs:jobs.data.getAvaliableJobs})
+  }
   changePPP = (event) => {
     const { name, value } = event.target;
 
@@ -32,9 +42,9 @@ class Availablejobs extends Component {
       <Card
         isGrid={this.state.isGrid}
         key={aJob.Id}
-        topic={aJob.title}
-        description={aJob.description}
-        price={aJob.price}
+        topic={aJob.jobTitle}
+        description={aJob.jobDescription}
+        price={aJob.jobBudget}
       />
     ));
     const setIsGrid = () => {

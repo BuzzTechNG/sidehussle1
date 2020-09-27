@@ -1,22 +1,11 @@
 class AppLogic{
     async getUserLocationFromHERE(lat,log){
       const response = await fetch(
-          `https://revgeocode.search.hereapi.com/v1/revgeocode?at=${lat}%2C${log}&apiKey=GSD3NW4vKzP7noIdGGjUf-CQ9WsisTNYGHvv_jiWaOU&lang=en`,
-        //   {
-        //     method:"GET",
-            
-        //     headers:{
-        //       "Host": "config.data.api.platform.here.com",
-        //       "Cache-Control": "no-cache",
-        //     "Authorization": "Bearer GSD3NW4vKzP7noIdGGjUf-CQ9WsisTNYGHvv_jiWaOU"
-        //   }
-        // }
-        );
+          `https://revgeocode.search.hereapi.com/v1/revgeocode?at=${lat}%2C${log}&apiKey=GSD3NW4vKzP7noIdGGjUf-CQ9WsisTNYGHvv_jiWaOU&lang=en`);
         const data = await response.json();
         console.log(data);  
     }
       
-    
     numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
@@ -42,8 +31,7 @@ class AppLogic{
             
         })
         
-        
-
+    
     }
       async getAddressFromLogandLat(loglat){
         const response = await fetch(
@@ -60,7 +48,6 @@ class AppLogic{
         console.log(data);
         return data
       }
-
 }
 const appLogic = new AppLogic()
 export default appLogic

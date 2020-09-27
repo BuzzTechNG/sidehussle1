@@ -2,6 +2,7 @@ import React from "react";
 import "./Card.css";
 import "./CardDark.scss";
 import { NavLink } from "react-router-dom";
+import { appLogic } from "../../../../..";
 
 const card = (props) => {
   return props.isGrid ? (
@@ -26,7 +27,7 @@ const card = (props) => {
             <i className="fa fa-layer-group  pr-2"> </i> {props.topic}{" "}
           </li>
           <li className="list-group-item d-flex justify-content-between bg-card">
-            <span> Price: {props.price} </span>{" "}
+            <span> Price: {appLogic.numberWithCommas(props.price)} </span>{" "}
           </li>{" "}
           <li className="list-group-item d-flex justify-content-between bg-card">
             <span> Posted by: user </span>{" "}
@@ -69,7 +70,7 @@ const card = (props) => {
           </li>{" "}
         </div>{" "}
       </div>{" "}
-      <div className="title2 px-1"> {props.price} </div>{" "}
+      <div className="title2 px-1"> {appLogic.numberWithCommas(props.price)} </div>{" "}
     </NavLink>
   );
 };

@@ -60,3 +60,4 @@ export {
   client,
   appLogic
 }
+export { apolloHelper } from "./apolloHelper"

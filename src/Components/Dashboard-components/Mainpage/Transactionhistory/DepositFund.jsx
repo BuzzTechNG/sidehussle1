@@ -27,7 +27,7 @@ function DepositFund() {
                 <div className="page-title">
                     Deposit Fund
                 </div>
-                <div className="custom-shadow mx-auto p-4 mt-5 py-5 " style={{maxWidth:"750px",width:"100%"}}>
+                <div className="custom-shadow mx-auto p-4 mt-5 py-5 " style={{width:"100%"}}>
                     <div className="row my-3 align-items-center">
                         <div className="col-5 subtitle2">Deposit Amount</div>
                         <div className="col-7  text-right">
