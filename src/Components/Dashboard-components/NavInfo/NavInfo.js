@@ -61,19 +61,19 @@ const NavInfo = () => {
                     </NavLink>
                     <div className="nav-link-container">
                       
-                      <NavLink to="" className="item" >
-                      Current Job
+                      <NavLink to="/dashboard/activejobs" className="item" >
+                      Active Jobs
                       </NavLink>
                       <NavLink to="/dashboard/previousjobs" className="item" >
-                      Past Work
+                      Past Jobs
                       </NavLink>
-                      <NavLink to="" className="item" >
+                      <NavLink to="/dashboard/myjobs" className="item" >
                        Posted Jobs
                       </NavLink>
                       <NavLink to="/dashboard/finduser" className="item" >
                       Find Husslers
                       </NavLink>
-                      
+                 
                       </div>
                   </li>
           

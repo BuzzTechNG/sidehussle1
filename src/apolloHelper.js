@@ -275,6 +275,7 @@ class apollaHelperClass {
   async getUser(id) {
     return await client.query({
       query: this.GET_USER,
+
       variables: {
         id,
       },

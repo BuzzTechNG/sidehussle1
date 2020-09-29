@@ -61,7 +61,7 @@ class Availablejobs extends Component {
       <div className="full-width">
         <div className="container-lg mt-3 py-2 px-4">
           <div className="page-title"> Avaliable Jobs </div>{" "}
-          <div className="row my-4">
+          <div className="row my-2">
             {" "}
             {/* Left container */}
             <div className="col-lg-3 col-md-12 col-sm-12 col-xs-12">

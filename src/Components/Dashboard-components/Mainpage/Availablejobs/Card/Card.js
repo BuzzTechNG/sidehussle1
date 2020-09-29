@@ -8,7 +8,7 @@ const card = (props) => {
   return props.isGrid ? (
     <NavLink
       title="Click to expand job information"
-      to="/dashboard/avaliablejobs/56d6dsh"
+      to="/dashboard/jobprofile/56d6dsh"
       class="col-sm-12 col-md-6 col-lg-6 col-xl-4 my-4"
     >
       <div class="xcard card-list">
@@ -38,7 +38,7 @@ const card = (props) => {
   ) : (
     <NavLink
       title="Click to expand job information"
-      to="/dashboard/avaliablejobs/56d6dsh"
+      to="/dashboard/jobprofile/56d6dsh"
       className="xcard row p-3 pl-4 mx-auto"
       style={{
         width: "96%",
