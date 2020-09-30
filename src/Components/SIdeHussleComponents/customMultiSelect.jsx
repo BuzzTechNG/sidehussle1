@@ -1,10 +1,17 @@
 import React from "react";
 
-function CustomSelect(props) {
+function CustomSelect(props,{onChange}) {
+  
   const [optionOpened, setOptionOpened] = React.useState(false);
   const [selected, setSelected] = React.useState({});
   const [filter, setFilter] = React.useState("");
   const [openCustomModal, setOpenCustomModal] = React.useState(false);
+  React.useEffect(() => {
+    props.onChange(Object.keys(selected))
+    return () => {
+      
+    }
+  }, [selected])
   const toggle = () => {
     setFilter("");
     if (window.innerWidth < 992) {
@@ -126,6 +133,7 @@ function CustomSelect(props) {
     );
   }
   function CustomModal(){
+    
     return (
       <div className="modal">
       <div className="modal-container">

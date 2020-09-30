@@ -330,27 +330,25 @@ class apollaHelperClass {
   }
   CREATE_JOB = gql `
     mutation createJob(
-      $userId: String
       $jobTitle: String
       $jobDescription: String
       $jobLocation:String
       $jobSpecification: [String]
-      $locationSensitive: String
-      $jobBudget: int
+      $locationSensitive: Boolean
+      $isBudgetNegotiable: Boolean
+      $jobBudget: Int
             ) {
       createJob(
-       userId:$userId
        jobTitle:$jobTitle
        jobDescription:$jobDescription
        jobLocation:$jobLocation
+       isBudgetNegotiable: $isBudgetNegotiable
        jobSpecification:$jobSpecification
        locationSensitive:$locationSensitive
        jobBudget:$jobBudget
       ) {
-        userId
         jobTitle
         jobDescription
-        jobLocation
         jobSpecification
         locationSensitive
         jobBudget
@@ -364,6 +362,7 @@ class apollaHelperClass {
     jobLocation,
     jobSpecification,
     locationSensitive,
+    isBudgetNegotiable,
     jobBudget
 
   }) {
@@ -375,6 +374,7 @@ class apollaHelperClass {
         jobDescription,
         jobLocation,
         jobSpecification,
+        isBudgetNegotiable,
         locationSensitive,
         jobBudget
       },

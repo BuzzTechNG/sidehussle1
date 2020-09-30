@@ -32,7 +32,8 @@ export default class PostJob extends Component {
       jobTitle: "",
       jobDescription: "",
       jobLocation: "",
-      jobSpecification: "",
+      isBudgetNegotiable: true,
+      jobSpecification: [],
       //jobBudget: "",
       loading: false,
       response: {},
@@ -59,22 +60,25 @@ export default class PostJob extends Component {
       [name]: value,
     });
   };
-
+  jobSpecificationChange = (value) => {
+    // eslint-disable-next-line react/no-direct-mutation-state
+    this.state.jobSpecification = value;
+    console.log(this.state);
+  };
   createJob = async () => {
-    if (this.validateForm() !== true) return;
+    if (!this.validateForm()) return;
 
     this.setState({ loading: true, response: {} });
     // uncomment block after testing validation
-    const response = await apollo.createJob(
-      this.state.userId,
-      this.state.jobTitle,
-      this.state.jobDescription,
-      this.state.jobLocation,
-      this.state.jobSpecification,
-      this.state.locationSensitive,
-      this.state.jobBudget
-    );
-    console.log(response);
+    const response = await apollo.createJob({
+      jobTitle: this.state.jobTitle,
+      jobDescription: this.state.jobDescription,
+      jobLocation: this.state.jobLocation,
+      jobSpecification: this.state.jobSpecification,
+      locationSensitive: this.state.locationSensitive,
+      isBudgetNegotiable: this.state.isBudgetNegotiable,
+      jobBudget: parseInt(this.state.jobBudget),
+    });
     this.setState({
       loading: false,
       response: response.data.createJob.Job,
@@ -146,7 +150,7 @@ export default class PostJob extends Component {
                   //  name="jobSpecification"
                   //value={this.state.jobSpecification}
                   //placeholder="Job Specification"
-                  // onChange={this.inputHandler}
+                  onChange={this.jobSpecificationChange}
                   options={[
                     "plumbing",
                     "tailoring",
@@ -226,6 +230,10 @@ export default class PostJob extends Component {
                   is this price negotiable
                   <input
                     type="checkbox"
+                    value={this.state.isBudgetNegotiable}
+                    onChange={(e) =>
+                      this.setState({ isBudgetNegotiable: e.target.value })
+                    }
                     style={{
                       width: "20px",
                       height: "20px",
@@ -253,7 +261,7 @@ export default class PostJob extends Component {
                 <button
                   className="buttonLogin link"
                   title="Post Job"
-                  onClick={this.postJob}
+                  onClick={this.createJob}
                 >
                   Post Job{" "}
                 </button>
