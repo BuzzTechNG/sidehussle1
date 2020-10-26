@@ -30,7 +30,7 @@ import { WebSocketLink } from '@apollo/client/link/ws';
 //   uri: 'http://192.168.1.117:3001/graphql',
 // });
       const wsLink = new WebSocketLink({
-        uri: `ws://hussleserver.herokuapp.com/graphql`,
+        uri: `wss://hussleserver.herokuapp.com/graphql`,
         options: {
           reconnect: true
         }
