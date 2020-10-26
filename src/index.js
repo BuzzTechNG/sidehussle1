@@ -20,18 +20,24 @@ import {
 import { getMainDefinition } from '@apollo/client/utilities';
 import { WebSocketLink } from '@apollo/client/link/ws';
 
-const wsLink = new WebSocketLink({
-  uri: `ws://192.168.1.117:3001/graphql`,
-  options: {
-    reconnect: true
-  }
-});
-const httpLink = createHttpLink({
-  uri: 'http://192.168.1.117:3001/graphql',
-});
-// const httpLink = createHttpLink({
-//   uri: 'https://hussleserver.herokuapp.com/graphql',
+// const wsLink = new WebSocketLink({
+//   uri: `ws://192.168.1.117:3001/graphql`,
+//   options: {
+//     reconnect: true
+//   }
 // });
+// const httpLink = createHttpLink({
+//   uri: 'http://192.168.1.117:3001/graphql',
+// });
+      const wsLink = new WebSocketLink({
+        uri: `ws://hussleserver.herokuapp.com/graphql`,
+        options: {
+          reconnect: true
+        }
+      });
+const httpLink = createHttpLink({
+  uri: 'https://hussleserver.herokuapp.com/graphql',
+});
 const authLink = setContext((_, {
   headers
 }) => {
