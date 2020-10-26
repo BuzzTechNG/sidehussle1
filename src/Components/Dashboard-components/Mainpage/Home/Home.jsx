@@ -9,8 +9,12 @@ import {
 } from "../Modals/Modal";
 import Apollo from "../../../../apolloHelper";
 import lottie from "lottie-web";
+import AvaliableBalance from "./AvaliableBalance";
+import Updateinfo from "../Updateuserinfo";
+import { appLogic } from "../../../..";
 const apollo = new Apollo();
 const ModalBtn = ({title, titleX, icon }) => {
+  
   return (
     <button
       type="button"
@@ -30,14 +34,27 @@ class Home extends Component {
     this.getUser();
 
     // this.getUserAfterModalSuccess = this.getUserAfterModalSuccess.bind(this)
-
+    this.state = {
+      loading: true,
+      data: "",
+    };
   }
-  state = {
-    loading: true,
-    data: "",
-  };
-
   
+  isUserProfile(){
+    if(appLogic.userId === this.state.data.id){
+      return true
+    }else{
+      return false
+    }
+  }
+  
+  isUserDetailsAvaliable(){
+    if(this.state.data.userDetails?.userTitle){
+      return true
+    }else{
+      return false
+    }
+  }
 
   componentDidMount() {
     this.animation = lottie.loadAnimation({
@@ -77,7 +94,7 @@ class Home extends Component {
 
        (
       <div key="home-screen" className="full-width column mt-4">
-        <div className="container-v custom-shadow row">
+        <div className="container-m custom-shadow row">
           <div className="row bdr justify-content-center align-items-center px-4 ml-0">
             {" "}
             <i className="fa fa-warning text-info"></i>
@@ -99,7 +116,8 @@ class Home extends Component {
             </p>
           </div>
         </div>
-        <div className="col column container-v custom-shadow mb-5 mt-4">
+        
+        <div className="col column container-m custom-shadow mb-5 mt-4">
           {/* Top container  */}
           <div className="col row padding-m py-4 bdb align-items-center">
             {this.state.data.pictureUrl ? (
@@ -112,14 +130,18 @@ class Home extends Component {
             )}
             <div className="ml-3 col">
               <div className="title1">{`${this.state.data.firstName} ${this.state.data.lastName}`}</div>
-              <div className="subtitle1">
-                {" "}
-                <i className="fa fa-location"></i> User location
+              <div className="title3 mb-1 d-flex align-items-center">
+              <i className="fa fa-money mr-2"></i> <AvaliableBalance/>
               </div>
+              {this.state.data.userDetails?.address && <div className="subtitle1">
+                <i className="fa fa-map-marker"></i> {this.state.data.userDetails.address}
+              </div>}
             </div>
           </div>
           {/* Top End */}
-          <div className="col row">
+          { !this.isUserDetailsAvaliable() ? 
+          <Updateinfo/> :
+          (<div className="col row">
             {/* Left Contaienr */}
             <div className=" col-lg-3 col-md-12 col-sm-12 col-xs-12 bdr p-3">
               <p className="subtitle1">
@@ -152,7 +174,7 @@ class Home extends Component {
                 <ul className="list subtitle3">
                 {this.state.data.userDetails?.languages.map((language,index)=>(
                   <li key={index}>
-                    {`${language.language} - ${language.proficiency}`}
+                    {`${language?.language} - ${language?.proficiency}`}
                   </li>
                 )) }
                 </ul>
@@ -219,7 +241,7 @@ class Home extends Component {
                   <div style={{ width: "40%" }}>
                     <img
                       style={{ width: "100%" }}
-                      src={require("../../../../assets/hiring.png")}
+                      src={require("../../../../assets/noworkava.svg")}
                       alt="review"
                       title="Work history"
                     />
@@ -238,7 +260,7 @@ class Home extends Component {
                   <div style={{ width: "40%" }}>
                     <img
                       style={{ width: "100%" }}
-                      src={require("../../../../assets/reviews.png")}
+                      src={require("../../../../assets/rating.svg")}
                       alt="review"
                       title="Reviews"
                     />
@@ -248,7 +270,7 @@ class Home extends Component {
               </div>
               /
             </div>
-          </div>
+          </div>)}
         </div>
         <ChangeRateViewModal
           reload={this.getUserAfterModalSuccess}

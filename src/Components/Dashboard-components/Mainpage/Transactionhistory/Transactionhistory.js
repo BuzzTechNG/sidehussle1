@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./Transactionhistory.css";
 import transactionlist from "../Previousjobslist";
 import "./Transactionhistory.scss";
 
@@ -30,7 +29,7 @@ class Transactionhistory extends Component {
           <div className="page-title my-4"> Transaction history</div>
           <div className="row">
             <div className="col-12">
-              <table className="table table-bordered mb-5">
+              <table className="table table-bordere mb-5">
                 <thead className="custom-shadow tablehead subtitle1">
                   <tr>
                     <th scope="col">#</th>
@@ -41,7 +40,9 @@ class Transactionhistory extends Component {
                     <th scope="col">Transaction status</th>
                   </tr>
                 </thead>
+                <tbody className="subtitle2">
                 {Thcard}
+                </tbody>
               </table>
             </div>
           </div>

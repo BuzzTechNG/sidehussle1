@@ -6,7 +6,7 @@ $fontSize: 25px;
 }
 .sidehussle-select{
     cursor: pointer;
-    border-bottom: 1px solid red;
+    border-bottom: 1px solid $custom-primary;
     width: max-content;
     min-width: 150px;
     
@@ -23,10 +23,12 @@ $fontSize: 25px;
         position: fixed;
         top:0;
         left: 0;
+        right: 0;
         width: 98vw;
         height: 95vh;
         background-color: #00000000;
         cursor: default;
+        z-index: 1;
     }
     &-modal{
         height: 70vh;
@@ -44,7 +46,7 @@ $fontSize: 25px;
           
           /* Handle */
           &::-webkit-scrollbar-thumb {
-            background: red;
+            background: $custom-primary;
             border-radius: 10px;
           }
     }
@@ -63,6 +65,7 @@ $fontSize: 25px;
         padding: 0 3px;
         
         box-shadow: 1px 1px 15px 0 #ddd;
+        z-index: 2;
         option{
             margin: 5px 10px;
             padding: 2px 10px;
@@ -83,7 +86,7 @@ $fontSize: 25px;
           
           /* Handle */
           &::-webkit-scrollbar-thumb {
-            background: red;
+            background: $custom-primary;
             border-radius: 10px;
           }
 

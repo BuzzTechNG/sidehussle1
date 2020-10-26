@@ -150,9 +150,7 @@ export default class PostJob extends Component {
                 </div>
                 {/* <input type="text" /> */}
                 <MultiSelect
-                  //  name="jobSpecification"
-                  //value={this.state.jobSpecification}
-                  //placeholder="Job Specification"
+                  
                   onChange={this.jobSpecificationChange}
                   options={[
                     "plumbing",

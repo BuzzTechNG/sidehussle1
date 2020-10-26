@@ -7,7 +7,7 @@
   position: absolute;
   height: 40vh;
   width: 100%;
-  background-image: linear-gradient(145deg, red, orange);
+  background-image: linear-gradient(145deg, $custom-primary, orange);
 
 }
 
@@ -24,8 +24,55 @@
   pointer-events: none;
 }
 
+
 .page {
   background-color: #fffcff;
+}
+
+.round-utility-btn{
+  border-radius: 25px;
+  border:1px solid $custom-primary;
+  padding: 2px 15px;
+  cursor: pointer;
+  width: max-content;
+  font-size: 12px;
+  transition: transform 220ms,opacity 300ms;
+  &:hover{
+    opacity: 0.9;
+    transform: scale(1.05)
+  }
+}
+
+@keyframes openCloseAnimation{
+  from{
+    transform: translateX(480px);
+  }
+  to{
+    transform: translateX(0px);
+  }
+}
+.open-message{
+
+animation: openCloseAnimation 500ms ease-in-out forwards;
+}
+.close-message{
+animation: openCloseAnimation 500ms ease-in-out reverse;
+}
+.side-messagebox{
+  
+  position: fixed;
+  bottom: 4px;
+  height: 100%;
+  max-height: 400px;
+  right: 20px;
+  width: 100%;
+  transform: translateX(500px);
+  max-width: 360px;
+  z-index: 10;
+  .card{
+    height: 100%;
+  }
+  
 }
 
 .verify {
@@ -38,8 +85,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #ffffffcc !important;
-  box-shadow: 1px 1px 7px 1px #eee, -1px -1px 15px 0 #eee;
   width: 100%;
   max-width: 480px;
 
@@ -67,7 +112,7 @@
 
     padding: 10px;
     border: 0;
-    border-bottom: 1px red solid;
+    border-bottom: 1px $custom-primary solid;
     font-size: Clamp(16px, 2vw , 22px);
 
   }
@@ -88,8 +133,8 @@
     }
 
     option:active {
-      background-color: red;
-      box-shadow: 0 0 100px 0 red;
+      background-color: $custom-primary;
+      box-shadow: 0 0 100px 0 $custom-primary;
     }
   }
 
@@ -106,13 +151,13 @@
 
   .square-btn {
 
-    font-size: medium;
+    font-size: 15px;
     border-radius: 3px;
     color: white;
-    padding: 8px 30px;
+    padding: 8px 15px;
     margin: 0;
     margin-top: 15px;
-    background-image: linear-gradient(145deg, red, orange);
+    background-image: linear-gradient(145deg, $custom-primary, orange);
   }
 }
 .action-btn{
@@ -122,14 +167,29 @@
     padding: 8px 30px;
     margin: 0;
     margin-top: 15px;
-    background-image: linear-gradient(145deg, red, orange);
+    // background-image: linear-gradient(145deg, $custom-primary, $custom-primary-accent ,);
+    background: linear-gradient(344.05deg, #7361d8 0%, #7361d8 53.55%);
+    box-shadow: 3px 3px 8px 2px #7361d833;
+
     cursor: pointer;
+    // color: #333;
     max-width: max-content;
-}
+    &:hover{
+      box-shadow: 1px 7px 7px 0px #22004422;
+      background: linear-gradient(344.05deg, rgb(230, 237, 252) 73.55%, rgb(230, 237, 252) 73.55%);
+      color: #000
+    }
+    &:active{
+      background-image: linear-gradient(145deg, $custom-primary, $custom-primary, $custom-primary );
+      
+    }
+    
+    }
+
 
 
 [dark="dark"] {
-  background-color: $dark-primary;
+  background-color: rgba($dark-primary,0.98);
   color: #bbb;
 
   a {
@@ -186,48 +246,29 @@
     color: #aaa;
   }
 
-  .bdr {
-    border-color: darken($dark-primary, 4);
-    border-right-width: 1px;
-    box-shadow: 1px 0px 0px 0 darken($dark-primary, 4);
+  .bdr, .bdl, .bdb, .bdt {
+    border-color: darken($dark-secondary, 0);
   }
 
-  .bdl {
-    border-color: darken($dark-primary, 4);
-    box-shadow: -1px 0px 0px 0 darken($dark-primary, 4);
-  }
-
-  .bdb {
-    border-color: darken($dark-primary, 4);
-    box-shadow: 0px 1px 0px 0 darken($dark-primary, 4);
-
-  }
-
-  .bdt {
-    border-color: darken($dark-primary, 4);
-    /* border-top-width: 1px; */
-    box-shadow: 0px -1px 0px 0 darken($dark-primary, 4);
-  }
 
   /* Botton */
   .round-btn,
   .square-btn {
-    background-color: lighten($dark-secondary, 100);
-    box-shadow: 1px 1px 8px 1px darken($dark-primary, 3);
+    background-color: lighten(#2e1222, 3);
+    // background-image: linear-gradient(180deg, $dark-secondary, $dark-secondary2) ;
+    box-shadow: 1px 1px 8px 1px darken($dark-secondary, 11);
   }
 
-  .square-btn {
-    color: red;
+  .square-btn, .round-btn {
+    color: #aaa;
   }
 
-  .round-btn {
-    color: red;
-  }
 
   .round-btn:hover,
   .square-btn:hover {
     box-shadow: 0px 2px 11px 1px #1c1820;
-    background-color: #aaa;
+    background-color: #bbb;
+    color: $custom-primary;
   }
 
   .list li {
@@ -236,7 +277,7 @@
 
   .custom-shadow {
     background-color: $dark-secondary2;
-    box-shadow: 2px 1px 5px 0px $dark-shadow, -2px -1px 5px 0px $dark-shadow;
+    box-shadow: 2px 1px 2px 0px $dark-shadow, -2px -1px 7px 0px $dark-shadow;
   }
 
   .filter-input {
@@ -245,5 +286,18 @@
 
   .postsperpage {
     color: grey;
+  }
+}
+@media screen and (max-width: 991px){
+  .side-messagebox{
+  
+    position: fixed;
+    bottom: 4px;
+    height: 85%;
+    max-height: 800px;
+    right: 0px;
+    width: 100%;
+    max-width: 460px;
+    
   }
 }

@@ -1,56 +1,33 @@
 import React from "react";
-
+import { TitleModal,SkillsModal,DescriptionModal,ChangeRateModal } from "./Modals/Modal";
 const Updateinfo = (props) => {
 
+
   return (
-    <div>
-      <div className="pt-5" style={{ zIndex: "0" }}>
+    <div className="">
+      <div className="py-2">
+
         <div className="">
-          <div
-            className="subtitle1 post-subtitle"
-            style={{ backgroundColor: "red" }}
-          >
-            You need to update other relevant information before you continue...
-          </div>
-        </div>
-
-        <div className="my-4">
-          <div className="mcard p-4">
-            {/*  */}
-            <div className="job-form row">
-              <div>
-                {" "}
-                <i className="fa fa-edit"></i> Enter your fullname
-              </div>
-              <div className="col-sm-12 col-md-4 px-2 m-2">
-                <input type="text" placeholder="FirstName" />
-              </div>
-              <div className="col-sm-12 col-md-4 px-2 m-2">
-                <input type="text" placeholder=" Middlename" />
-              </div>
-              <div className="col-sm-12 col-md-4 px-2 m-2">
-                <input type="text" placeholder="LastName(Surname)" />
-              </div>
-            </div>
-            {/*  */}
-            <div className="job-form row">
-              <div className="col-sm-12 col-md-6 px-2 m-2">
-                <div>
-                  <i className="fa fa-edit"></i> Update your phone number
-                </div>
-
-                <input type="number" placeholder="Enter Phone number" />
-              </div>
-              <div className="col-sm-12 col-md-6 px-2 m-2">
-                <div>
-                  <i className="fa fa-edit"></i> Update your Email address
-                </div>
-
-                <input type="mail" placeholder="Enter E-mail address" />
-              </div>
-            </div>
-            {/*  */}
+          <div className=" p-4 job-form" >
+            <section className="mb-4">
+            <TitleModal/>
+            </section>
+            <section className="my-3">
+            <DescriptionModal/>
+            </section>
+            <section className="my-4">
+              <h5>Your Charge Rate</h5>
+              <div className="hint">let us know how much you would like to make per hour</div>
+            <ChangeRateModal/>
+            </section>
+            <section className="my-4">
+            <SkillsModal/>
+            </section>
+           
             <div className="job-form">
+
+
+
               <div>
                 <i className="fa fa-edit"></i> Gender
               </div>
@@ -61,18 +38,9 @@ const Updateinfo = (props) => {
                 <option value="female">Female</option>
               </select>
             </div>
-            {/*  */}
-            <div className="job-form">
-              <div>
-                <i className="fa fa-edit"></i> Bio
-              </div>
-              <input
-                type="textarea"
-                placeholder="Brief description for your profile"
-                row="7"
-              />
+            <div className="d-flex justify-content-end">
+              <div className="square-btn subtitle1 mx-0" style={{fontWeight:"700"}}>Update Profile <i style={{fontWeight:"800"}} className="fa fa-check ml-2 my-auto"></i></div>
             </div>
-            {/*  */}
           </div>
         </div>
       </div>

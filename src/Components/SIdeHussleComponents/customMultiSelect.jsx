@@ -1,6 +1,6 @@
 import React from "react";
 
-function CustomSelect(props,{onChange}) {
+function CustomSelect(props,{onChange, placeholder}) {
   
   const [optionOpened, setOptionOpened] = React.useState(false);
   const [selected, setSelected] = React.useState({});
@@ -12,15 +12,18 @@ function CustomSelect(props,{onChange}) {
       
     }
   }, [selected])
-  const toggle = () => {
+  function toggle(){
     setFilter("");
     if (window.innerWidth < 992) {
       // eslint-disable-next-line no-undef
       // $('#customSelect').modal('toggle');
+      if(optionOpened){
+        setOptionOpened((prev) => !prev)  
+      }
       setOpenCustomModal(true)
       // eslint-disable-next-line no-undef
       // $("#customSelect").appendTo("body").modal("show");
-      console.log(window.innerWidth);
+      
     } else {
       setOptionOpened((prev) => !prev);
     }
@@ -37,107 +40,14 @@ function CustomSelect(props,{onChange}) {
     // })
     // setFilter("")
   }
-  function SelectModal({
-    data,
-    selected,
-    setSelected,
-    filter,
-    setFilter,
-    removeItem,
-  }) {
-    function closeModal() {
-      // eslint-disable-next-line no-undef
-      $("#customSelect").modal("toggle");
-    }
-    return (
-      <div
-        className="modal fade "
-        id="customSelect"
-        tabIndex={1}
-        aria-labelledby="ModalLabel"
-        aria-hidden="true"
-      >
-        <div
-          className="modal-dialog modal-lg modal-dialog-centered "
-          style={{ border: 0, outline: 0 }}
-        >
-          <div className="modal-content " style={{ border: 0, outline: 0 }}>
-            <div className="modal-header">
-              <h4 className="modal-title" id="ModalLabel">
-                Select
-              </h4>
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div className="modal-body ">
-              {/* <div className="sidehussle-select-modal" > { data } </div> */}
-              <input
-                className="multiclass-filter"
-                type="text"
-                value={filter}
-                onChange={(e) => setFilter(e.target.value)}
-              />
-              {Object.keys(selected).map((item, index) => (
-                <div key={`${index}option`} className="multiselect-option">
-                  {" "}
-                  {item}{" "}
-                  <i
-                    className="fa fa-times"
-                    style={{ fontWeight: "700" }}
-                    onClick={() => removeItem(item)}
-                  >
-                    {" "}
-                  </i>{" "}
-                </div>
-              ))}
-
-              {props.options
-                
-                .filter((option) => option.includes(filter))
-                .map((optionx, index) => (
-                  <div
-                    key={`${index}list-item`}
-                    className="multiselect-select-list-item"
-                    onClick={() => {
-                      setSelected((prev) => {
-                        return { ...prev, [optionx]: optionx };
-                      });
-                      // toggle()
-                    }}
-                  >
-                    {optionx}
-                  </div>
-                ))}
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="modal-close-btn"
-                data-dismiss="modal"
-              >
-                Close
-              </button>
-              {/* <button type="button" className="modal-save-btn square-btn m-0">
-                Save changes
-              </button> */}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  
   function CustomModal(){
     
     return (
       <div className="modal">
       <div className="modal-container">
         <div>Select service categories needed</div>
+      <div className="job-form">
       <input
       autoFocus
                 className="multiclass-filter"
@@ -145,6 +55,7 @@ function CustomSelect(props,{onChange}) {
                 value={filter}
                 onChange={(e) =>{e.persist(); setFilter(e.target.value)}}
               />
+              </div>
               <div className="d-flex multiselect">
               {Object.keys(selected).map((item, index) => (
                 <div key={`${index}option`} className="multiselect-option mx-2">
@@ -208,15 +119,55 @@ function CustomSelect(props,{onChange}) {
       /> */}
        {openCustomModal && (<CustomModal/>)}
        
+      <div className="d-flex align-items-center">
+      
       <i className="mx-1 fa  fa-angle-down" style={{ fontWeight: "900" }}></i>
-      <div onClick={toggle} className="multiclass-filter">
+      <div onClick={toggle} className="multiselect-filter">
         <input
-          className="multiclass-filter"
+          placeholder={props.placeholder}
           type="text"
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
         />
+      {optionOpened && (
+        <div className="multiselect-select-list">
+          {" "}
+          {props.options
+            .filter((optionx)=> !Object.keys(selected).includes(optionx))
+            .filter((option) => option.includes(filter))
+            .map((optionx, index) => (
+              <div
+                key={`${index}list-item`}
+                className="multiselect-select-list-item"
+                onClick={() => {
+                  
+                  setSelected((prev) => {
+
+                    return { ...prev, [optionx]: optionx };
+                  });
+                  
+                }}
+              >
+                {optionx}
+              </div>
+            ))}{" "}
+            {props.options
+            .filter((optionx)=> !Object.keys(selected).includes(optionx))
+            .filter((option) => option.includes(filter)).length < 1 && <div
+             className="multiselect-select-list-item">
+               <div style={{opacity:0.5,}} className="d-flex flex-column justify-content-center align-items-center">
+                  <i className="fa fa-folder-open mx-auto"></i> 
+                  <div className="subtitle3"> No Data </div> 
+                  </div> 
+                  </div>}
+        </div>
+      )}
       </div>
+      
+      
+      
+      </div>
+      
       {Object.keys(selected).map((item, index) => (
         <div key={`${index}option`} className="multiselect-option">
           {" "}
@@ -230,34 +181,14 @@ function CustomSelect(props,{onChange}) {
           </i>{" "}
         </div>
       ))}
-      {optionOpened && (
-        <div onClick={toggle} className="sidehussle-select-overlay"></div>
-      )}
 
-      {optionOpened && (
-        <div className="multiselect-select-list">
-          {" "}
-          {props.options
-            .filter((optionx)=> !Object.keys(selected).includes(optionx))
-            .filter((option) => option.includes(filter))
-            .map((optionx, index) => (
-              <div
-                key={`${index}list-item`}
-                className="multiselect-select-list-item"
-                onClick={() => {
-                  setSelected((prev) => {
-                    return { ...prev, [optionx]: optionx };
-                  });
-                  toggle();
-                }}
-              >
-                {optionx}
-              </div>
-            ))}{" "}
-        </div>
+{optionOpened && (
+        <div onClick={toggle} className="sidehussle-select-overlay"></div>
       )}
     </div>
   );
 }
 
 export default CustomSelect;
+const MultiSelect = CustomSelect
+export { MultiSelect };

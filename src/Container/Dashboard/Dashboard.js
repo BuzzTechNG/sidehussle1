@@ -19,6 +19,7 @@ class Dashboard extends Component {
     return (
       <div>
         <div className="container-fluid" dark={mode}>
+        <img className="container-fluid-bg" src={require('../../assets/main-bg.svg')} />
           <div className="row">
             <NavInfo />
             <Mainpage />

@@ -20,6 +20,22 @@
 display: flex;
 flex-direction: column-reverse;
 height: 100%;
+
+
+    &-loading{
+        position: absolute;
+        top: 0;
+        // bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        // margin-top: -60%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 100;
+        
+    }
 }
 .message-box
 .message-chat{
@@ -67,13 +83,14 @@ display: none;
     box-shadow: 0px -1px 5px 0 #dddddddd;
     }
     
-    height: 50px;
+    min-height: 50px;
+    padding: 7px 0
 
 }   
 .message-box-header{
     position: absolute;
     top: 0;
-    right: 1%;
+    margin-left: -15px;
     height: 50px;
     width: 100%;
     @if($isDarkMode){
@@ -121,41 +138,48 @@ display: none;
 // .message-box
 .message-box
 .message-box-area
-input:focus {
+.input:focus {
     border-bottom: rgba($custom_primary,0.5) 1px solid;
 }
 
+.input:empty::before {
+    content: "Write a Message...";
+    color: gray;
+  }
 .message-box
 .message-box-area
-input{
+.input{
     position: relative;
     outline: none;
     background: transparent;
     border-color: transparent;
-    border-bottom: 1px solid red($color: #000000);
-    padding-bottom: 5px;
-    
-    // margin: 0 auto;
+    border-bottom: 1px solid $custom-primary;
+    padding-bottom: 7px;
+    padding-top: 8px;
+    cursor: text;
+    background-color: #00000011;
+    border-radius: 25px;
 
 }
 .message-box
-.message-box-area input
+.message-box-area div
 ::after{
 
     content: "";
     position: absolute;
     bottom: 0;
-    /* left: 0; */
-    width: 10px;
-    height: 1px;
-    background-color: #41a362;
-    transition: all 700ms;
-    
+    left: 0; 
+    width: 1px;
+    height: 1.5px;
+    background-color: $custom-secondary;
+    transition: all 500ms;
+    transform-origin: right;
+    margin: auto 1.5%
 }
 .message-box
-.message-box-area input
-:hover::after{
-    width: 90%;
+.message-box-area div
+:focus::after{
+    width: 97%;
 }
 @mixin complainList($isDarkMode){
 height: 100%;
@@ -209,6 +233,7 @@ height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
     @if($isDarkMode){
         background-color: rgba($custom_primary_accent,0.1);
     color:#ccc
@@ -299,6 +324,46 @@ width: 99%;
         @include messageBox(true)
        }
 }
+.custom-file-inputx {
+    color: transparent;
+    width: 25px;
+    height: 25px;
+    border: none;
+    outline: none;
+  }
+  .custom-file-inputx::-webkit-file-upload-button {
+    visibility: hidden;
+  }
+  
+  .custom-file-inputx::before {
+    content: 'Select some files';
+    width: 25px;
+    height: 25px;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f0c6";
+    outline: none;
+    border: none;
+    color: #888;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    // background-color: blue;
+    padding: 8px;
+    border-radius: 50%;
+  }
+
+  .custom-file-inputx:hover::before {
+    border-color: black;
+    background-color: #00000011;
+  }
+  .custom-file-inputx:active {
+    outline: none;
+    border: none;
+  }
+  .custom-file-inputx:active::before {
+    background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9); 
+  }
+  
 @media screen and ( max-width: 991px){
     .no-show{
         display: none;
@@ -306,3 +371,4 @@ width: 99%;
         opacity: 0;
     }
 } 
+

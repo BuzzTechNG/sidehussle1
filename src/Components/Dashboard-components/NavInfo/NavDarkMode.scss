@@ -55,8 +55,8 @@
     }
 
     .post-a-job {
-        /* background-color: orangered; */
-        background-image: linear-gradient(to right, #c42252 100%, #fe3852 100%);
+        /* background-color: orange$custom-primary; */
+        background-image: linear-gradient(to right, $custom-primary-accent, $custom-primary);
         color: white;
 
     }
@@ -84,13 +84,13 @@
             .item{
                 
                 &::before{
-                    color: red;
+                    color: $custom-primary;
                 }
             
             }
         }
       }
-      @media only screen and ( max-width: 992px){
+      @media only screen and ( max-width: 991px){
     
     
         .nav-item{
@@ -115,7 +115,7 @@
                     
                     &::before{
                         
-                        color: red;
+                        color: $custom-primary;
                     }
                 
                 }
@@ -168,7 +168,7 @@
             position: absolute;
             top: -20px;
             left: 38%;
-            // background-color: red;
+            // background-color: $custom-primary;
             border: 7px solid transparent;
             border-bottom: 10px solid rgb(245, 7, 118);
             
@@ -186,13 +186,13 @@
                 -webkit-font-smoothing: antialiased;
                 margin-right: 10px;
                 font-size: 12px;
-                color: red;
+                color: $custom-primary;
             }
         
         }
     }
   }
-  @media only screen and ( max-width: 992px){
+  @media only screen and ( max-width: 991px){
 
 
     .nav-item{
@@ -243,7 +243,7 @@
                     -webkit-font-smoothing: antialiased;
                     margin-right: 10px;
                     font-size: 12px;
-                    color: red;
+                    color: $custom-primary;
                 }
             
             }

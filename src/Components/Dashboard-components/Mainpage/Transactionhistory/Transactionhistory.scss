@@ -1,16 +1,35 @@
 @import "../../../../css/variables";
+.tablehead {
 
+
+}
+// .trans-row{
+//     // border:0 !important
+//     border-color: red !important;
+// }
+
+.trans-row:hover {
+    color: rgb(142, 150, 142);
+    
+}
 [dark="dark"] {
     .tablehead {
         background-color: $dark-primary;
         color: grey;
     }
 
-    .tbody {
-        color: white;
+    .trans-row {
+        // color: white;
+        
+    }
+    .table th,.table td{
+        border-color: #2a2a2a
     }
 
-    .tbody:hover {
+    .trans-row:hover {
         color: rgb(108, 112, 108);
+    }
+    .table-bordered {
+        border: 1px solid #494949;
     }
 }

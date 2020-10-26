@@ -6,7 +6,13 @@ import "./logindark.scss";
 import Apollo from "../../apolloHelper";
 const apollo =  new Apollo()
 class LogIn extends Component {
-  
+  constructor(props){
+    super(props)
+    const mobileNumber = localStorage.getItem("mobileNumber")
+    if(mobileNumber){
+      this.state.Username = mobileNumber
+    }
+  }
   state = {
     Username: "",
     Password: "",

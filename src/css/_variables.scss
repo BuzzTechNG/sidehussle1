@@ -1,19 +1,47 @@
 
-// $dark-secondary: lighten(#121212,8);
-// $dark-shadow: darken(#101010,0);
-// $dark-primary: lighten(#121212,0);
-// $dark-secondary2: lighten(#121212,3);
-// $ligth-primary: #cacaca;
-// $ligth-secondary: #b2a7c0;
-// $custom-primary: #c42252;
-// $custom-primary-accent: #fe3852;
+$dark-secondary-black: lighten(#121212,8);
+$dark-shadow-black: darken(#101010,0);
+$dark-primary-black: lighten(#121212,0);
+$dark-secondary2-black: lighten(#121212,3);
+$ligth-primary-black: #cacaca;
+$ligth-secondary-black: #b2a7c0;
+$custom-primary-black: #c42252;
+$custom-primary-accent-black: #fe3852;
 
 
 $dark-secondary: lighten(#332940,1);
-$dark-shadow: darken(#1F1A24,2);
+$dark-shadow: darken(#1F1A24,1);
 $dark-primary: darken(#1F1A24,0);
 $dark-secondary2: darken(#332940,6);
 $ligth-primary: #cacaca;
 $ligth-secondary: #b2a7c0;
+
+// $custom-primary: #C4B6FF;
+// $custom-secondary: #f6b6ff;
+// $custom-primary-accent: rgb(49, 145, 42);
 $custom-primary: #c42252;
-$custom-primary-accent: #fe3852;
+$custom-secondary: rgb(0, 225, 255);
+// $custom-primary-accent: #fe3852;
+$custom-primary-accent: #460cb1;
+[dark="dark-purle"] {
+    --dark-primary: $dark-primary;
+    --dark-secondary: $dark-secondary;
+    --dark-shadow: $dark-shadow;
+    --dark-secondary2:$dark-secondary2;
+     --ligth-primary:$ligth-primary;
+     --ligth-secondary:$ligth-secondary;
+     --custom-primary:$custom-primary;
+     --custom-primary-accent:$custom-primary-accent;
+
+  }
+  [dark="dark-black"] {
+    --dark-primary: $dark-primary-black;
+    --dark-secondary: $dark-secondary-black;
+    --dark-shadow: $dark-shadow-black;
+    --dark-secondary2:$dark-secondary2-black;
+     --ligth-primary:$ligth-primary-black;
+     --ligth-secondary:$ligth-secondary-black;
+     --custom-primary:$custom-primary-black;
+     --custom-primary-accent:$custom-primary-accent-black;
+
+  }

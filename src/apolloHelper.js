@@ -40,6 +40,11 @@ class apollaHelperClass {
       }
     }
   `;
+  UPDATE_USER_LOCATION = gql`
+    query updateUserLocation($location: String) {
+      updateUserLocation(location: $location)
+    }
+  `;
   GET_USER_WITHOUT_AUTH = gql`
     query getUserWithoutAuth($id: String) {
       getUserWithoutAuth(id: $id) {
@@ -47,6 +52,7 @@ class apollaHelperClass {
         pictureUrl
         firstName
         lastName
+        mobileNumber
       }
     }
   `;
@@ -112,9 +118,8 @@ class apollaHelperClass {
         email: $email
       ) {
         id
-        firstName
-        middleName
-        lastName
+        mobileNumber
+        message
       }
     }
   `;
@@ -199,10 +204,75 @@ class apollaHelperClass {
       }
     }
   `;
+  SEARCH_USER_WITH_FILTER = gql`
+    query searchUserWithFilter($services: [String]){
+      searchUserWithFilter(services: $services){
+        id
+        firstName
+        middleName
+        lastName
+        pictureUrl
+        userDetails {
+          logAndLat
+          address
+          userPricePerHour
+          userInfo
+          userTitle
+          videoUrl
+      }
+    }
+    }
+  `;
+  // Banks
+  GET_USER_BANK_DETAILS = gql`
+    query getUserBankDetails($id: String) {
+      getUserBankDetails(id: $id) {
+        accountNumber
+        accountName
+        paystackRSP
+      }
+    }
+  `;
+  ADD_USER_BANK_DETAILS = gql`
+    mutation addUserBankDetails(
+      $type: String
+      $name: String
+      $account_number: String
+      $bank_code: String
+      $currency: String
+    ) {
+      addUserBankDetails(
+        type: $type
+        name: $name
+        account_number: $account_number
+        bank_code: $bank_code
+        currency: $currency
+      ) {
+        accountNumber
+        accountName
+        paystackRSP
+        message
+      }
+    }
+  `;
+
+  PAY_WITH_PAYSTACK = gql`
+    mutation payWithPaystack($amount: String, $email: String) {
+      payWithPaystack(amount: $amount, email: $email)
+    }
+  `;
+
+  TRANSFER_WITH_PAYSTACK = gql`
+    mutation transferWithPaystack($amount: String, $userBank: String) {
+      transferWithPaystack(amount: $amount, userBank: $userBank)
+    }
+  `;
+
   //  Job
   GET_AVALIABLE_JOBS = gql`
     query getAvaliableJobs($location: String) {
       getAvaliableJobs(location: $location) {
+        id
         jobTitle
         jobDescription
         locationSensitive
@@ -219,35 +289,294 @@ class apollaHelperClass {
       }
     }
   `;
+  CREATE_JOB = gql`
+    mutation createJob(
+      $jobTitle: String
+      $jobDescription: String
+      $jobLocation: String
+      $jobSpecification: [String]
+      $locationSensitive: Boolean
+      $isBudgetNegotiable: Boolean
+      $jobBudget: Int
+    ) {
+      createJob(
+        jobTitle: $jobTitle
+        jobDescription: $jobDescription
+        jobLocation: $jobLocation
+        isBudgetNegotiable: $isBudgetNegotiable
+        jobSpecification: $jobSpecification
+        locationSensitive: $locationSensitive
+        jobBudget: $jobBudget
+      ) {
+        jobTitle
+        jobDescription
+        jobSpecification
+        locationSensitive
+        jobBudget
+      }
+    }
+  `;
+  GET_JOB = gql`
+    query getJob($id: String) {
+      getJob(id: $id) {
+        id
+        jobTitle
+        jobDescription
+        locationSensitive
+        jobBudget
+        isBudgetNegotiable
+        jobCompleted
+        jobStatus
+        jobLocation
+        jobAddress
+        createdAt
+        jobSpecification
+        assignedTo {
+          # user {
+          id
+          firstName
+          lastName
+
+          # }
+        }
+        interestedUser {
+          user {
+            id
+            firstName
+            lastName
+            pictureUrl
+          }
+          message
+          negotiatedPrice
+          createdAt
+        }
+        user {
+          id
+          firstName
+          lastName
+          # profileUrl
+          userDetails {
+            address
+          }
+          createdAt
+        }
+      }
+    }
+  `;
+  GET_JOBS_ASSIGNED_TO_WITH_STATUS = gql` 
+    query getJobsAssignedToWithStatus($status: String){
+        getJobsAssignedToWithStatus(status: $status){
+        id
+        jobTitle
+        jobDescription
+        locationSensitive
+        jobBudget
+        isBudgetNegotiable
+        jobCompleted
+        jobStatus
+        jobLocation
+        jobAddress
+        jobSpecification
+
+        createdAt
+    }
+    }
+  `;
+  GET_JOBS_USER_POSTED_WITH_STATUS = gql` 
+    query getJobsUserPostedWithStatus($status: String){
+      getJobsUserPostedWithStatus(status: $status){
+        id
+        jobTitle
+        jobDescription
+        locationSensitive
+        jobBudget
+        isBudgetNegotiable
+        jobCompleted
+        jobStatus
+        jobLocation
+        jobAddress
+        jobSpecification
+
+        createdAt
+    }
+    }
+  `;
+  AVALIABLE_BALANCE = gql`
+    query getUserAvaliableBalance {
+      getUserAvaliableBalance {
+        balance
+      }
+    }
+  `;
+  CAN_APPLY_FOR_JOB = gql`
+    query canApplyForJob($jobId: String) {
+      canApplyForJob(jobId: $jobId)
+    }
+  `;
+  APPLY_FOR_JOB = gql`
+    mutation applyForJob(
+      $jobId: String
+      $user: String
+      $message: String
+      $negotiatedPrice: String
+    ) {
+      applyForJob(
+        jobId: $jobId
+        user: $user
+        message: $message
+        negotiatedPrice: $negotiatedPrice
+      ) {
+        id
+      }
+    }
+  `;
+
+  CANCEL_JOB = gql`
+    mutation cancelJob($jobId: String) {
+      cancelJob(jobId: $jobId) {
+        jobStatus
+      }
+    }
+  `;
+  GET_USER_ASSIGNED_TO_JOB = gql`
+    query getUserAssignedToJob($jobId: String) {
+      getUserAssignedToJob(jobId: $jobId) {
+        user {
+          id
+          firstName
+          lastName
+        }
+        message
+        price
+      }
+    }
+  `;
+  ASSIGN_JOB = gql`
+    mutation assignJob($jobId: String, $user: String) {
+      assignJob(jobId: $jobId, user: $user)
+    }
+  `;
   async getAvaliableJobs(location) {
     return await client.query({
       query: this.GET_AVALIABLE_JOBS,
       variables: {
         location,
       },
+      fetchPolicy: "network-only",
     });
   }
+
+  START_OR_CONTINUE_CONVERSATION = gql`
+    mutation startOrContinueConversation($participant: String, $job: String) {
+      startOrContinueConversation(participant: $participant, job: $job) {
+        id
+        job
+        participants {
+          id
+          firstName
+          lastName
+        }
+        sender {
+          id
+          firstName
+          lastName
+        }
+      }
+    }
+  `;
+  PUSH_MESSAGE = gql`
+    mutation pushMessage($message: String, $id: String) {
+      pushMessage(message: $message, id: $id)
+    }
+  `;
+  GET_CONVERSATION = gql`
+    query getConversation($id: String) {
+      getConversation(id: $id) {
+        by
+        message
+      }
+    }
+  `;
+
+  GET_USER_CONVERSATIONS = gql`
+    query getUserConversations {
+      getUserConversations {
+        id
+        job
+        participants {
+          id
+          firstName
+          lastName
+          pictureUrl
+        }
+        sender {
+          id
+          firstName
+          lastName
+          pictureUrl
+        }
+      }
+    }
+  `;
+  NEW_MESSAGE = gql`
+    subscription newMessage($id: String) {
+      newMessage(id: $id) {
+        by
+        message
+      }
+    }
+  `;
+  GET_REVIEW = gql`
+    query getReview($jobId: String) {
+      getReview(jobId: $jobId) {
+        message
+        review
+        rating
+      }
+    }
+  `;
+
+  CREATE_REVIEW = gql`
+    mutation createReview(
+      $job: String
+      $reviewer: String
+      $reviewedUser: String
+      $review: String
+      $rating: Int
+    ) {
+      createReview(
+        job: $job
+        reviewer: $reviewer
+        reviewedUser: $reviewedUser
+        review: $review
+        rating: $rating
+      ) {
+        id
+        message
+      }
+    }
+  `;
   async register(
     firstName,
-    middleName,
+    // middleName,
     lastName,
     password,
     confirmPassword,
-    address,
+    // address,
     mobileNumber,
-    email
+    // email
   ) {
     return await client.mutate({
       mutation: this.REGISTER,
       variables: {
         firstName,
-        middleName,
+        // middleName,
         lastName,
         password,
         confirmPassword,
-        address,
+        // address,
         mobileNumber,
-        email,
+        // email,
       },
     });
   }
@@ -286,6 +615,14 @@ class apollaHelperClass {
       query: this.GET_USER_WITHOUT_AUTH,
       variables: {
         id,
+      },
+    });
+  }
+  async updateUserLocation(location) {
+    return await client.query({
+      query: this.UPDATE_USER_LOCATION,
+      variables: {
+        location,
       },
     });
   }
@@ -336,33 +673,7 @@ class apollaHelperClass {
       },
     });
   }
-  CREATE_JOB = gql `
-    mutation createJob(
-      $jobTitle: String
-      $jobDescription: String
-      $jobLocation:String
-      $jobSpecification: [String]
-      $locationSensitive: Boolean
-      $isBudgetNegotiable: Boolean
-      $jobBudget: Int
-            ) {
-      createJob(
-       jobTitle:$jobTitle
-       jobDescription:$jobDescription
-       jobLocation:$jobLocation
-       isBudgetNegotiable: $isBudgetNegotiable
-       jobSpecification:$jobSpecification
-       locationSensitive:$locationSensitive
-       jobBudget:$jobBudget
-      ) {
-        jobTitle
-        jobDescription
-        jobSpecification
-        locationSensitive
-        jobBudget
-        }
-    }
-  `;
+
   async createJob({
     userId,
     jobTitle,
@@ -371,8 +682,7 @@ class apollaHelperClass {
     jobSpecification,
     locationSensitive,
     isBudgetNegotiable,
-    jobBudget
-
+    jobBudget,
   }) {
     return await client.mutate({
       mutation: this.CREATE_JOB,
@@ -384,11 +694,20 @@ class apollaHelperClass {
         jobSpecification,
         isBudgetNegotiable,
         locationSensitive,
-        jobBudget
+        jobBudget,
+      },
+    });
+  }
+  async startOrContinueConversation({ participant, job }) {
+    return await client.mutate({
+      mutation: this.START_OR_CONTINUE_CONVERSATION,
+      variables: {
+        job,
+        participant,
       },
     });
   }
 }
-const apolloHelper = new apollaHelperClass()
+const apolloHelper = new apollaHelperClass();
 export default apollaHelperClass;
-export { apolloHelper }
+export { apolloHelper };

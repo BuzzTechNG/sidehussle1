@@ -27,6 +27,7 @@
 }
 
 .mcard {
+    background-color: #fcfcfc;
     box-shadow: 0 0 2px 0 #eee;
     border: #bbb solid 1px;
 }
@@ -76,7 +77,7 @@
 
 .job-form div {
     font-size: Clamp(14px, 2vw , 18px);  
-    font-weight: 700;
+    font-weight: 800;
 }
 
 .modal-body div {
@@ -96,6 +97,7 @@
 }
 
 .job-form input,
+.job-form select,
 .job-form textarea,
 .modal-body select {
     outline: none;

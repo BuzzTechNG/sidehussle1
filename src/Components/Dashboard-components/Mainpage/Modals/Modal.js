@@ -136,9 +136,9 @@ const ModalView = ({ body, title, modalType, action, reload }) => {
 };
 
 const TitleModal = ({ userTitle, setUserTitle }) => (
-  <div>
+  <>
     <h5>Your title</h5>
-    <p className="my-3">
+    <p className="my-3 subtitle1">
       Enter a single sentence description of your professional skills/experience
       (e.g Expert Web Designer with Ajax experience)
     </p>
@@ -158,18 +158,21 @@ const TitleModal = ({ userTitle, setUserTitle }) => (
         />
       </div>
     </form>
-  </div>
+  </>
 );
 const ChangeRateModal = ({ userPricePerHour, setUserPricePerHour }) => (
-  <div>
-    <p>
+  <>
+    <p className="subtitle2" style={{fontWeight:"bolder"}}>
       Please note that your hourly rate will only apply to new contracts. At this time SideHussle is service fee is 0 NGN
 
       </p>
-    <p>
-      Total Amount client will see{" "}
+    <div>
+    <p className="subtitle1 my-0">
+    Total Amount client will see{" "}
+    </p>
       <span>
-        <input
+       <div className="d-flex align-items-center"> 
+      <input
           type="number"
           name="yourRate"
           id="rate"
@@ -179,12 +182,15 @@ const ChangeRateModal = ({ userPricePerHour, setUserPricePerHour }) => (
             setUserPricePerHour(e.target.value);
           }}
           value={userPricePerHour}
-        />
+        /><div className="ml-2">
+        /hr
+        </div>
+        </div>
       </span>
-      /hr
-    </p>
+      
+    </div>
     <hr />
-    <p>
+    <p className="subtitle1">
       0% SideHussle Service fee{" "}
       <span>
         <strong>- {userPricePerHour}</strong>
@@ -199,11 +205,11 @@ const ChangeRateModal = ({ userPricePerHour, setUserPricePerHour }) => (
       </span>
       /hr
     </p>
-  </div>
+  </>
 );
 const SkillsModal = ({ services, setServices }) => (
-  <div>
-    <h5>Select skills:</h5>
+  <>
+    <div className="title2">Select skills:</div>
     <form>
       <div class="form-group">
         
@@ -228,6 +234,7 @@ const SkillsModal = ({ services, setServices }) => (
         }
         }
         >
+          <input/>
           <option value="transport">Transport</option>
           <option value="plumbing">plumbing</option>
           <option value="Electical">Electical</option>
@@ -237,14 +244,14 @@ const SkillsModal = ({ services, setServices }) => (
         
       </div>
     </form>
-  </div>
+  </>
 );
 const LanguageModal = ({ languages, setLanguages })=> {
   
   
   const [localLanguage, setLocalLanguage] = useState("")
   return (
-  <div>
+  <>
     <div class="form-group">
       <label for="editLanguage">Select your preferred Language</label>
       <select
@@ -272,7 +279,7 @@ const LanguageModal = ({ languages, setLanguages })=> {
         class="form-control"
         data-role="select-dropdown"
         data-profile="minimal"
-        value={languages.proficiency}
+        value={languages?.proficiency}
         onChange={(e) => {
           e.persist();
           const filteredLanguage = languages.map(lang => 
@@ -292,7 +299,7 @@ const LanguageModal = ({ languages, setLanguages })=> {
         <option value="5">5</option>
       </select>
     </div>
-  </div>
+  </>
 )};
 
 const EducationModal = ({ localEducation, setLocalEducation }) => {
@@ -311,7 +318,7 @@ const EducationModal = ({ localEducation, setLocalEducation }) => {
     }))
   }
   return (
-    <div>
+    <>
       <div>
         <h5>School</h5>
         <div>
@@ -418,27 +425,33 @@ const EducationModal = ({ localEducation, setLocalEducation }) => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
 const DescriptionModal = ({ userDesc, setDescription }) => (
-  <div>
-    <h5>Description (Optional)</h5>
+  <>
+    <h5>Description</h5>
     <form>
-      <div class="form-group">
+      <div class="form-group mb-0">
         <textarea
           rows="4"
           value={userDesc}
+          className="mb-0"
           onChange={(e) => {
             e.persist();
             setDescription(e.target.value);
           }}
           id="userDesc"
         />
+        <div className="job-form mt-0">
+        <div className="hint mt-0">
+        Tell us a little about yourself
+        </div>
+        </div>
       </div>
     </form>
-  </div>
+  </>
 );
 // percentCalc = () => {
 //   let servicefee = +state.servicefee * 0.1;
@@ -551,6 +564,12 @@ const DescriptionViewModal = ({ data, reload }) => {
   );
 };
 export {
+  TitleModal,
+  EducationModal,
+  SkillsModal,
+  LanguageModal,
+  ChangeRateModal,
+  DescriptionModal,
   TitleViewModal,
   EducationViewModal,
   SkillsViewModal,

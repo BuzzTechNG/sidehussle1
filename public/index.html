@@ -5,6 +5,87 @@
   <meta charset="utf-8" />
   <link rel="icon" href="%PUBLIC_URL%/logo-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    #preloader {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    position: fixed;
+    background-color: #f6f6faff;
+    }
+    #loading-animation {
+      top: 50%;
+      left: 50%;
+      width: 200px;
+      height: 200px;
+      position: absolute;
+      margin: -100px 0 0 -100px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      /* background: url('loading-animation.gif') center center no-repeat; */
+    }
+    #loader {
+  /* Uncomment this to make it run! */
+  /*
+     animation: loader 5s linear infinite; 
+  */
+  
+  position: absolute;
+  top: calc(50% - 30px);
+  left: calc(50% - 30px);
+}
+@keyframes loader {
+  0% { left: -100px }
+  100% { left: 110%; }
+}
+#box {
+  width: 60px;
+  height: 60px;
+  background: #C4B6FF;
+  animation: animate .5s linear infinite;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 3px;
+}
+@keyframes animate {
+  17% { border-bottom-right-radius: 3px; }
+  25% { transform: translateY(9px) rotate(22.5deg); }
+  50% {
+    transform: translateY(18px) scale(1,.9) rotate(45deg) ;
+    border-bottom-right-radius: 40px;
+  }
+  75% { transform: translateY(9px) rotate(67.5deg); }
+  100% { transform: translateY(0) rotate(90deg); }
+} 
+#shadow { 
+  width: 50px;
+  height: 5px;
+  background: #0d0c11;
+  opacity: 0.1;
+  position: absolute;
+  top: 59px;
+  left: 0;
+  border-radius: 50%;
+  animation: shadow .5s linear infinite;
+}
+@keyframes shadow {
+  50% {
+    transform: scale(1.2,1);
+  }
+}
+
+
+.loading-text{
+  text-align: center;
+  font-size: x-large;
+  font-weight: 800;
+}
+
+  </style>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -17,7 +98,12 @@
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
-  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=ABeeZee&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Vadodara:wght@600&display=swap" rel="stylesheet">
+        <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
   <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -32,6 +118,18 @@
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="preloader">
+    <div id="loading-animation">
+      <div id="loader">
+        <div id="shadow"></div>
+        <div id="box"></div>
+      </div>
+     <div class="loading-text">
+
+       SideHussle.
+     </div>
+    </div>
+  </div>
   <div id="root"></div>
   <!--
       This HTML file is a template.
@@ -159,6 +257,12 @@
   </script>
   <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()"
     onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+    <script>
+      window.onload = function(){
+        var el = document.getElementById('preloader');
+        el.style.display = 'none'
+      }
     </script>
 </body>
 

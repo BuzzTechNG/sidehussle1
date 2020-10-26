@@ -8,13 +8,14 @@ const card = (props) => {
   return props.isGrid ? (
     <NavLink
       title="Click to expand job information"
-      to="/dashboard/jobprofile/56d6dsh"
+      to={`/dashboard/jobprofile/${props.id}`}
       class="col-sm-12 col-md-6 col-lg-6 col-xl-4 my-4"
     >
       <div class="xcard card-list">
-        <div v className="card-header py-1 text-left">
-          <p className="title3"> {props.topic} </p>{" "}
+        <div  className=" py-1 text-left">
+          <p className="title3 px-1"> {props.topic} </p>{" "}
         </div>{" "}
+        <div className="line" style={{width:"100%"}}></div>
         <div className="px-3 py-2">
           <p className="subtitle2"> {props.description} </p>{" "}
         </div>
@@ -24,7 +25,9 @@ const card = (props) => {
             Open 1 minute ago{" "}
           </li>{" "}
           <li className="list-group-item d-flex bg-card">
-            <i className="fa fa-layer-group  pr-2"> </i> {props.topic}{" "}
+            <i className="fa fa-layer-group  pr-2"> </i> {props.specification.map(item=>(<div className="mx-1">
+            {item}
+            </div>))}{" "}
           </li>
           <li className="list-group-item d-flex justify-content-between bg-card">
             <span> Price: {appLogic.numberWithCommas(props.price)} </span>{" "}
@@ -38,8 +41,8 @@ const card = (props) => {
   ) : (
     <NavLink
       title="Click to expand job information"
-      to="/dashboard/jobprofile/56d6dsh"
-      className="xcard row p-3 pl-4 mx-auto"
+      to={`/dashboard/jobprofile/${props.id}`}
+      className=" xcard row p-3 pl-4 mx-auto "
       style={{
         width: "96%",
       }}
@@ -49,8 +52,9 @@ const card = (props) => {
       </div>{" "}
       <div className="col">
         <div className="text-left">
-          <p className="title1"> {props.topic} </p>{" "}
+          <div className="title1"> {props.topic} </div>{" "}
         </div>{" "}
+        <div className="line mb-3 mt-2" style={{width:"100%"}}></div>
         <div className="">
           <p className="subtitle2"> {props.description} </p>{" "}
         </div>{" "}
@@ -63,9 +67,11 @@ const card = (props) => {
             </span>{" "}
           </li>{" "}
           <li className="row align-items-center p-2 col-md-6 col-sm-12">
-            <span>
+            <span className="d-flex align-items-center">
               {" "}
-              <i className="fa fa-layer-group  pr-2"> </i> {props.topic}{" "}
+              <i className="fa fa-layer-group  pr-2"> </i> {props.specification.map(item=>(<div className="mx-1">
+                {item}
+                </div>))}{" "}
             </span>{" "}
           </li>{" "}
         </div>{" "}
