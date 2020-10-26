@@ -1,0 +1,73 @@
+[dark="dark"]{
+    .market{
+        .market-card{
+            &:hover{
+                box-shadow: 3px 3px 12px 2px $dark-shadow;
+            }
+            .bottom-container{
+                box-shadow: 5px 5px 5px 5px $dark-shadow;
+                background-color: $dark-secondary2;
+            }
+        }
+    }
+}
+.item-page{
+    .color-avatar{
+        width: 18px;
+        height: 18px;
+        margin: 5px;
+        border-radius: 50%;
+        background-color: grey
+    }
+}
+
+
+.market {
+  .grid-view {
+    display: flex;
+    // flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .market-card {
+      position: relative;
+    // flex: 1 0 30%; /* explanation below */
+    margin: 8px;
+    // padding: 10px;
+    height: 270px;
+    //   max-width: 27%;
+      min-width: 200px;
+    overflow: hidden;
+    
+    .img-view{
+        height: 85%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+    }
+    .bottom-container{
+        position: absolute;
+        background-color: #fcfcfc;
+      bottom: 0;
+      width: 100%;
+    }
+    .bottom-info {
+      height: 0px;
+      width: 100%;
+      visibility: hidden;
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: height 300ms, transform 100ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    //   transition-delay: 300ms;
+    }
+    &:hover {
+         .bottom-info{
+        transform: scaleY(1);
+        height: 40px;
+        visibility: visible;
+        // transition-delay: 0ms;
+    }
+    box-shadow: 5px 5px 15px 2px #00000022;
+    }
+  }
+}

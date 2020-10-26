@@ -2,7 +2,7 @@
 
 [dark="dark"] {
     .card {
-        background: $dark-primary;
+        background: $dark-secondary2;
     }
 
     .mcard {
@@ -70,12 +70,13 @@
     }
 
     .job-form input,
+    .job-form select,
     .job-form textarea,
     .modal-body select {
         background-color: lighten($dark-primary, 6);;
         box-shadow: -1px 1px 5px 0px $dark-shadow;
         color: #ccc;
-        border-bottom: 1px #ccc solid;
+        border-bottom: 1px #555 solid;
     }
 
     .job-form input:focus,

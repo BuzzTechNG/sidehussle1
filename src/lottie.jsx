@@ -18,9 +18,9 @@ function Lottie({style, animation}) {
     return (
 
         <div style={style}>
-            <div ref={(c) => {
+            <div  ref={(c) => {
             el = c;
-          }} style={{width:"100%", height:"100%"}}
+          }} style={{width:"100%", height:"100%",opacity:"0.7"}}
            ></div>
         </div>
     )

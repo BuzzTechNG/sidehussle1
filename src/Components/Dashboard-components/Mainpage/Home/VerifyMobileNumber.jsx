@@ -25,7 +25,19 @@ const verifyFunc = async ({ userLocation = "", mobileNumber = "", id }) => {
 };
 
 const MobileNumber = (props) => {
-  const [mobileNumber, setmobileNumber] = useState("");
+  console.log(props)
+  const [mobileNumber, setmobileNumber] = useState(()=>{
+    if(props.mobileNumber){
+      console.log(props.mobileNumber.charAt(0))
+      if(props.mobileNumber.charAt(0) == 0){
+        return props.mobileNumber.slice(1, props.mobileNumber.length)
+      }else{
+        return ""
+      }
+    }else{
+      return ""
+    }
+  });
   const [isSending, setIsSending] = useState(false);
   const [message, setMessage] = useState("");
   const [userLocation, setUserLocation] = useState(countryCode["NG"]);
@@ -67,8 +79,11 @@ const MobileNumber = (props) => {
       const { country } = await response.json();
       console.log(country);
       setUserLocation(countryCode[country]);
+      setSelectLocation(
+        `${country} : +${countryCode[country]}`
+      );
     }
-    // getUserLocation()
+    getUserLocation()
     return () => {};
   }, []);
 
@@ -77,10 +92,10 @@ const MobileNumber = (props) => {
     <>
       <div className="title1 my-2">Kindly Verify Your Mobile Number</div>
 
-      <div className="row px-2 my-3">
-        <div style={{zIndex:"5"}}>
+      <div className="d-flex px-2 my-3">
+        <div className="subtitle1" style={{zIndex:"5"}}>
           <CustomSelect selected={selectLocation}>
-            {Object.keys(countryCode).map((Itemoption, index) => (
+            {Object.keys(countryCode).sort().map((Itemoption, index) => (
               <option
                 onClick={() => {
                   setUserLocation(countryCode[Itemoption]);
@@ -93,10 +108,11 @@ const MobileNumber = (props) => {
             ))}
           </CustomSelect>
         </div>
-        <div className="col" style={{zIndex:"4"}}>
+        <div className="subtitle2" style={{zIndex:"4"}}>
           <input
             type="number"
             maxLength="10"
+            style={{padding:"5% 0"}}
             value={mobileNumber}
             placeholder="Mobile Number"
             onChange={(e) => setmobileNumber(e.target.value)}
@@ -105,7 +121,7 @@ const MobileNumber = (props) => {
       </div>
       <div style={{ width: "100%" }}>
         <div className="float-left my-auto">{message}</div>
-        <div onClick={sendMessage} className="square-btn float-right">
+        <div onClick={sendMessage} className="square-btn float-right mb-3">
           {isSending ? (
             <div
               id="lottie-view"
@@ -129,7 +145,7 @@ function Token(props) {
   const [message, setMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [isActive, setIsActive] = useState(true);
-  const [counter, setCounter] = React.useState(5);
+  const [counter, setCounter] = React.useState(30);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -137,7 +153,7 @@ function Token(props) {
         setCounter((counter) => counter - 1);
         console.log(counter);
       } else {
-        setIsActive((isActive) => !isActive);
+        setIsActive(false);
         clearInterval(timer);
       }
     }, 1000);
@@ -146,10 +162,12 @@ function Token(props) {
   }, [counter]);
 
   const comfirmFunc = async () => {
-    setIsActive(!isActive);
+    
+    // setIsActive(!isActive);
     if (userToken.length < 6 || isSending) {
       return;
     }
+    setMessage("")
     await setIsSending(true);
     var animation = lottie.loadAnimation({
       container: document.getElementById("lottie-view"),
@@ -171,8 +189,9 @@ function Token(props) {
         setTimeout(() => {
           props.route.push("/dashboard");
           localStorage.setItem("token", resp.data.comfirmUserMobile.token);
-        }, 3000);
+        }, 1000);
       } else {
+        setMessage("Invalid Token")
       }
     } catch (error) {
       console.log(error);
@@ -186,21 +205,38 @@ function Token(props) {
       <div className="mb-2 title1 text-center">
         kindly enter the token sent to your mobile device
       </div>
-      <div className=" job-form row px-2 my-3">
+      <div className="subtitle1">{userLocationX+mobileNumberX}</div>
+      <div className=" job-form row px-2 my-4 ">
         <input
+        className="subtitle1 pl-1"
           autoFocus
           value={userToken}
-          style={{ letterSpacing: "8px" }}
+          style={{ letterSpacing: "17px", width:"100%"  }}
           onChange={(e) => setUserToken(e.target.value)}
           type="text"
-          tabindex="0"
-          maxlength="6"
+          tabIndex="0"
+          maxLength="6"
         />
       </div>
-      <div style={{ width: "100%" }}>
-        <div className="float-left">{message}</div>
-
-        <div className="square-btn float-right" onClick={comfirmFunc}>
+      <div style={{ width: "100%" }} className="d-flex justify-content-center ">
+        <div className="col-6 d-flex justify-content-center">
+          {!isActive && <div className="action-btn" style={{textOverflow:"ellipsis",fontSize:"14px",padding:"8px 10px"}}
+          onClick={() =>{
+            verifyFunc({
+              userLocation: userLocationX,
+              mobileNumber: mobileNumberX,
+              id: props.userId,
+            });
+            setIsActive(true);
+            setCounter(50);
+            setMessage("")
+          }}
+          >
+          Resend Token  
+            </div>}
+          </div>
+          <div className="col-6 d-flex justify-content-center">
+        <div className="square-btn" onClick={comfirmFunc} >
           {isSending ? (
             <div
               id="lottie-view"
@@ -210,40 +246,30 @@ function Token(props) {
           ) : (
             <>
               {" "}
-              Verify <i className="fa fa-check my-auto ml-1"></i>
+              Verify OTP<i className="fa fa-check my-auto ml-1"></i>
             </>
           )}
         </div>
         </div>
-        <div className="mt-3">
+        </div>
+        <div className="mt-5 mb-3">
         {isActive ? (
           <p className="subtitle3">
             Didn't receive a token?, resend token in {counter} 
             
           </p>
         ) : (
-          <div className="d-flex">
+          <div className="d-flex justify-content-center">
             {/* div to render change mobile number and resend token */}
-            <div className="verifie" onClick={() => props.setMode(false)}>
+            <div className="verifie mcard" onClick={() => props.setMode(false)}>
               {" "}
               Change mobile number
             </div>
-            <div
-              className="verifie"
-              onClick={() =>
-                verifyFunc({
-                  userLocation: userLocationX,
-                  mobileNumber: mobileNumberX,
-                  id: props.userId,
-                })
-              }
-            >
-              {" "}
-              Resend token
-            </div>
+            
           </div>
         )}
      </div>
+        <div>{message}</div>
     </>
   );
 }
@@ -261,9 +287,9 @@ function VerifyMobileNumber(props) {
   console.log(err);
   return (
     !loading && (
-      <div className="full-width page" style={{ height: "100vh" }}>
+      <div className="full-width page container-fluid" style={{ height: "100vh" }}>
         <div className="logo-watermark"></div>
-        <div className="verify container-m ">
+        <div className="verify container-m custom-shadow">
           <div className="mt-2 mb-4">
             <img
               src={require("../../../../assets/logo-with-name.png")}
@@ -282,7 +308,7 @@ function VerifyMobileNumber(props) {
             {`${data.getUserWithoutAuth.firstName} ${data.getUserWithoutAuth.lastName}`}
           </div>
           {!mode ? (
-            <MobileNumber setMode={setMode} userId={props.match.params.id} />
+            <MobileNumber setMode={setMode} userId={props.match.params.id} mobileNumber={data.getUserWithoutAuth?.mobileNumber}/>
           ) : (
             <Token
               userId={props.match.params.id}

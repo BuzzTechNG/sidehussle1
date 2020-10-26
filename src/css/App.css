@@ -1,7 +1,28 @@
 .container-fluid {
-  background-color: #fff9fa;
-}
+  position: relative;
+  background-color: #ebebedf0;
 
+  overflow: hidden;
+}
+.container-fluid-bg{
+  content:"we";
+  position: absolute;
+  /* top: 0; */
+  top: -200px;
+  left: -20%;
+  width: 100vw;
+  height: 100vh;
+  /* background-color: red; */
+  opacity: 0.8;
+  /* background-image: url("../assets/main-bg.svg"); */
+  /* background-size: cover; */
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+[dark="dark"] .container-fluid-bg{
+  opacity: 0;
+}
 a {
   text-decoration: none;
   color: black;
@@ -14,6 +35,7 @@ a:hover {
 
 .full-width {
   width: 100vw;
+  min-height: 78vh;
   overflow: hidden;
 }
 
@@ -35,12 +57,15 @@ a:hover {
 }
 
 .page-title {
+  font-family: 'Hind Vadodara', sans-serif;
+  /* font-family: 'Josefin Sans', sans-serif; */
   font-size: Clamp(17px, 22px, Calc(1vw + 10px));
   font-weight: 700;
   position: relative;
   width: max-content;
   margin-left: 5px;
-  margin-top: 26px;
+  margin-top: Clamp(10px, 4vw , 50px);
+  margin-bottom: Clamp(10px, 4vw , 20px);;
 }
 
 .page-title::after {
@@ -138,33 +163,39 @@ a:hover {
 }
 
 .title1 {
-  font-size: Clamp(18px, 1vw, 23px);
-  font-weight: 500;
-}
-
-.subtitle1 {
-  font-size: Clamp(12px, 1vw, 14px);
+  font-family: 'Josefin Sans', cursive;
+  font-size: Clamp(18px, Calc(2vw + 4px), 23px) !important;
   font-weight: 700;
 }
 
+.subtitle1 {
+  font-family: 'ABeeZee', sans-serif;
+  font-size: Clamp(14px, Calc(1vw + 6px), 16px) !important;
+  font-weight: 600;
+}
+
 .title2 {
-  font-size: Clamp(16px, 1vw,  21px);
+  font-family: 'Josefin Sans', cursive;
+  font-size: Clamp(19px, Calc(1vw + 8px),  21px) !important;
   font-weight: 500;
 }
 
 .subtitle2 {
-  font-size: Clamp(11px, 1vw, 13px);
+  font-family: 'ABeeZee', sans-serif;
+  font-size: Clamp(12px, Calc(1vw + 4px), 14px) !important;
   font-weight: 500;
 }
 
 .title3 {
-  font-size: Clamp(15px, 1vw, 20px);
+  font-family: 'Josefin Sans', cursive;
+  font-size: Clamp(17px, Calc(1vw + 7px), 19px) !important;
   font-weight: 500;
 }
 
 .subtitle3 {
-  font-size: Clamp(10px, 1vw, 12px);
-  font-weight: 500;
+  /* font-family: 'ABeeZee', sans-serif; */
+  font-size: Clamp(11px, 1vw, 13px) !important;
+  font-weight: 400;
 }
 
 .title1,
@@ -173,6 +204,7 @@ a:hover {
 .title4,
 .title5,
 .title6 {
+  font-family: 'Commissioner', sans-serif;
   color: #444;
 }
 
@@ -192,7 +224,7 @@ a:hover {
 .title6 {}
 
 .subtitle4 {
-  font-size: 14px;
+  font-size: 14px !important;
 }
 
 .subtitle5 {}
@@ -200,28 +232,23 @@ a:hover {
 .subtitle6 {}
 
 .bdr {
-  border-color: #aaa;
-  border-right-width: 1px;
-  box-shadow: 1px 0px 0px 0 #ccc;
+  border-right: 1px solid #ddd;
 }
 
 .bdl {
-  border-color: #aaa;
-  border-left-width: 1px;
-  box-shadow: -1px 0px 0px 0 #ccc;
+  border-left: 1px solid #ddd;
 }
 
 .bdb {
-  border-color: #aaa;
-  border-bottom-width: 5px;
-  box-shadow: 0px 1px 0px 0 #ccc;
+  border-bottom: 1px solid #ddd;
+  /* box-shadow: 0px 1px 0px 0 #ccc; */
 
 }
 
 .bdt {
   border-color: #aaa;
   /* border-top-width: 1px; */
-  box-shadow: 0px -1px 0px 0 #ccc;
+  /* box-shadow: 0px -1px 0px 0 #ccc; */
 }
 
 /* Botton */
@@ -262,6 +289,15 @@ a:hover {
   box-shadow: 0px 2px 11px 1px #aaa;
 }
 
+
+.star{
+ transition: transform 200ms;
+}
+.star:hover{
+  transform: scale(1.3);
+  
+}
+
 .list {
   margin: 0;
   padding: 0;
@@ -278,7 +314,8 @@ a:hover {
 }
 
 .custom-shadow {
-  box-shadow: 2px 1px 15px 0px #ccccccaa;
+  background-color: #f9f9f9;
+  box-shadow: rgba(0, 0, 0, 0.20) 0px 3px 10px -1px;
 }
 
 /* input  */
@@ -288,11 +325,14 @@ a:hover {
   transform: scale(3);
 }
 
+
+
 :root {
   --dark-primary: #1F1A24;
   --dark-secondary: #332940;
   --dark-shadow: #1F1A24
 }
+
 
 /* Verify CSS */
 .verifie {
@@ -316,5 +356,33 @@ a:hover {
 
 }
 
+@keyframes filter-animation{
+  from{
+    transform: translateX(-480px);
+  }
+  to{
+    transform: translateX(0px);
+  }
+}
+.filter-modal{
+  animation: filter-animation 500ms;
+  width: 100%;
+  height: 100%;
+  max-width: 320px;
+  position: absolute;
+  top: 0;
+
+}
+.display-show{
+  display: none;
+}
+@media only screen and (max-width: 991px){
+  .display-show{
+    display: block !important;
+  }
+  .display-none{
+    display: none !important;
+  }
+}
 
 /* Dark Mode */

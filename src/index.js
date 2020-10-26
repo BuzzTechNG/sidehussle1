@@ -11,16 +11,27 @@ import {
   ApolloClient,
   InMemoryCache,
   createHttpLink,
-  ApolloProvider
+  ApolloProvider,
+  split
 } from '@apollo/client';
 import {
   setContext
 } from '@apollo/client/link/context';
+import { getMainDefinition } from '@apollo/client/utilities';
+import { WebSocketLink } from '@apollo/client/link/ws';
 
-const httpLink = createHttpLink({
-  uri: 'https://hussleserver.herokuapp.com/graphql',
-
+const wsLink = new WebSocketLink({
+  uri: `ws://192.168.1.117:3001/graphql`,
+  options: {
+    reconnect: true
+  }
 });
+const httpLink = createHttpLink({
+  uri: 'http://192.168.1.117:3001/graphql',
+});
+// const httpLink = createHttpLink({
+//   uri: 'https://hussleserver.herokuapp.com/graphql',
+// });
 const authLink = setContext((_, {
   headers
 }) => {
@@ -34,9 +45,19 @@ const authLink = setContext((_, {
     }
   }
 });
-
+const splitLink = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === 'OperationDefinition' &&
+      definition.operation === 'subscription'
+    );
+  },
+  wsLink,
+  authLink.concat(httpLink),
+);
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: splitLink,
   cache: new InMemoryCache()
 });
 ReactDOM.render( <
@@ -60,3 +81,6 @@ export {
   client,
   appLogic
 }
+export { apolloHelper } from "./apolloHelper";
+export  {Unavaliable}  from "./Unavaliable"
+export { MultiSelect } from "./Components/SIdeHussleComponents/customMultiSelect"

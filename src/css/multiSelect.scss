@@ -1,12 +1,11 @@
 .multiselect{
-    position: relative;
     outline: none;
-    box-shadow: -1px 1px 5px 0px #bbbbbbdd;
-    border: none;
-    padding: 10px 20px;
-    margin: 7px 0;
+    // box-shadow: -1px 1px 5px 0px #bbbbbbdd;
+    // border: 1px solid;
+    // padding: 10px 20px;
+    // margin: 7px 0;
     // width: max-content !important;
-    // background-color: red;
+    // background-color: $custom-primary;
     font-size: Clamp(13px, 2vw , 16px);
 
     display: flex;
@@ -15,14 +14,25 @@
     gap: 5px;
     width: 100%;
     flex-wrap: wrap;
-
+    
+    &-filter{
+        position: relative;
+        z-index: 10;
+        
+    input{
+        background-color: #88888822;
+        border:0;
+        outline:0;
+        box-shadow: none;
+        padding: 3px 4px;
+    }}
     &-select-list{
         position: absolute;
         // left: 0;
         top: 0;
         // bottom:-130%;
         margin-left:2%;
-        margin-top:7%;
+        margin-top:28%;
         background-color: #fff;
         // width: 10%;
         height: max-content;
@@ -57,7 +67,7 @@
           
           /* Handle */
           &::-webkit-scrollbar-thumb {
-            background: red;
+            background: $custom-primary;
             border-radius: 10px;
           }
 
@@ -75,15 +85,10 @@
             border-radius: 50%;
             background-color: #bbb;
             font-size: 12px !important;
+            color: $custom-primary;
         }
     }
-    &-filter{
-    input{
-        background-color: blue;
-        border:0;
-        outline:0;
-        box-shadow: none;
-    }}
+    
     @keyframes modalOpen {
         from{
             opacity: 0.5;
@@ -104,13 +109,14 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: #ddddddcc;
+        background-color: #e9e9e9aa;
         &-container{
-            padding: 20px ;
+            padding: 20px 20px 0 20px ;
             margin: 0 auto;
-            background-color: #ffffff;
-            width: 90%;
-            border-radius: 10px;
+            background-color: #fcfcfc;
+            width: 95%;
+            border-radius: 7px;
+            max-width: 480px;
             &-body{
                 height: 40vh;
                 overflow-y: scroll;
@@ -125,7 +131,7 @@
                   
                   /* Handle */
                   &::-webkit-scrollbar-thumb {
-                    background: red;
+                    background: $custom-primary;
                     border-radius: 10px;
                   }
             }
@@ -138,6 +144,17 @@
         box-shadow: -1px 1px 5px 0px $dark-shadow;
         color: #ccc;
         border-bottom: 1px #ccc solid;
+        &-filter{
+            input{
+                color: #ccc
+            }
+        }
+        .modal{
+            background-color: rgba($dark-primary,0.9);
+            &-container{
+                background-color: $dark-secondary;
+            }
+        }
     &-option{
         background-color: lighten($dark-secondary, 9);
         color: #ccc;

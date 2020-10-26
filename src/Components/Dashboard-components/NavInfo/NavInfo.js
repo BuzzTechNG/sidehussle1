@@ -6,11 +6,16 @@ import { DarkModeToggler } from "../../../DarkModeContext";
 import { useQuery } from "@apollo/client";
 import Apollo from "../../../apolloHelper";
 import Lottie from "../../../lottie";
+import { appLogic } from "../../..";
 const apollo = new Apollo()
 const NavInfo = () => {
   const { loading, data, err } = useQuery(apollo.GET_USER, {
   });
-  console.log(data)
+  React.useEffect(()=>{
+    if(!loading && data){
+      appLogic.userId = data.getUser.id
+    }  
+  },[loading])
   return (
     <div className="navinfo">
       <div className="col">
@@ -61,19 +66,17 @@ const NavInfo = () => {
                     </NavLink>
                     <div className="nav-link-container">
                       
-                      <NavLink to="" className="item" >
-                      Current Job
+                      <NavLink to="/dashboard/myproposals" className="item" >
+                      Proposals
                       </NavLink>
-                      <NavLink to="/dashboard/previousjobs" className="item" >
-                      Past Work
-                      </NavLink>
-                      <NavLink to="" className="item" >
+                      
+                      <NavLink to="/dashboard/myjobs" className="item" >
                        Posted Jobs
                       </NavLink>
                       <NavLink to="/dashboard/finduser" className="item" >
                       Find Husslers
                       </NavLink>
-                      
+                 
                       </div>
                   </li>
           

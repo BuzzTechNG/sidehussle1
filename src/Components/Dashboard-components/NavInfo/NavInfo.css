@@ -1,7 +1,8 @@
 .custom-nav {
     color: #444;
     position: relative;
-    font-size: 14px;
+    font-size: 13px;
+    font-family: sans-serif;
 }
 
 .toggler {
@@ -48,7 +49,7 @@
 
 .post-a-job {
     /* background-color: orangered; */
-    background-image: linear-gradient(to right, #c42252 100%, #fe3852 100%);
+    background-image: linear-gradient(to right, #da275c 100%, #fe3852 100%);
     padding: 0 10px;
     border-radius: 2px;
     border: 0;

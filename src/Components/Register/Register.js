@@ -1,29 +1,98 @@
 import React, { Component } from "react";
 import "./Register.css";
 import Apollo from "../../apolloHelper";
+import { withRouter } from "react-router";
+
 const apollo = new Apollo();
 
 class SignUp extends Component {
-  state = {
-    firstName: "",
-    middleName: "",
-    lastName: "",
-    password: "",
-    confirmPassword: "",
-    mobileNumber: "",
-    email: "",
-    address: "",
-    loading: false,
-    response: {},
-    firstNameRequired: false,
-    middleNameRequired: false,
-    lastNameRequired: false,
-    passwordRequired: false,
-    confirmPasswordRequired: false,
-    mobileNumberRequired: false,
-    emailRequired: false,
-    addressRequired: false,
-  };
+  constructor(props){
+    super(props)
+    this.state = {
+      firstName: "",
+      middleName: "",
+      lastName: "",
+      password: "",
+      confirmPassword: "",
+      mobileNumber: "",
+      email: "",
+      address: "",
+      loading: false,
+      response: {},
+      firstNameRequired: false,
+      middleNameRequired: false,
+      lastNameRequired: false,
+      passwordRequired: false,
+      confirmPasswordRequired: false,
+      mobileNumberRequired: false,
+      emailRequired: false,
+      addressRequired: false,
+      passwordLength: false,
+      confirmPasswordError: false,
+      confirmPasswordErrorMessage: "",
+      passwordErrorMessage:"",
+      mobileError: false,
+      mobileErrorMessage: "",
+    };
+  }
+  
+
+  NOT_NULL = "This Field is Required*"
+  INVALID = "Not acceptable (invalid number)*"
+  DONT_MATCH = "Doesn't match password*"
+  GREATER_THAN_VALUE = "Password lenght must be greater than 6*"
+  
+  isMobileValid = () => {
+    if(this.state.mobileNumber.length <= 1){
+      this.setState({mobileError:true, mobileErrorMessage:this.NOT_NULL})
+      return false
+    }
+    if(!this.state.mobileNumber.match(/^(\+\d{1,3}[- ]?)?\d{11}$/) ||  (this.state.mobileNumber.match(/0{5,}/)) ){
+      this.setState({mobileError:true, mobileErrorMessage:this.INVALID})
+      return false
+    }
+    this.setState({mobileError:false,mobileErrorMessage:""})
+    return true
+
+  }
+  
+  isPasswordValid = () =>{
+    
+    if(this.state.password.length <= 1){
+      
+      this.setState({passwordLength:true, passwordErrorMessage:this.NOT_NULL})
+      return false
+    }
+    if(this.state.password.length > 1 && this.state.password.length < 6){
+      
+      this.setState({passwordLength:true, passwordErrorMessage: this.GREATER_THAN_VALUE})
+      return false
+    }
+
+    if(this.state.confirmPassword.length > 0){
+      this.isConfirmPasswordMatch()
+    }
+    this.setState({passwordLength:false,passwordErrorMessage:""})
+    return true
+    
+  }
+  isConfirmPasswordMatch = () =>{
+    
+    if(this.state.password.length <= 1 ){
+      
+      this.setState({confirmPasswordError:true, confirmPasswordErrorMessage:this.NOT_NULL})
+      return false
+    }
+    if(this.state.password !== this.state.confirmPassword ){
+      
+      this.setState({confirmPasswordError:true, confirmPasswordErrorMessage:this.DONT_MATCH})
+      return false
+    }
+    
+    this.setState({confirmPasswordError:false,confirmPasswordErrorMessage:""})
+    return true
+    
+  }
 
   inputHandler = (event) => {
     const { name, value } = event.target;
@@ -37,14 +106,9 @@ class SignUp extends Component {
 
     const validationItems = [
       "firstName",
-      "middleName",
+      
       "lastName",
-      "password",
-      "confirmPassword",
-      "mobileNumber",
-      "email",
-      "address",
-      "loading",
+      
     ]; //items to validate would be inserted here
 
     validationItems.forEach((item) => {
@@ -69,27 +133,39 @@ class SignUp extends Component {
   };
 
   register = async () => {
-    if (this.validateForm() > 0) return;
+    
+    if (this.validateForm() > 0 || !this.isMobileValid() || !this.isPasswordValid() || !this.isConfirmPasswordMatch() ){ return;}
 
     this.setState({ loading: true, response: {} });
     // uncomment block after testing validation
     const response = await apollo.register(
       this.state.firstName,
-      this.state.middleName,
+      // this.state.middleName,
       this.state.lastName,
       this.state.password,
       this.state.confirmPassword,
-      this.state.address,
+      // this.state.address,
       this.state.mobileNumber,
-      this.state.email
+      // this.state.email
     );
 
     console.log(response);
     this.setState({
       loading: false,
-      response: response.data.register.userDetail,
+      response: response.data.register.message,
     });
+    if(response.data.register.message === "successful"){
+      this.registerSuccessfull({
+        mobileNumber:response.data.register.mobileNumber, 
+        id: response.data.register.id
+      })
+    }
   };
+
+  registerSuccessfull({mobileNumber,id}){
+    localStorage.setItem("mobileNumber",mobileNumber)
+    this.props.history.push(`/verifyUser/${id}`);
+  }
 
   render() {
     return (
@@ -109,7 +185,7 @@ class SignUp extends Component {
             <div className="validation-message"></div>
           )}
         </div>
-        <div>
+        {/* <div>
           <input
             show-validation-error={`${this.state.middleNameRequired}`}
             className="inputElement"
@@ -123,7 +199,7 @@ class SignUp extends Component {
           {this.state.middleNameRequired && (
             <div className="validation-message"></div>
           )}
-        </div>
+        </div> */}
         <div>
           <input
             show-validation-error={`${this.state.lastNameRequired}`}
@@ -141,6 +217,22 @@ class SignUp extends Component {
         </div>
         <div>
           <input
+            show-validation-error={`${this.state.mobileNumberRequired}`}
+            className="inputElement"
+            type="number"
+            name="mobileNumber"
+            value={this.state.mobileNumber}
+            placeholder="Mobile Number"
+            onChange={(e)=>{this.inputHandler(e);}}
+            title="Your mobile number"
+            onBlur={(e)=>{this.cancelError(e);this.isMobileValid()}}
+          />
+          {this.state.mobileError && (
+            <div className="password-message">{this.state.mobileErrorMessage}</div>
+          )}
+        </div>
+        {/* <div>
+          <input
             show-validation-error={`${this.state.emailRequired}`}
             className="inputElement"
             value={this.state.email}
@@ -153,20 +245,24 @@ class SignUp extends Component {
           {this.state.emailRequired && (
             <div className="validation-message"></div>
           )}
-        </div>
+        </div> */}
         <div>
           <input
-            show-validation-error={`${this.state.passwordRequired}`}
+            // show-validation-error={`${this.state.passwordRequired}`}
+            show-password-error={`${this.state.passwordLength}`}
             className="inputElement"
             value={this.state.password}
             placeholder="Password"
             name="password"
             type="password"
-            onChange={this.inputHandler}
+            onChange={(e) =>{this.inputHandler(e);this.isPasswordValid()}}
             onBlur={this.cancelError}
           />
-          {this.state.passwordRequired && (
+          {/* {this.state.passwordRequired && (
             <div className="validation-message"></div>
+          )} */}
+          {this.state.passwordLength && (
+            <div className="password-message"> {this.state.passwordErrorMessage}</div>
           )}
         </div>
 
@@ -179,13 +275,13 @@ class SignUp extends Component {
             type="password"
             name="confirmPassword"
             onChange={this.inputHandler}
-            onBlur={this.cancelError}
+            onBlur={this.isConfirmPasswordMatch}
           />
-          {this.state.confirmPasswordRequired && (
-            <div className="validation-message"></div>
+          {this.state.confirmPasswordError && (
+            <div className="password-message">{this.state.confirmPasswordErrorMessage}</div>
           )}
         </div>
-        <div>
+        {/* <div>
           <input
             show-validation-error={`${this.state.addressRequired}`}
             className="inputElement"
@@ -199,24 +295,9 @@ class SignUp extends Component {
           {this.state.addressRequired && (
             <div className="validation-message"></div>
           )}
-        </div>
+        </div> */}
 
-        <div>
-          <input
-            show-validation-error={`${this.state.mobileNumberRequired}`}
-            className="inputElement"
-            type="number"
-            name="mobileNumber"
-            value={this.state.mobileNumber}
-            placeholder="Mobile Number"
-            onChange={this.inputHandler}
-            title="Your mobile number"
-            onBlur={this.cancelError}
-          />
-          {this.state.mobileNumberRequired && (
-            <div className="validation-message"></div>
-          )}
-        </div>
+        
 
         <button
           className="buttonLogin link"
@@ -241,4 +322,4 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp;
+export default withRouter(SignUp);

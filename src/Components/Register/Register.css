@@ -16,3 +16,31 @@
 [show-validation-error="true"] {
     border-bottom: crimson 1px solid;
 }
+.register .password-message, .password-message::after {
+    /* content: " Password lenght must be greater than 6*"; */
+    font-size: x-small;
+    margin-top: -100px;
+    text-align: left;
+    position: absolute;
+    bottom: -12px;
+    left: 0;
+    color: red;
+}
+
+[show-password-error="true"] {
+    border-bottom: crimson 1px solid;
+}
+.register .comfirm-password-message::after {
+    content: " Password don't match";
+    font-size: x-small;
+    margin-top: -100px;
+    text-align: left;
+    position: absolute;
+    bottom: -12px;
+    left: 0;
+    color: red;
+}
+
+[show-comfirm-password-error="true"] {
+    border-bottom: crimson 1px solid;
+}

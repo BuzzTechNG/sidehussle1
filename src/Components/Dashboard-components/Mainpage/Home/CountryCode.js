@@ -249,4 +249,9 @@ const countryCode = {
   QA: "974",
   MZ: "258",
 };
+// function countryCodeSorted(){
+//   return Object.keys(countryCode).sort()
+// }
+
+// export { countryCodeSorted };
 export default countryCode;

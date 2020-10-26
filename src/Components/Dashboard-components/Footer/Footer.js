@@ -4,42 +4,47 @@ import "./Footer.css";
 class Footer extends Component {
   render() {
     return (
+      // <div class="col-md-4 p-3 mini-container">
+      //           <p className="subtitle1"> Subscribe for job updates: </p>{" "}
+      //           <form action="#" className="d-flex justify-content-center pt-2">
+      //             <input
+      //               type="text"
+      //               className="newsletter-input mr-3"
+      //               placeholder="Your Email..."
+      //             />
+      //             <button
+      //               className="button p-2 pl-0"
+      //               type="submit"
+      //               title="click to subscribe for email notifications"
+      //             >
+      //               <i className="fas fa-envelope fa-1x mr-1"> </i>Subscribe
+      //             </button>{" "}
+      //           </form>{" "}
+      //         </div>{" "}
       <div className="footer">
-        <div className="row ">
-          <div className="container">
-            <div className="row"> {/* <div className="col-12"></div> */} </div>{" "}
-            <div className="row footer-row">
-              <div className="col-md-4 p-3">
+      <div className="footer-shape1"> </div>
+      <div className="footer-shape2"> </div>
+        <div className="row">
+          
+          
+          
+          <div className="container-m">
+            
+            <div className="d-flex flex-wrap align-items-center">
+              <div className=" p-3">
                 <div className="footer-title"> About Us </div>{" "}
-                <p className="footer-subtitle">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.Ea
-                  voluptate id aliquam exercitationem voluptatum ipsa{" "}
-                </p>{" "}
-                <br />
-                <div className=" footer-title"> Contact Us </div>{" "}
-                <div>
-                  <i className="fas fa-mobile-alt footer-subtitle fa-fw"> </i>:{" "}
-                  <a className="footer-subtitle" href="/">
-                    08034565543{" "}
-                  </a>{" "}
-                </div>
-                <div>
-                  <i className="fas fa-envelope fa-fw footer-subtitle"> </i>:{" "}
-                  <a className="footer-subtitle" href="mailto:mail@example.com">
-                    mail @BuzzTech.com{" "}
-                  </a>{" "}
-                </div>{" "}
               </div>{" "}
-              <div className="col-md-4 p-3">
-                <div className="footer-title"> Follow Along On: </div>{" "}
-                <div className="d-flex justify-content-between py-2 px-5 social-icons">
-                  <a a href="/" title="click on icon to follow us on facebook">
-                    <i className="fab m-2 fa-facebook fa-1x footer-subtitle">
+              <div class=" p-3"> <div className="footer-title">Contact Us</div></div>  
+              <div className=" p-3">
+                <div className="d-flex justify-content-between align-items-center px-0">
+                <div className="footer-title"> Follow Us: </div>
+                  <a  href="/" title="click on icon to follow us on facebook">
+                    <i className="fa m-2 fa-facebook footer-subtitle">
                       {" "}
                     </i>{" "}
                   </a>{" "}
                   <a a href="/" title="click on icon to follow us on twitter">
-                    <i className="fab m-2 fa-twitter fa-1x footer-subtitle">
+                    <i className="fa m-2 fa-twitter fa-1x footer-subtitle">
                       {" "}
                     </i>{" "}
                   </a>{" "}
@@ -51,29 +56,30 @@ class Footer extends Component {
                   </a>{" "}
                 </div>{" "}
               </div>{" "}
-              <div class="col-md-4 p-3">
-                <h2 className="footer-title"> Subscribe for job updates: </h2>{" "}
-                <form action="#" className="d-flex justify-content-center pt-4">
-                  <input
-                    type="text"
-                    className="newsletter-input"
-                    placeholder="Your Email..."
-                  />
-                  <button
-                    className="btn btn-light newsletter-btn"
-                    type="submit"
-                    title="click to subscribe for email notifications"
-                  >
-                    <i className="fas fa-envelope fa-1x"> </i>{" "}
-                  </button>{" "}
-                </form>{" "}
-              </div>{" "}
+              <div className="p-3">
+              <div className="d-flex justify-content-between align-items-center px-0 social-icons">
+              <div className="footer-title pr-2"> Mobile App: </div>
+                  <a a href="/" title="click on icon to follow us on facebook">
+                    <i className="fa  fa-android footer-subtitle">
+                      {" "}
+                    </i>{" "}
+                  </a>{" "}
+                  <a a href="/" title="click on icon to follow us on twitter">
+                    <i className="fa m-2 fa-apple fa-1x footer-subtitle">
+                      {" "}
+                    </i>{" "}
+                  </a>{" "}
+                  </div>
+                  </div>
+              
             </div>{" "}
           </div>
           {/* <div className="copyright fixed-bottom">
-                    Copyright © 2020 BuzzTech - All Rights Reserved. Privacy Policy.
+                    
                   </div> */}{" "}
         </div>{" "}
+        <div className="line" style={{width:"100%"}}></div>
+                <div className="footer-title" style={{fontSize:"11px"}} >Copyright © {new Date().getFullYear()} BuzzTech - All Rights Reserved. Privacy Policy.</div>
       </div>
     );
   }

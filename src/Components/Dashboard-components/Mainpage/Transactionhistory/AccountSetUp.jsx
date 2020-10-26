@@ -1,8 +1,17 @@
 import React from "react";
 import CustomSelect from "../../../SIdeHussleComponents/customSelect";
+import Accordion from "../../../SIdeHussleComponents/Accordion";
+import { useQuery, useMutation } from "@apollo/client";
+import { appLogic,apolloHelper } from "../../../..";
+import Lottie from "../../../../lottie";
+import NoMessage from "../../../SIdeHussleComponents/NoMessage";
+import NoData from "../../../SIdeHussleComponents/NoData";
 function BankAccount() {
+  const { data, loading, refetch } = useQuery(apolloHelper.GET_USER_BANK_DETAILS)
+  const [addUserBankDetails, addUserBankDetailsResult] = useMutation(apolloHelper.ADD_USER_BANK_DETAILS)
   const [backlist, setBanklist] = React.useState([]);
   const [accountNumber, setAccountNumber] = React.useState("");
+  const [newAccountNumber, setNewAccountNumber] = React.useState(false);
   const [selectedBank, setSelectedBank] = React.useState({});
   const [verifiedAccount, setVerifiedAccount] = React.useState({});
   async function verifyAccountNumber(account_number, back_code) {
@@ -23,31 +32,21 @@ function BankAccount() {
   async function createTransferRecipient() {
     if (verifiedAccount.status === false) return;
     const vac = verifiedAccount.data;
-    const body = {
+    const response = await addUserBankDetails({variables:{
       type: "nuban",
       name: vac.account_name,
-      description: "user recipient",
+      
       account_number: vac.account_number,
       bank_code: selectedBank.code,
       currency: "NGN",
-    };
-    let createRep = await fetch(`https://api.paystack.co/transferrecipient`, {
-      method: "POST",
-      body: JSON.stringify(body),
-      headers: {
-        Authorization:
-          "Bearer sk_test_9e2450a9dfb7daf8e8f4cc34c2aea150dc54536d",
-        "Cache-Control": "no-cache",
-        "Content-Type": "application/json",
-      },
-    });
-    createRep = await createRep.json();
-    //   setVerifiedAccount(createRep)
-    console.log(createRep);
-    if (createRep.status) {
-      //   save rep code api
+    }})
+    if(response.data.addUserBankDetails.message === "success"){
+      refetch()
     }
+    console.log(response)
   }
+  
+  console.log(data)
 
   React.useEffect(() => {
     async function bankList() {
@@ -67,8 +66,40 @@ function BankAccount() {
   }, []);
   return (
     <div className="col custom-shadow  py-3 px-3">
-      <div className="title3 mb-3">Bank Details</div>
-      <div className="subtitle"> Select your bank </div>
+      <div className="title2 ">Bank Details</div>
+      <div className="subtitle3 mb-3">Add or remove bank account</div>
+
+          <div className="mx-4">
+            <p className="subtitle1">
+              Account Details you've added:
+            </p>
+            <div className="mcard p-2 mb-2"> 
+            {
+              loading &&   <Lottie style={{width:"120px",height:"40px",transform:"scale(1)", margin:"auto auto"}} animation="/loading4.json"/>
+
+            } 
+            {
+              (!loading && data?.getUserBankDetails?.length < 1 || data?.getUserBankDetails === null)  && <NoData text="No account found"/>
+            }
+            {
+             
+              data?.getUserBankDetails?.map((bank,index) => (
+                <div className="mb-2" key={`${index}-bank`}>
+                  <div className="subtitle2">
+                    {bank.accountName}
+                  </div>
+                  <div className="subtitle3">
+                    {bank.accountNumber}
+                  </div>
+                </div>
+              ))
+            }</div>
+            {/* <p className="link subtitle3" onClick={()=> setNewAccountNumber(prev => !prev)}>Add new bank account</p> */}
+            <Accordion title={"Add new bank account"} titleClass={"subtitle3 link"} icon={"fa fa-sync"}>
+            <div className="mx-3">
+      {true && 
+      <>
+        <div className="subtitle1 mt-2"> Select your bank </div>
       <CustomSelect selected={selectedBank.name}>
         {backlist.map((bank, index) => (
           <option onClick={() => setSelectedBank(bank)} key={index}>
@@ -76,7 +107,7 @@ function BankAccount() {
           </option>
         ))}{" "}
       </CustomSelect>
-      <div className="my-4 job-form">
+      <div className="my-2 job-form subtitle1">
         Account Number
         <div className="d-flex  job-form p-0 m-0">
           <input
@@ -95,7 +126,7 @@ function BankAccount() {
             min="0"
           />
         </div>
-        {/* verify btn */}
+        
         {verifiedAccount.data?.account_name !== undefined &&
           verifiedAccount?.status === true && (
             <div>
@@ -107,7 +138,7 @@ function BankAccount() {
               </p>
 
               <div
-                className="action-btn"
+                className="action-btn subtitle1"
                 onClick={() => createTransferRecipient()}
               >
                 Save Account
@@ -121,6 +152,13 @@ function BankAccount() {
           </div>
         )}
       </div>
+      </>
+      }
+      </div>
+            </Accordion>
+          </div>
+      
+      
     </div>
   );
 }
@@ -129,6 +167,7 @@ function ProfileDetails() {
   return (
     <div className="col custom-shadow py-3 px-3 ">
       <div className="title3">Account Information </div>
+      <div className="subtitle3">Settings to help you keep your account secure</div>
       <div className="row job-form">
         <div className="col-12 col-md-6">
           <label className="subtitle2 ">First Name</label>
@@ -139,13 +178,54 @@ function ProfileDetails() {
           <input  type="text" />
         </div>
         <div className="line mt-4 mb-2" style={{ width: "100%" }}></div>
-        <div className="col-12 col-md-6">
-          <label className="subtitle2 ">Email</label>
+        <div className="col-12">
+        <div className="title3">
+          Email address
+        </div>
+        <div className="subtitle3 mb-2 font-weight-normal">Add or remove email address</div>
+        <div className="mx-3">
+          <p className="subtitle1">Email address you've added</p>
+        </div>
+        <Accordion title={"change email"} titleClass={"subtitle3 link"} icon={"fa fa-sync"}>
+        <div className="col-12 mx-md-3">
+          <label className="subtitle2 ">Email address</label>
           <input  type="text" />
         </div>
-        <div className="col-12 col-md-6">
-          <label className="subtitle2 ">Mobile Number</label>
+        <div className="d-flex mx-4 pl-1">
+        <div className="action-btn subtitle2 mr-2">
+          Cancel
+        </div>
+        <div className="action-btn subtitle2">
+          Send Verification
+        </div>
+        </div>
+        </Accordion>
+        </div>
+        
+        <div className="line mt-4 mb-2" style={{ width: "100%" }}></div>
+
+        <div className="col-12">
+        <div className="title3">
+          Mobile Number
+        </div>
+        <div className="subtitle3 mb-2 font-weight-normal">Add or remove mobile number</div>
+        <div className="mx-3">
+          <p className="subtitle1">Mobile number you've added</p>
+        </div>
+        <Accordion title={"change mobile number"} titleClass={"subtitle3 link"} icon={"fa fa-sync"}>
+        <div className="col-12 mx-3">
+          <label className="subtitle2 ">Mobile number</label>
           <input  type="text" />
+        </div>
+        <div className="d-flex mx-4 pl-1">
+        <div className="action-btn subtitle2 mr-2">
+          Cancel
+        </div>
+        <div className="action-btn subtitle2">
+          Send Verification
+        </div>
+        </div>
+        </Accordion>
         </div>
       </div>
 
@@ -178,22 +258,24 @@ function ProfileDetails() {
 function Password(){
     return (
         <div className="col custom-shadow py-3 px-3 ">
-          <div className="title3">Password</div>
-          <div className="column job-form">
+          <div className="title3">Change Password</div>
+          <div className="subtitle3 mb-3">Choose a unique password to protect your account</div>
+
+          <div className="column job-form mx-4">
             
-            <div className="subtitle"><label > Current Password
+            <div className="subtitle2"><label > Type your Current Password
             <input className="hint" type="password"/>
             </label></div>    
             <div className="line mt-2" style={{width:"100%"}}></div>
                 
                 
-            <div className="subtitle mt-4"><label > New Password      
+            <div className="subtitle2 mt-4"><label >Type your new Password      
             <input className="pr-5 hint" type="password"/>
             </label></div>    
-            <div className="subtitle"><label > Comfirm Password
-            <input className="hint" type="password"/>
+            <div className="subtitle2"><label >Retype your new Password
+            <input className="hint pr-4" type="password"/>
             </label></div>    
-                <div className="action-btn">
+                <div className="action-btn subtitle1">
                     Save Password
                 </div>
           </div>
@@ -209,8 +291,8 @@ function NotificationSettings(){
           <div className="column">
               <div className="d-flex mt-4">
                   <div className="col">
-                    <div className="subtitle2">Push Notification</div>
-                    <div className="hint">Receive instant jobs push notifications</div>
+                    <div className="subtitle1">Push Notification</div>
+                    <div className="subtitle3">Receive instant jobs push notifications</div>
                   </div>
                   <div>
                   <label class="switch">
@@ -222,8 +304,8 @@ function NotificationSettings(){
               </div>
               <div className="d-flex mt-4">
                   <div className="col">
-                    <div className="subtitle2">Chat Notification</div>
-                    <div className="hint">Receive chat notifications</div>
+                    <div className="subtitle1">Chat Notification</div>
+                    <div className="subtitle3">Receive chat notifications</div>
                   </div>
                   <div>
                   <label class="switch">
@@ -235,8 +317,8 @@ function NotificationSettings(){
               </div>
               <div className="d-flex mt-4">
                   <div className="col">
-                    <div className="subtitle2">Payment Notification</div>
-                    <div className="hint">Receive payment push notifications</div>
+                    <div className="subtitle1">Payment Notification</div>
+                    <div className="subtitle3">Receive payment push notifications</div>
                   </div>
                   <div>
                   <label class="switch">
@@ -253,12 +335,12 @@ function NotificationSettings(){
 function AccountSetUp() {
   const [navigation, setNavigation] = React.useState(1);
   return (
-    <div className="full-width" style={{ minHeight: "70vh" }}>
-      <div className="container-m settings-page">
+    <div className="full-width" >
+      <div className="container-m settings-page mb-3">
         <div className="page-title">Settings</div>
         <div className="row mt-4">
-          <div className="col-12 col-lg-3 settings-navigation">
-            <ul className="mt-3">
+          <div className="col-12 col-lg-3 settings-navigation ">
+            <ul className="mt-3 ">
                 <li className="p-0 m-0"></li>
               <li key="Profile" className={navigation === 0 ? 'active' : ''} onClick={()=>setNavigation(0)}>Account</li>
               <li className={navigation === 1 ? 'active' : ''} onClick={()=>setNavigation(1)}>Notification</li>
@@ -266,8 +348,8 @@ function AccountSetUp() {
               <li className={navigation === 3 ? 'active' : ''} onClick={()=>setNavigation(3)}>Password</li>
             </ul>
           </div>
-
-          {navigation === 0 && (
+        <div className="col px-3">
+        {navigation === 0 && (
             <div className="col">
               {" "}
               <ProfileDetails />
@@ -291,6 +373,8 @@ function AccountSetUp() {
               <Password />
             </div>
           )}
+        </div>
+          
         </div>
       </div>
     </div>
