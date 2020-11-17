@@ -30,14 +30,24 @@ function showImage(dataX){
 }
 }
 
-function MessageApp() {
+function MessageApp(props) {
+  console.log(props)
   const [complainGroupTitle, setcomplainGroupTitle] = React.useState("");
   const [complainGroup, setComplainGroup] = React.useState(0);
   const [complainGroupStyle, setComplainGroupStyle] = React.useState("");
   const [selecetdMessage, setSelectedMessage] = React.useState({})
+  const [selectedCategory, setSelectedCategory] = React.useState("ALL")
   const { data, loading } = useQuery(apolloHelper.GET_USER_CONVERSATIONS)
   console.log(data)
-  
+  const categories = ['ALL','JOBS','DIRECT MESSAGES','ADMIN']
+  React.useEffect(() => {
+    document.getElementById("footer").style.opacity = "0"
+    document.getElementById("footer").style.pointerEvents = "none"
+    return () => {
+      document.getElementById("footer").style.opacity = "1"
+      document.getElementById("footer").style.pointerEvents = "unset"
+    }
+  }, [])
   React.useEffect(() => {
     let group = complainGroup % 3;
     if (group === 0) {
@@ -59,21 +69,47 @@ function MessageApp() {
       // eslint-disable-next-line no-undef
       $("#message-box").modal("toggle");
       console.log(window.innerWidth);
+      props.history.push(
+        '/message/dm',{jobData:job})
     }
   }
   function complaintToggle() {
     setComplainGroup((prev) => prev + 1);
   }
   return (
-    <div className="full-width">
-      <div className="container-lg">
-        <div className="page-title my-4">Message</div>
+    <div className="full-width" >
+      <div className="position-absolute" style={{bottom:"4px",width:"100%",}}>
+        {/* <div className="page-title my-4 display-none">Message</div> */}
         <div
           // style="overflow: hidden;"
-          className="complaint-container  row"
+          className="complaint-container  row" style={{height:"92vh",marginBottom:"0px"}}
         >
+
+         
+          <div className="col-12 col-xs-12 col-md-3 complaint-list display-none"          
+           style={{flexDirection:"column",display:"flex"}}
+          >
+             <div style={{flex:"1"}} className="d-flex justify-content-center align-items-center">
+                <img src={require("../../../../assets/data_arranging.svg")} style={{width:"200px",height:"200px", borderRadius:"50%"}} className="mt-4 avatar-shadow" alt=""/>
+             </div>
+            {
+              categories.map((item, index)=>(
+                <div
+                  category-selected={selectedCategory === item ? 'true' : 'false'}
+                  onClick={()=>setSelectedCategory(item)}
+                  key={index}
+                  className="item row align-items-center ustify-content-center"
+                >
+                  <div className="column col">
+                    <div className="col subtitle1">{item}</div>
+                    
+                  </div>
+                </div>
+              ))
+            }
+          </div>
           {/* <!-- complain list --> */}
-          <div className="col col-md-3 complaint-list">
+          <div className="col-12 col-xs-12 col-md-3 complaint-list">
             <div className="search-bar-container row align-items-center justify-content-center">
               <div className="search-bar row align-items-center">
                 <i className="fa fa-search px-2" />
@@ -125,7 +161,7 @@ function MessageApp() {
           <MessageBox noShow={true} jobData={selecetdMessage} />
         </div>
       </div>
-      <ModalView selecetdMessage={selecetdMessage} />
+      {/* <ModalView selecetdMessage={selecetdMessage} /> */}
     </div>
   );
 }
@@ -169,13 +205,13 @@ function MessageBox({ item, noShow, id, participant, jobData }){
     };
   },[]);
   if(jobData?.id === undefined) return ( <div className="col message-bo my-auto"> <div className="message-box-loadin my-auto display-none"> <SelectMessage text={"Select a Message Conversation"}/></div></div>);
-  if(loading) return ( <div className="col message-box"> <div className="message-box-loading card">
+  if(loading) return ( <div className="col message-box"> <div className="message-box-loading mcard">
     <Lottie style={{width:"120px",height:"40px",transform:"scale(2)", margin:"auto auto"}} animation="/loading4.json"/>
     </div> </div> )
   return (
-    <div className={[`col message-box ${noShow ? "no-show" : ""}`]}>
+    <div className={[`col message-box px-0 ${noShow ? "no-show" : ""}`]}>
       <div className="message-box-area d-flex align-items-center justify-content-center">
-        <input className="custom-file-inputx" type="file"></input>
+        <input className="custom-file-inputx ml-2" type="file"></input>
         {/* <textarea
           
           className="col-11 mx-1"
@@ -185,7 +221,7 @@ function MessageBox({ item, noShow, id, participant, jobData }){
           placeholder="Write a message..."
           ref={message}
         /> */}
-        <div className="col-11 mx-1">
+        <div className="col mx-1">
               <div 
         class="input px-4 subtitle1"
         style={{width:"100%"}}
@@ -199,7 +235,7 @@ function MessageBox({ item, noShow, id, participant, jobData }){
           onClick={() => {
           pushMessageToServer()
           }}
-          className="fa fa-paper-plane"
+          className="fa fa-paper-plane mr-2"
         />
       </div>
       <div className="message-chat thumb">
@@ -208,7 +244,7 @@ function MessageBox({ item, noShow, id, participant, jobData }){
             key={`${index}-message`}
             className={
               appLogic.userId === item.by
-                ? "message message-left card"
+                ? "message message-left mcard text-primary"
                 : "message message-right"
             }
           >
@@ -217,19 +253,9 @@ function MessageBox({ item, noShow, id, participant, jobData }){
         ))}
       </div>
       <div className="message-box-header d-flex align-items-center">
-        {window.innerWidth < 991 ? (
-          <div className="my-auto mx-2">
-            <i
-              className="fa fa-arrow-left my-auto"
-              onClick={() => {
-                // eslint-disable-next-line no-undef
-                $("#message-box").modal("toggle");
-              }}
-            ></i>
-          </div>
-        ) : (
-          <></>
-        )}
+        <div className="avatar mx-2" style={{width:"30px", height:"30px"}}>
+          <img src={showImage(jobData)} style={{width:"100%",height:"100%"}} alt=""/>
+        </div>
         <div className="col-6 q-pl-md subtitle1">
           {showName(jobData)}
         </div>

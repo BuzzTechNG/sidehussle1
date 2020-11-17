@@ -4,6 +4,7 @@ import { apolloHelper, appLogic } from "../../../..";
 import Lottie from "../../../../lottie";
 import { MessageBox } from "../MessageModule/Message";
 import RatingStarUneditable from "./RatingStar";
+const BUNNY = require("../../../../assets/bunny.svg")
 
 function MiniMessage({
   jobData,
@@ -34,7 +35,7 @@ function MiniMessage({
         }`,
       ]}
     >
-      <div style={{ position: "relative" }} className="card ">
+      <div style={{ position: "relative" }} className="card custom-shadow2 ">
         <div
           style={{ position: "absolute", top: "-20px" }}
           className="d-flex justify-content-start message-box-header"
@@ -114,10 +115,10 @@ function JobPage(props) {
       </div>
     ) : (
       <div style={{ width: "100%" }}>
-        {data?.canApplyForJob && (
+        {data?.canApplyForJob?.status && (
           <div
             style={{ width: "100%", flexDirection: "column" }}
-            className="d-flex card p-3 my-2 mt-3"
+            className="d-flex card custom-shadow2 card-rounded p-3 my-2 mt-3"
           >
             <div className="title3 my-1">Apply For Job</div>
 
@@ -143,7 +144,7 @@ function JobPage(props) {
             </div>
             <div className="d-flex justify-content-end mt-2">
               <div
-                className="square-btn mx-0 ml-2"
+                className="action-btn btn-rounded ml-2"
                 onClick={() => applyForJobFunction()}
                 style={{ fontSize: "14px" }}
               >
@@ -152,6 +153,17 @@ function JobPage(props) {
             </div>
           </div>
         )}
+        {
+          data?.canApplyForJob?.message === "user_already_applied" && (
+            <div className="custom-shadow2 card-rounded mt-3 py-3">
+              <div className="mx-auto d-flex justify-content-center my-3" style={{width:"100%"}}>
+              <img src={BUNNY} alt="" className="mx-auto" style={{width:"43%",height:"43%"}} />
+              </div>
+              <p className="subtitle1 text-center mb-3">  user already applied </p>
+            </div>
+          )
+        }
+
         {!data && <div>{`${data}`}</div>}
       </div>
     );
@@ -164,7 +176,7 @@ function JobPage(props) {
           <div style={{ width: "25px" }}>
             <i
               className={`fa fa-${icon}`}
-              style={{ color: verified ? "green" : "", fontSize: "12px" }}
+              style={{ color: verified ? "green" : "var(--text-primary)", fontSize: "12px" }}
             ></i>
           </div>
           <div className="subtitle2">{name}</div>
@@ -216,7 +228,7 @@ function JobPage(props) {
     <Lottie animation="/loading4.json" style={{ width: "50px" }} />
   </div> }
     return (
-      <div className="card mt-4">
+      <div className="card custom-shadow2 mt-4">
         <div className="title3 p-3">Designated User</div>
         <InterestedUserCard data={data.getUserAssignedToJob} />
         <MakePayment />
@@ -231,7 +243,7 @@ function JobPage(props) {
           {" "}
           <span>
             {" "}
-            <i className={`fa fa-${icon} pr-2`}></i>
+            <i className={`fa fa-${icon} pr-2 text-primary`}></i>
           </span>{" "}
           {text}
         </div>
@@ -309,7 +321,7 @@ function JobPage(props) {
               <div className="row mb-4">
                 <div className="col">
                   {/* Project Detail Card */}
-                  <div className="card ">
+                  <div className="card custom-shadow2 card-rounded">
                     <div
                       className="title3 p-3"
                       style={{ borderBottom: "#ccc solid 1px" }}
@@ -339,7 +351,7 @@ function JobPage(props) {
                         />
                         <RequirementComponent
                           icon={"map"}
-                          text={"Ibadan GRA"}
+                          text={data.getJob.jobAddress || "Not avaliable"}
                         />
                       </div>
                       <div
@@ -351,7 +363,8 @@ function JobPage(props) {
                           userResult.data.getUser.id === data.getJob.user.id &&
                           data.getJob.jobStatus === "Pending" && (
                             <div
-                              className="round-utility-btn"
+                              className="action-btn2"
+                              style={{fontSize:"13px"}}
                               onClick={() => {
                                 cancelJob({
                                   variables: { jobId: data.getJob.id },
@@ -378,19 +391,16 @@ function JobPage(props) {
             ) : (
               <div className="d-flex" style={{ flexDirection: "column" }}>
                 {data?.getJob.interestedUser.map((value) => (
-                  <div key={value} className="my-3 card">
+                  <div key={value} className="mb-3 card custom-shadow2">
                     <InterestedUserCard data={value}>
-                      <div
-                        className="line my-2"
-                        style={{ width: "100%" }}
-                      ></div>
-                      <div className="d-flex mt-2">
+                      
+                      <div className="d-flex mt-1">
                         {!data.getJob.assignTo &&
                           data.getJob.jobStatus === "Pending" && 
                           appLogic.userId === data.getJob.user.id &&
                           (
                             <div
-                              className="round-utility-btn mx-2"
+                              className="action-btn2 mx-2"
                               onClick={() => {
                                 assignJob({
                                   variables: {
@@ -400,19 +410,19 @@ function JobPage(props) {
                                 });
                               }}
                             >
-                              Assign Job <i className="fa fa-plus"></i>
+                              Assign Job <i className="fa fa-plus ml-2"></i>
                             </div>
                           )}
                         {(appLogic.userId === data.getJob.user.id) && (
                           <div
-                            className="round-utility-btn mx-2"
+                            className="action-btn2 mx-2"
                             onClick={() => {
                               setSelectedUser(value?.user?.id);
                               setIsMessageBoxOpened(true);
                               setShowMessageBoxOpened(true);
                             }}
                           >
-                            Conversation <i className="fa fa-paper-plane"></i>
+                            Conversation <i className="fa fa-paper-plane ml-2"></i>
                           </div>
                         )}
                       </div>
@@ -443,7 +453,7 @@ function JobPage(props) {
               onClick={() => setRating(index + 1)}
               key={index}
               className="fa fa-star star mx-1"
-              style={{ color: rating > index ? "orange" : "" }}
+              style={{ color: rating > index ? "orange" : "var(--text-primary)" }}
             ></i>
           ))}
         </div>
@@ -466,7 +476,7 @@ function JobPage(props) {
     }
     if(!loading && data.getReview.message === "review not found" && appLogic.userId === postedBy){
       return (
-        <div className="card mt-4 p-4">
+        <div className="card custom-shadow2 card-rounded mt-4 p-4 text-primary">
           <div className="title3 py-1">Review</div>
           <div className="line my-1" style={{ width: "100%" }}></div>
           <div>Rate this user</div>
@@ -482,11 +492,11 @@ function JobPage(props) {
             ></textarea>
             <div className="d-flex justify-content-end">
               <div
-                className="square-btn mx-0 align-self-right mt-2"
+                className="action-btn mx-0 align-self-right mt-2"
                 style={{ fontSize: "14px" }}
                 onClick={sumbitReview}
               >
-                Submit Review<i className="fa fa-mark"></i>
+                Submit Review<i className="fa fa-mark text-primary"></i>
               </div>
             </div>
           </div>
@@ -495,7 +505,7 @@ function JobPage(props) {
     }
     if(!loading && data.getReview.message === "review found"){
       return (
-        <div className="card mt-4 p-4">
+        <div className="card custom-shadow2 card-rounded mt-4 p-4">
           <div className="title3">Review</div>
           <div className="line my-1" style={{ width: "100%" }}></div>
 
@@ -511,8 +521,8 @@ function JobPage(props) {
     
 
     return (
-      <div className="card mt-4 p-4">
-        hi
+      <div className="card custom-shadow2 mt-4 p-4">
+        HI
       </div>
     );
   }
@@ -526,12 +536,14 @@ function JobPage(props) {
       ) : (
         <div className="container-m">
           <div className="job-title">
-            <div className="job-title--bg"></div>
+              <img src="https://cdn.hipwallpaper.com/i/19/88/YtwHJA.jpg" style={{width:"110%",height:"400px",top:0,left:0,position:"absolute",zIndex:"0"}}  alt=""/>
+            {/* <div className="job-title--bg">
+            </div>
             <div
               className="job-title--bg"
               style={{ right: "200px", opacity: "0.5" }}
-            ></div>
-            <div> {data.getJob.jobTitle} </div>
+            ></div> */}
+            <div className="job-title-text"> {data.getJob.jobTitle} </div>
           </div>
           <JobMainWindow />
         </div>

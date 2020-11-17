@@ -187,7 +187,7 @@ function Token(props) {
       setIsSending(false);
       if (resp.data.comfirmUserMobile.message === "mobileNumber-confirmed") {
         setTimeout(() => {
-          props.route.push("/dashboard");
+          props.route.push("/");
           localStorage.setItem("token", resp.data.comfirmUserMobile.token);
         }, 1000);
       } else {

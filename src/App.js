@@ -7,21 +7,75 @@ import DarkModeContext from "./DarkModeContext"
 import "./css/App.css";
 
 import "./css/styles.scss";
+import AuthUserContext from "./AuthContext";
 
 
+
+function ProtectedRoute(props) {
+  const [isSignedIn, setSignedIn] = React.useState(()=>{
+    if(localStorage.getItem("token")){
+        return true
+    }else{
+        return false
+    }
+})
+  function authLogic() {
+      
+    const signIn = () =>{
+     setSignedIn(true)   
+    }
+
+    const signOut = () =>{
+        localStorage.removeItem("token")
+        setSignedIn(false)
+    }
+
+    return {
+        isSignedIn,
+        setSignedIn,
+        signIn,
+        signOut
+    }
+}
+  return (
+    <AuthUserContext.Provider value={authLogic()}>
+    <AuthSwitch/>
+    </AuthUserContext.Provider>
+  )
+}
+function AuthSwitch(){
+const context = React.useContext(AuthUserContext)
+if(context.isSignedIn){
+return (
+  <Dashboard/>
+)}else{
+ return (
+    <Userlogger/>
+  )
+}
+}
 
 function App() {
-  const mode = React.useState("light")
+  const mode = React.useState(()=>{
+      // document.body.classList.add("background-primary")
+      if(localStorage.getItem("modeAndTheme")){
+          return JSON.parse(localStorage.getItem("modeAndTheme"))
+      }else{
+          localStorage.setItem("modeAndTheme",JSON.stringify(["light","default"]))
+          return ["light","default"]
+      }
+  })
   return (
     <DarkModeContext.Provider value = {mode} >
+    <div dark={mode[0]} theme={mode[1]} >
     <Router >
       <Switch>
-      <Route path="/dashboard" component={Dashboard} />
       <Route path="/verifyUser/:id" component={VerifyUser} />
-      <Route path="/" exact component={Userlogger} />
+      <Route path="/" component={ProtectedRoute} />
         <Route />
       </Switch>
     </Router>
+    </div>
     </DarkModeContext.Provider>
   );
 }

@@ -19,7 +19,7 @@
     .job-title {
         padding: 45px 15px;
         background-image: linear-gradient(to right, $dark-secondary, $dark-secondary);
-        box-shadow: 0px 1px 5px 0 $dark-primary;
+        box-shadow: 0px 1px 5px 0 var(--dark-primary);
         color: white;
         font-size: 26px;
         overflow: hidden;
@@ -29,6 +29,7 @@
 
     .job-title--bg {
         position: absolute;
+        margin: 0 20px;
         right: 50px;
         bottom: -30px;
         width: 200px;
@@ -40,8 +41,8 @@
     }
 
     .job-tab .active {
-        box-shadow: 0px 2px 2px 0 red;
-        background-color: #cf142dde;
+        box-shadow: 0px 2px 2px 0 var(--custom-primary);
+        background-color: var(--custom-primary);
         color: white;
     }
 
@@ -66,26 +67,25 @@
 
     .job-form .hint {
         font-size: 13px;
-        font-weight: 400;
     }
 
-    .job-form input,
-    .job-form select,
-    .job-form textarea,
-    .modal-body select {
-        background-color: lighten($dark-primary, 6);;
-        box-shadow: -1px 1px 5px 0px $dark-shadow;
-        color: #ccc;
-        border-bottom: 1px #555 solid;
-    }
+    // .job-form input,
+    // .job-form select,
+    // .job-form textarea,
+    // .modal-body select {
+    //     background-color: lighten($dark-primary, 6);;
+    //     box-shadow: -1px 1px 5px 0px $dark-shadow;
+    //     color: #ccc;
+    //     border-bottom: 1px #555 solid;
+    // }
 
-    .job-form input:focus,
-    .job-form textarea:focus {
-        box-shadow: 1px 1px 5px 1px $dark-primary;
-        background-color: $dark-secondary;
-        color: white;
-        border-bottom: 1px red solid;
-    }
+    // .job-form input:focus,
+    // .job-form textarea:focus {
+    //     box-shadow: 1px 1px 5px 1px $dark-primary;
+    //     background-color: $dark-secondary;
+    //     color: white;
+    //     border-bottom: 1px var(--custom-primary) solid;
+    // }
 
     .modal-body select {
         outline: none;
@@ -95,9 +95,9 @@
     }
 
     .modal-body select:focus {
-        outline: dotted 1px #fe3852;
+        outline: dotted 1px var(--custom-primary);
     }
-
+    
     @keyframes backgroundImage {
         from {
             transform: scale(0.1);

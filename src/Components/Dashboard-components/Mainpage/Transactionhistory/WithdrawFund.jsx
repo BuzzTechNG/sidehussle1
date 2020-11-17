@@ -43,7 +43,7 @@ function WithdrawFund() {
       <div className="container-m">
         <div className="page-title">Withdraw Funds</div>
 
-        {loading && balanceLoading && (
+        {loading && (
           <Lottie
             style={{
               width: "120px",
@@ -60,15 +60,17 @@ function WithdrawFund() {
         {!loading &&
           !balanceLoading &&
           bankData?.getUserBankDetails?.length > 0 && (
-            <div className="row p-2 custom-shadow m-3 my-5">
+            <div className="row p-2 custom-shadow color-shadow full-card m-3 mb-5">
                 <div className="col-6 display-none ">
                 <div className="subtitle1 job-form">
                     <div>
                     Account Details
                         </div> </div>
-                <div className="title2 pr-4">
+                <div className="title2 pr-4 my-auto d-flex align-items-center justify-content-center" style={{height:"50vh"}}>
+                {/* <div className=""> */}
 
-                <SvgWithdraw text="Kindly ensure that all the details supplied are correct before proceeding" className="mt-2"/>
+                <SvgWithdraw text="Kindly ensure that all the details supplied are correct before proceeding" className="mt-2 my-auto"/>
+                {/* </div> */}
                 </div>
                 </div>
               {/* Account Details */}
@@ -128,7 +130,7 @@ function WithdrawFund() {
               {/* Withdraw btn */}
               <div className="row justify-content-end px-3">
                 <div
-                  className=" mx-0 align-self-right square-btn p-2 px-4"
+                  className=" mx-0 align-self-right action-btn p-2 px-4"
                   onClick={withDraw}
                 >
                   Withdraw Funds

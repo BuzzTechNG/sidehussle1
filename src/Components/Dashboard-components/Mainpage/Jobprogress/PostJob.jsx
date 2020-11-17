@@ -1,11 +1,28 @@
 import React, { Component } from "react";
 import MultiSelect from "../../../SIdeHussleComponents/customMultiSelect";
 import { appLogic } from "../../../../index";
-import Apollo from "../../../../apolloHelper";
+import Apollo, { apolloHelper } from "../../../../apolloHelper";
+import Accordion from "../../../SIdeHussleComponents/Accordion";
+import { useQuery, useLazyQuery } from "@apollo/client";
+import CustomSelect from "../../../SIdeHussleComponents/customSelect";
+import PostJobModal from "../Modals/PostJobModal";
+import FullPageLoading from "../../../SIdeHussleComponents/FullPageLoading";
+import FullPageSucess from "../../../SIdeHussleComponents/FullPageSucess";
+import FullPageError from "../../../SIdeHussleComponents/FullPageError";
 const apollo = new Apollo();
 
-function LocationComponent() {
+function LocationComponent({ getEditLocation }) {
   const [loc, setLoc] = React.useState("");
+
+  const [locationSearch, { data, loading }] = useLazyQuery(
+    apolloHelper.LOCATION_AUTOCOMPLETE,
+    {
+      variables: {
+        location: "",
+      },
+    }
+  );
+  console.log(data);
   async function getLogLat() {
     const loglat = await appLogic.getLocation();
     setLoc(loglat);
@@ -14,19 +31,78 @@ function LocationComponent() {
     getLogLat();
     return () => {};
   }, []);
+  React.useEffect(() => {
+    getEditLocation(loc);
+    return () => {};
+  }, [loc]);
   return (
     <div>
       {loc && <div className="hint">detected your location as</div>}
       {`${loc}`}
+      <Accordion
+        title={"not correct? change location"}
+        titleClass={"subtitle3 link"}
+        icon={"fa fa-sync"}
+      >
+        {/* <input
+          list="job-location"
+          onChange={(e) => {
+            locationSearch({ variables: { location: e.target.value } });
+          }}
+        ></input>
+        <datalist id="job-location">
+          {data?.locationAutocomplete &&
+            JSON.parse(data?.locationAutocomplete).map((item, index) => (
+              <div
+                key={`data-location-${index}`}
+                onClick={() => {
+                  setLoc(`${item.address?.city}, ${item.address?.country}`);
+                  console.log("object set loc");
+                }}
+              >
+                <option style={{ fontSize: "12px" }}>
+                  <div
+                    onClick={() => {
+                      setLoc(`${item.address?.city}, ${item.address?.country}`);
+                      console.log("object set loc");
+                    }}
+                    dangerouslySetInnerHTML={{ __html: item.label }}
+                  >
+                    {" "}
+                  </div>{" "}
+                </option>
+              </div>
+            ))}
+        </datalist> */}
+        <CustomSelect
+          selected={loc}
+          filterString={(filterdata) =>
+            locationSearch({ variables: { location: filterdata } })
+          }
+          filter
+        >
+          <div style={{ width: "500px" }}>
+            {data?.locationAutocomplete &&
+              JSON.parse(data?.locationAutocomplete).map((item, index) => (
+                <p
+                  className="option"
+                  dangerouslySetInnerHTML={{ __html: item.label }}
+                  key={`data-location-${index}`}
+                  onClick={() => {
+                    setLoc(`${item.address?.city}, ${item.address?.country}`);
+                    console.log("object set loc");
+                  }}
+                ></p>
+              ))}
+          </div>
+        </CustomSelect>
+      </Accordion>
     </div>
   );
 }
 export default class PostJob extends Component {
-
-
   constructor(props) {
     super(props);
-
 
     this.state = {
       locationSensitive: false,
@@ -35,20 +111,31 @@ export default class PostJob extends Component {
       jobTitle: "",
       jobDescription: "",
       jobLocation: "",
+      jobAddress: "",
       isBudgetNegotiable: true,
       jobSpecification: [],
       //jobBudget: "",
       loading: false,
+      success: false,
       response: {},
     };
+    this.initJobLocation();
   }
 
+  async initJobLocation() {
+    const response = await apolloHelper.getUser();
+    const details = response.data.getUser.userDetails;
+    this.setState({
+      jobLocation: details.logAndlat,
+      jobAddress: details.address,
+    });
+  }
   validateForm = () => {
     if (
       this.state.jobTitle &&
       this.state.jobDescription &&
-      this.state.locationSensitive &&
-      // this.state.jobSpecification &&
+      // this.state.locationSensitive &&
+      (this.state.jobSpecification.length > 0) &&
       this.state.jobBudget
     ) {
       return true;
@@ -77,18 +164,28 @@ export default class PostJob extends Component {
       jobTitle: this.state.jobTitle,
       jobDescription: this.state.jobDescription,
       jobLocation: this.state.jobLocation,
+      jobAddress: this.state.jobAddress,
       jobSpecification: this.state.jobSpecification,
       locationSensitive: this.state.locationSensitive,
       isBudgetNegotiable: this.state.isBudgetNegotiable,
       jobBudget: parseInt(this.state.jobBudget),
     });
+    if(response.data.createJob){
+      this.showResponseStatus("success")  
+    }else{
+      this.showResponseStatus("error")  
+    }
     this.setState({
       loading: false,
-      response: response.data.createJob.Job,
     });
     console.log(response);
   };
-
+  showResponseStatus(state){
+    this.setState({[state]:true})
+    setTimeout(() => {
+      this.setState({[state]:false})
+    }, 5000);
+  }
   render() {
     return (
       <div className="full-width" style={{ position: "relativ" }}>
@@ -150,7 +247,6 @@ export default class PostJob extends Component {
                 </div>
                 {/* <input type="text" /> */}
                 <MultiSelect
-                  
                   onChange={this.jobSpecificationChange}
                   options={[
                     "plumbing",
@@ -196,7 +292,14 @@ export default class PostJob extends Component {
                   />
                 </div>
                 <div>
-                  {this.state.locationSensitive && <LocationComponent />}
+                  {this.state.locationSensitive && (
+                    <LocationComponent
+                      getEditLocation={(value) => {
+                        this.state.jobAddress = value;
+                        this.state.jobLocation = "";
+                      }}
+                    />
+                  )}
                 </div>
               </div>
               {/*  */}
@@ -231,9 +334,10 @@ export default class PostJob extends Component {
                   is this price negotiable
                   <input
                     type="checkbox"
+                    selected={this.state.isBudgetNegotiable}
                     value={this.state.isBudgetNegotiable}
                     onChange={(e) =>
-                      this.setState({ isBudgetNegotiable: e.target.value })
+                      this.setState({ isBudgetNegotiable: Boolean(e.target.value) })
                     }
                     style={{
                       width: "20px",
@@ -259,17 +363,36 @@ export default class PostJob extends Component {
               </div>
               {/*  */}
               {this.validateForm() && (
-                <button
-                  className="buttonLogin link"
-                  title="Post Job"
-                  onClick={this.createJob}
+                <div
+                type="button"  
+                data-toggle="modal"
+                data-target="#modal-postjob-view"
+                className="action-btn"
                 >
                   Post Job{" "}
-                </button>
+                </div>
               )}
             </div>
           </div>
         </div>
+        <PostJobModal 
+        title={this.state.jobTitle}
+        desc={this.state.jobDescription}
+        budget={this.state.jobBudget}
+        action={()=>{this.createJob()}}
+        />
+        <FullPageLoading
+        message="Posting Job"
+        loading={this.state.loading}
+        />
+        <FullPageSucess
+        show={this.state.success}
+        message={"Job successfully posted."}
+        />
+        <FullPageError
+        show={this.state.error}
+        message={"An error occuried while trying to post job."}
+        />
       </div>
     );
   }

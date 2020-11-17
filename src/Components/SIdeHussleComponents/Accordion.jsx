@@ -6,7 +6,7 @@ function Accordion({ children, title, subtitle, icon, titleClass }) {
   return (
     <div className="" style={{ width: "100%" }}>
       <div
-        className="d-flex"
+        className="d-flex acc-underline"
         style={{ width: "100%" }}
         onClick={() => {
             requestAnimationFrame(()=>{

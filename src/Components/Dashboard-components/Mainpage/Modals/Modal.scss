@@ -1,13 +1,17 @@
 @import "../../../../css/variables";
 
-[dark="dark"] {
+
     .modalbg {
-        background-color: lighten($dark-primary,0);
+        background-color: var(--dark-secondary2);
         // background-color: red
-        color: #ccc;
+        color: var(--text-secondary);
     }
 
     .modalframe {
-        background-color:  rgba($color: $dark-secondary, $alpha: 0.8) ;
+        color: var(--text-secondary);
+        background-color: var(--dark-primary);
+        opacity: 0.92;
     }
-}
+    svg {
+        fill-color: red
+    }

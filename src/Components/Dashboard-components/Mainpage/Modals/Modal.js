@@ -3,6 +3,10 @@ import "./Modal.scss";
 import "./Modal.css";
 import lottie from "lottie-web";
 import Apollo from "../../../../apolloHelper";
+import { MultiSelect } from "../../../SIdeHussleComponents/customMultiSelect";
+import UploadInfo from "../../../SIdeHussleComponents/UploadInfo";
+import SocailLink from "../Market/SocialLink";
+import ThemeSettings from "../Settings/ThemeSettings";
 const apollo = new Apollo();
 
 //const [response, updateUserResponse] = useState({});
@@ -40,6 +44,8 @@ const state = {
     { id: 4, title: "Add Language", modalType: "editLanguage" },
     { id: 5, title: "Add Education", modalType: "editEducation" },
     { id: 6, title: "Description", modalType: "editDescription" },
+    { id: 7, title: "Introduction Video", modalType: "editShortVid" },
+    { id: 7, title: "Social links", modalType: "editSocialLink" },
   ],
   yourRate: 0,
   servicefee: 0,
@@ -58,6 +64,7 @@ const updateUser = async ({
   address,
   logAndLat,
   services,
+  socialLinks,
   languages,
   videoUrl,
   education,
@@ -68,6 +75,7 @@ const updateUser = async ({
   const response = await apollo.updateUser({
     userTitle,
     services,
+    socialLinks,
     languages,
     education,
     videoUrl,
@@ -101,8 +109,8 @@ const ModalView = ({ body, title, modalType, action, reload }) => {
         class="modal-dialog modal-lg modal-dialog-centered "
         style={{ border: 0, outline: 0 }}
       >
-        <div class="modal-content modalbg" style={{ border: 0, outline: 0 }}>
-          <div class="modal-header">
+        <div class="modal-content modalbg" >
+          <div class="modal-header" style={{ border: "none", }}>
             <h4 class="modal-title" id="ModalLabel">
               {title}
             </h4>
@@ -115,8 +123,10 @@ const ModalView = ({ body, title, modalType, action, reload }) => {
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
+          <div className="line"></div>
           <div class="modal-body job-form  ">{body}</div>
-          <div class="modal-footer">
+          <div className="line"></div>
+          <div class="modal-footer" style={{ border: "none", }}>
             <button type="button" class="modal-close-btn" data-dismiss="modal">
               Close
             </button>
@@ -129,6 +139,46 @@ const ModalView = ({ body, title, modalType, action, reload }) => {
               {modalLoading ? <LottieView /> : "Save changes"}
             </button>
           </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const CustomiseDisplayModal = () => {
+  return (
+    <div
+      class="modal fade modalframe"
+      backdrop="static"
+      id="modal-custom-view"
+      tabIndex={-1}
+      role="dialog"
+      aria-labelledby="ModalLabel"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered "
+        style={{ border: 0, outline: 0, maxWidth:"450px" }}
+      >
+        <div class="modal-content modalbg" >
+          <div class="modal-header" style={{ border: "none", }}>
+            <h4 class="modal-title" id="ModalLabel">
+              Display settings
+            </h4>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div className="line"></div>
+          <div class="modal-body " >
+            <ThemeSettings/>
+            </div>
+          
         </div>
       </div>
     </div>
@@ -160,8 +210,8 @@ const TitleModal = ({ userTitle, setUserTitle }) => (
     </form>
   </>
 );
-const ChangeRateModal = ({ userPricePerHour, setUserPricePerHour }) => (
-  <>
+function ChangeRateModal({ userPricePerHour, setUserPricePerHour }){
+  return (<>
     <p className="subtitle2" style={{fontWeight:"bolder"}}>
       Please note that your hourly rate will only apply to new contracts. At this time SideHussle is service fee is 0 NGN
 
@@ -205,15 +255,19 @@ const ChangeRateModal = ({ userPricePerHour, setUserPricePerHour }) => (
       </span>
       /hr
     </p>
-  </>
-);
-const SkillsModal = ({ services, setServices }) => (
+  </>)
+};
+function SkillsModal({ services, setServices }) {
+  const local_services = useRef(services)
+  console.log(local_services,"local")
+  console.log(local_services.current,"local current")
+  return(
   <>
     <div className="title2">Select skills:</div>
     <form>
       <div class="form-group">
         
-        <select
+        {/* <select
         multiple={true}
         required
           type="text"
@@ -240,13 +294,14 @@ const SkillsModal = ({ services, setServices }) => (
           <option value="Electical">Electical</option>
           <option value="Engineer">Engineer</option>
           
-        </select>
+        </select> */}
         
+        <MultiSelect items={local_services.current} onChange={(value)=>setServices(value)} options={['Transport','plumbing','Electical','Engineer','washing','cooking']} />
       </div>
     </form>
   </>
-);
-const LanguageModal = ({ languages, setLanguages })=> {
+)};
+function LanguageModal({ languages, setLanguages }){
   
   
   const [localLanguage, setLocalLanguage] = useState("")
@@ -302,7 +357,7 @@ const LanguageModal = ({ languages, setLanguages })=> {
   </>
 )};
 
-const EducationModal = ({ localEducation, setLocalEducation }) => {
+function EducationModal ({ localEducation, setLocalEducation }){
   
   const setEducation = (e,target) => {
     
@@ -343,10 +398,10 @@ const EducationModal = ({ localEducation, setLocalEducation }) => {
         <br />
 
         <div className="row">
-          <div className="col-sm-5">
+          <div className="col-sm-6">
             {/* <form> */}
             <div class="form-group">
-              <label className="mr-2">
+              <label style={{width:"100%"}} className="mr-md-2">
               From
               <input
                 type="date"
@@ -365,7 +420,7 @@ const EducationModal = ({ localEducation, setLocalEducation }) => {
           <div className="col-sm-6">
             {/* <form> */}
             <div class="form-group ml-2">
-              <label>To <input
+              <label style={{width:"100%"}}>To <input
                 type="date"
                 class="form-control"
                 id="dateTo"
@@ -429,7 +484,7 @@ const EducationModal = ({ localEducation, setLocalEducation }) => {
   );
 };
 
-const DescriptionModal = ({ userDesc, setDescription }) => (
+function DescriptionModal({ userDesc, setDescription }) {return(
   <>
     <h5>Description</h5>
     <form>
@@ -452,23 +507,52 @@ const DescriptionModal = ({ userDesc, setDescription }) => (
       </div>
     </form>
   </>
-);
-// percentCalc = () => {
-//   let servicefee = +state.servicefee * 0.1;
-//   let userPricePerHour = +state.yourRate - servicefee;
-//   this.setState({
-//     servicefee: servicefee,
-//     userPricePerHour: userPricePerHour,
-//   });
-// };
+)};
+function VideoUploadModal({ userVideo, setUserVideo }) {return(
+  <>
+    <form>
+      <div class="form-group mb-0">
+        <div className="subtitle1 mx-auto" style={{width:"max-content"}}>Let the people know you better</div>
+        <div className="row">
+        <div className="mx-auto">
 
-//   <button
-//     type="button"
-//     className="btn btn-primary m-5 p-3"
-//     data-toggle="modal"
-//     // data-target={`#${title.modalType}`}
+        <UploadInfo size="lg"/>
+        </div>
+        </div>
+        <div className="job-form mt-0">
+        <div className="hint mt-0 mx-auto" style={{width:"max-content"}}>
+        upload a 30secs video about yourself
+        </div>
+        </div>
+      </div>
+    </form>
+  </>
+)};
 
-//   />
+function SocialLinkModal({ socialLinks, setSocialLinks }) {
+  const local_link = useRef(socialLinks)
+  return(
+  <>
+    <form>
+      <div class="form-group mb-0">
+        <div className="subtitle1 mx-auto" style={{width:"max-content"}}>Let the people know you better</div>
+        <div className="row">
+        <div className="mx-auto">
+
+        <SocailLink initValue={local_link.current} onChange={(value)=> setSocialLinks(value) }/>
+
+        </div>
+        </div>
+        <div className="job-form mt-0">
+        <div className="hint mt-0 mx-auto" style={{width:"max-content"}}>
+        share your social media pages
+        </div>
+        </div>
+      </div>
+    </form>
+  </>
+)};
+
 
 const TitleViewModal = ({ data, reload }) => {
   const [userTitle, setUserTitle] = useState(data);
@@ -495,8 +579,9 @@ const ChangeRateViewModal = ({ data, reload }) => {
     />
   );
 };
-const SkillsViewModal = ({ data, reload }) => {
+function SkillsViewModal({ data, reload }) {
   const [services, setServices] = useState(data);
+  console.log("object skill rerender")
   return (
     <ModalView
       title={state.titles[2].title}
@@ -563,6 +648,32 @@ const DescriptionViewModal = ({ data, reload }) => {
     />
   );
 };
+const VideoUploadViewModal = ({ data, reload }) => {
+  const [userVideo, setUserVideo] = useState(data); 
+
+  return (
+    <ModalView
+      title={state.titles[6].title}
+      modalType={state.titles[6].modalType}
+      body={VideoUploadModal({ userVideo, setUserVideo })}
+      action={() => updateUser({ userVideo })}
+      reload={reload}
+    />
+  );
+};
+const SocialLinkViewModal = ({ data, reload }) => {
+  const [socialLinks, setSocialLinks] = useState(data); 
+
+  return (
+    <ModalView
+      title={state.titles[7].title}
+      modalType={state.titles[7].modalType}
+      body={SocialLinkModal({ socialLinks, setSocialLinks })}
+      action={() => updateUser({ socialLinks })}
+      reload={reload}
+    />
+  );
+};
 export {
   TitleModal,
   EducationModal,
@@ -576,4 +687,7 @@ export {
   LanguageViewModal,
   ChangeRateViewModal,
   DescriptionViewModal,
+  VideoUploadViewModal,
+  SocialLinkViewModal,
+  CustomiseDisplayModal
 };

@@ -4,30 +4,82 @@ import availableJobs from "../AvailablejobsList";
 import Pagination from "./Pagination";
 import Card from "./Card/Card";
 import { apolloHelper } from "../../../..";
-import { MultiSelect } from "../../../SIdeHussleComponents/customMultiSelect";
+import  { MultiSelect } from "../../../SIdeHussleComponents/customMultiSelect";
 import Lottie from "../../../../lottie";
 import NoFile from "../../../SIdeHussleComponents/NoFile";
+import CustomSelect from "../../../SIdeHussleComponents/customSelect";
 
 class Availablejobs extends Component {
   constructor(props) {
     super(props);
     this.LeftContainer = this.LeftContainer.bind(this)
     this.LeftModal = this.LeftModal.bind(this)
-    this.getAvaliableJobs("7.4444 3.1455");
+    this.loadUser()
+  }
+  async loadUser(){
+    this.setState({loading: true})
+    const user = await apolloHelper.getUser()
+    const value = user?.data?.getUser?.userDetails?.services || []
+    const err = user?.error
+    console.log(err)
+    console.log(value)
+    await this.setFilterValue('services',value)
+    this.getAvaliableJobs("7.4444 3.1455")
   }
   state = {
     availableJobs: [],
+    locationList: [],
     isGrid: false,
     currentPage: 1,
-    postsPerPage: 5,
+    postsPerPage: 20,
     loading: true,
-    filterModal: false
+    filterModal: false,
+    filters: {
+      verifiedUser: false,
+      verifiedPayment: false,
+      services:[],
+      location: "",
+      showJobsInOtherLocations: false,
+      showOtherServices: false,
+    }
   };
+  
+  componentDidUpdate(prevProps,prevState){
+    if(prevState.filters !== this.state.filters){
+      console.log(this.state.filters)
+      this.getAvaliableJobs()
+    }
+  }
+  async locationSearch(l){
+    if(l.length < 3) return
+   let locationList = await apolloHelper.locationAutocomplete(l)
+    locationList = JSON.parse(locationList.data.locationAutocomplete)
+    this.setState({locationList})
+    console.log(locationList)
+  }
+  setFilterValue(state,value){
+    this.setState(prevState =>({
+      ...prevState,  filters: {...prevState.filters, [state]: value} 
+    }))
+    console.log("set service")
+  }
   getAvaliableJobs = async () => {
     this.setState({ loading: true });
-    const jobs = await apolloHelper.getAvaliableJobs("");
-    console.log(jobs);
-    this.setState({ availableJobs: jobs.data.getAvaliableJobs });
+    try {
+      const jobs = await apolloHelper.getAvaliableJobs({
+        verifiedUser: this.state.filters.verifiedUser,
+        verifiedPayment: this.state.filters.verifiedPayment,
+        services: this.state.filters.services,
+        location: this.state.filters.location,
+        showJobsInOtherLocations: this.state.filters.showJobsInOtherLocations,
+        showOtherServices: this.state.filters.showOtherServices
+      });  
+      this.setState({ availableJobs: jobs.data.getAvaliableJobs });
+    } catch (error) {
+    console.log(error)  
+    }
+    
+    
     this.setState({ loading: false });
   };
   changePPP = (event) => {
@@ -39,15 +91,20 @@ class Availablejobs extends Component {
   };
 
   ToggleFilterProp(props) {
+    console.log(props)
     return (
       <div className="d-flex align-items-center">
         <label className="subtitle2">
           <input
             className="mr-2"
             type="checkbox"
-            value={props.value}
+            checked={props.value}
             onChange={(e) => {
-              props.func(e.target.value);
+              // props.func(e.target.value);
+              console.log(`${props.value}`.split())  
+              this.setState(prevState =>({
+                ...prevState,  filters: {...prevState.filters, [props.name]: !prevState.filters[`${props.name}`]} 
+              }))
             }}
             name=""
             id=""
@@ -60,16 +117,13 @@ class Availablejobs extends Component {
   }
   LeftContainer(){
     return ( 
-      <div className="row mb-4  p-lg-3">
+      <div className="row mb-4  p-lg-3 custom-shadow2">
       <div className="p-2 ml-md-2 ml-lg-0 mb-lg-4 mb-md-0 subtitle1">
         Filter settings <i className="fa fa-cog"> </i>{" "}
       </div>{" "}
       {/* Search Location */}
       <div
-        className="p-2 d-flex col-sm-12 mb-2"
-        style={{
-          border: "1px solid #aaa",
-        }}
+        className="p-2 d-flex col-sm-12 mb-2 bdb bdt bdl bdr"
       >
         <span>
           {" "}
@@ -83,9 +137,16 @@ class Availablejobs extends Component {
             backgroundColor: "transparent",
           }}
           type="text"
+          list="location"
+          onChange={e => { this.locationSearch(e.target.value);}}
           placeholder="Search Location"
           className="filter-input"
         />
+        <datalist id="location">
+          {this.state.locationList.map((item,index)=>(
+          <option style={{fontSize:"12px"}} dangerouslySetInnerHTML={{ __html: item.label }} key={`data-location-${index}`}></option>
+          ))}
+        </datalist>
       </div>{" "}
       {/* space */}{" "}
       <div
@@ -97,15 +158,18 @@ class Availablejobs extends Component {
       ></div>{" "}
       {/* Search Service */}{" "}
       <div
-        className="d-flex p-2 mb-sm-3 col-sm-12 mb-2 "
-        style={{
-          border: "1px solid #aaa",
-        }}
+        className="d-flex p-2 mb-sm-3 col-sm-12 mb-2 bdb bdt bdl bdr"
+        
       >
         
         <MultiSelect
-          onChange={() => {}}
+          onChange={(value) => {
+            console.log(value)
+            console.log(this.state.filters.services)
+           if(JSON.stringify(value) !== JSON.stringify(this.state.filters.services)){
+            this.setFilterValue("services",value);console.log("service call call")}}}
           placeholder="Select Services"
+          items={this.state.filters.services}
           options={[
             "plumbing",
             "tailoring",
@@ -120,14 +184,16 @@ class Availablejobs extends Component {
       <div className="subtitle1 mb-1">Verification</div>
       <div className="col-12">
         {this.ToggleFilterProp({
-          value: true,
+          value: this.state.filters.verifiedUser,
           func: () => {},
+          name: 'verifiedUser',
           text: "Verfied Users",
         })}
       </div>
       <div className="col-12">
         {this.ToggleFilterProp({
-          value: true,
+          value: this.state.filters.verifiedPayment,
+          name: 'verifiedPayment',
           func: () => {},
           text: "Verfied Payments",
         })}
@@ -135,16 +201,23 @@ class Availablejobs extends Component {
       <div className="subtitle1 my-2">Others</div>
       <div className="col-12">
         {this.ToggleFilterProp({
-          value: true,
-          func: () => {},
-          text: "Show jobs in other locations",
+          value: this.state.filters.showJobsInOtherLocations,
+          name: 'showJobsInOtherLocations',
+          func: () => {
+
+            this.setState(prevState =>({
+              ...prevState,  filters: {...prevState.filters, showJobsInOtherLocations: !prevState.filters.showJobsInOtherLocations} 
+            }))
+          },
+          text: "Other locations",
         })}
       </div>
       <div className="col-12">
         {this.ToggleFilterProp({
-          value: true,
+          value: this.state.filters.showOtherServices,
+          name: 'showOtherServices',
           func: () => {},
-          text: "Verfied Payments",
+          text: "Other services",
         })}
       </div>
     </div>
@@ -152,7 +225,7 @@ class Availablejobs extends Component {
   }
   LeftModal(){
     return( 
-      this.state.filterModal && <div className="filter-modal display-show px-4 pt-5 custom-shadow">
+       <div className={`filter-modal display-show px-4 pt-5 custom-shadow ${this.state.filterModal ? 'filter-modal-open': 'filter-modal-close'}`}>
         {  this.LeftContainer() }
       </div>
     )
@@ -190,18 +263,18 @@ class Availablejobs extends Component {
     return (
       <div className="full-width" style={{position:"relative"}}>
         
-        <div className="container-v px-2 px-md-4">
-          <div className="page-title"> Avaliable Jobs </div>{" "}
+        <div className="container-v px-2 px-md-4 full-width">
+          {/* <div className="page-title"> Avaliable Jobs </div>{" "} */}
           <div className="row my-2">
             {" "}
             {/* Left container */}
-            <div className="col-lg-3 col-md-12 col-sm-12 col-xs-12 pl-md-4 category-card display-none">
+            <div className="col-lg-3 col-md-12 col-sm-12 col-xs-12 pl-md-4 display-none">
              { this.LeftContainer() }
             </div>{" "}
             {/* Right Container */}
-            <div className="col-lg-9 col-md-12 col-sm-12 col-xs-12 px-4">
-              <div className="px-1 py-1 d-flex align-items-center justify-content-left ">
-                
+            <div className="col-lg-9 col-md-12 col-sm-12 col-xs-12 px-md-4">
+              <div className="custom-shadow col">
+                <div className="px-md-3 pt-4 pb-1 d-flex align-items-center justify-content-left mx-0">
                 <div
                   className="col"
                   style={{
@@ -210,14 +283,13 @@ class Availablejobs extends Component {
                   }}
                 >
                   <div
-                    className="col p-2 px-0 row align-items-center"
+                    className="col p-2 px-0 row align-items-center bdr bdb bdl bdt"
                     style={{
-                      border: "1px solid #aaa",
+                      // border: "1px solid #aaa",
+                      borderRadius:"7px"
                     }}
                   >
-                    <span className=" mr-1">
-                      <i className="fa fa-search"> </i>{" "}
-                    </span>{" "}
+                    
                     <input
                       className="col filter-input subtitle1 pr-0"
                       style={{
@@ -228,29 +300,51 @@ class Availablejobs extends Component {
                       type="text"
                       placeholder="Search.."
                     />
+                    <span className=" mr-1 square-btn mx-0">
+                      <i className="fa fa-search p-0"> </i>{" "}
+                    </span>{" "}
                   </div>{" "}
                 </div>{" "}
-                
-                <div
-                  title="Click to change view to grid or list"
-                  onClick={() => setIsGrid()}
-                  className="round-btn mx-0 ml-2 ml-1 "
-                  style={{
-                    
-                    padding: "8px",
-                  }}
-                >
-                  <i
-                    className={
-                      this.state.isGrid ? "fa fa-th-large my-auto " : "fa fa-list my-auto "
-                    }
-                  ></i>
-                   {/* {this.state.isGrid ? "Expanded " : "Compact"} */}
                   
-                </div>{" "}
+                
+                </div>
+                <div className="px-md-3 pb-2  d-flex justify-content-between">
+                      <div className="px-md-3 py-0 d-flex align-items-center d-flex subtitle3">
+                        <i className="fa fa-rss mr-2" style={{color:aJobs.length>0?"red":""}}></i>
+                        { aJobs.length } jobs found
+                      </div>
+                      <div className="job-form d-flex">
+                        <div className="d-flex align-items-center mr-4">
+                          <div className="subtitle3 mr-2">
+                          Sort: 
+                          </div>
+                          <select className="subtitle3" name="" id="">
+                            <option value="">Newest</option>
+                            <option value="">Oldest</option>
+                          </select>
+                        </div>
+                        
+                        <div 
+                        title="Click to change view to grid or list"
+                        className="d-flex align-items-center subtitle1" style={{fontWeight:"800"}}>
+                          <div className="subtitle3 mr-2">
+                          View: 
+                          </div>
+                          <div
+                          onClick={() => setIsGrid()}
+                          className="mr-3"  > <i style={{fontWeight:"800"}} className={`fa fa-list ${this.state.isGrid ?  "subtitle1": " "}`}></i> </div>
+                          
+                          <div
+                          onClick={() => setIsGrid()}
+                          > <i style={{fontWeight:"800"}} className={`far fa-th-large ${!this.state.isGrid ?  "subtitle1": " "}`} ></i> </div>
+                          
+                        </div>
+
+                      </div>
+                </div>
               </div>{" "}
               {this.state.loading && <div className="row mt-3"> <Lottie style={{width:"120px",height:"40px", margin:"auto auto"}} animation="/loading4.json"/> </div>}
-              <div className="row mt-3"> {aJobs} </div>{" "}
+              <div className="row mt-0 col px-0 mx-auto"> {aJobs} </div>{" "}
               <div className="row mt-3"> {aJobs.length < 1 && !this.state.loading &&<NoFile text={"No Job Avaliable"}/>} </div>{" "}
               <div className="d-flex mt-3">
                 {/* post per page */}
@@ -295,8 +389,8 @@ class Availablejobs extends Component {
                   onClick={ ()=> this.setState(p=>({filterModal:!p.filterModal}))}
                   className="round-btn display-show fa fa-sliders-h" style={{
                     position:"fixed",
-                    right: "30px",
-                    bottom:"25%",
+                    right: "25px",
+                    bottom:"5%",
                     zIndex:"100",
                     padding:"15px"
                   }}>

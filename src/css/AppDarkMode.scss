@@ -163,21 +163,61 @@ animation: openCloseAnimation 500ms ease-in-out reverse;
 .action-btn{
     font-size: medium;
     border-radius: 3px;
-    color: white;
-    padding: 8px 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white !important;
+    font-family: 'Rubik', sans-serif;
+    font-size: Clamp(11px, 2vw, 12px) !important;
+    font-weight: 500 !important;
+    padding: 6px 25px;
     margin: 0;
     margin-top: 15px;
     // background-image: linear-gradient(145deg, $custom-primary, $custom-primary-accent ,);
-    background: linear-gradient(344.05deg, #7361d8 0%, #7361d8 53.55%);
-    box-shadow: 3px 3px 8px 2px #7361d833;
-
+    background: linear-gradient(344.05deg, var(--custom-primary) , var(--custom-primary-accent) );
+    box-shadow: 1px 1px 2px 1px var(--custom-primary);
+    transition: all 200ms;
     cursor: pointer;
     // color: #333;
     max-width: max-content;
     &:hover{
       box-shadow: 1px 7px 7px 0px #22004422;
       background: linear-gradient(344.05deg, rgb(230, 237, 252) 73.55%, rgb(230, 237, 252) 73.55%);
-      color: #000
+      color: #000 !important;
+    }
+    &:active{
+      background-image: linear-gradient(145deg, $custom-primary, $custom-primary, $custom-primary );
+      
+    }
+    
+    }
+.action-btn2{
+    font-size: 12px !important;
+    color: var(--text-primary);
+    padding: 6px 25px;
+    margin: 0;
+    display: grid;
+    place-content: center;
+    font-weight: 500 !important;
+    margin-top: 15px;
+    // background-image: linear-gradient(145deg, $custom-primary, $custom-primary-accent ,);
+    border: var(--custom-primary) 2px solid;
+    // border-image: linear-gradient(344.05deg, var(--custom-primary) , var(--custom-primary-accent) ) ;
+    border-radius: 25px;
+    cursor: pointer;
+    // color: #333;
+    height: max-content;
+    transition: all 200ms;
+    max-width: max-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:hover{
+      border: rgb(230, 237, 252) 2px solid;
+      box-shadow: 1px 7px 7px 0px #22004422;
+      // background: linear-gradient(344.05deg, rgb(230, 237, 252) 73.55%, rgb(230, 237, 252) 73.55%);
+      background: linear-gradient(344.05deg, var(--custom-primary) , var(--custom-primary-accent) );
+      color: #fff
     }
     &:active{
       background-image: linear-gradient(145deg, $custom-primary, $custom-primary, $custom-primary );
@@ -186,48 +226,53 @@ animation: openCloseAnimation 500ms ease-in-out reverse;
     
     }
 
+    .action-btn[disabled-btn="true"], .action-btn2[disabled-btn="true"] {
+      pointer-events: none;
+      cursor: not-allowed;
+      background: var(--dark-secondary3);
+      box-shadow: none !important;
+    }
 
-
-[dark="dark"] {
-  background-color: rgba($dark-primary,0.98);
-  color: #bbb;
+// [dark="dark"] {
+  
+  
 
   a {
-    color: #ccc;
+    color: var(--text-primary);
   }
 
   a:hover {
-    color: #ccc;
+    color: var(--text-primary);
   }
 
   .avatar {
-    background-color: #ccc;
+    background-color: var(--text-primary);
 
   }
 
   @keyframes shimerEffect {
     from {
       transform: translateX(45px);
-      background-color: #ccc;
+      background-color: var(--text-primary);
     }
 
     to {
-      background-color: #eee;
+      background-color: var(--text-secondary);
       transform: translateX(-30px);
     }
   }
 
   .modal-close-btn {
     background-color: #00000000;
-    color: white;
+    color: var(--text-primary);
   }
 
   .modal-close-btn:hover {
-    background-color: #000000cc;
+    background-color: var(--dark-primary);
   }
 
   .avatar-mini {
-    background-image: linear-gradient(145deg, #ccc, #fcfcfc);
+    background-image: linear-gradient(145deg, var(--text-primary), var(--text-secondary));
   }
 
   .avatar-mini::after {
@@ -236,58 +281,97 @@ animation: openCloseAnimation 500ms ease-in-out reverse;
 
   .title1,
   .title2,
-  .title3 {
-    color: #ccc;
+  .title3,
+  .titleXL {
+    color: var(--text-primary) !important;
   }
 
   .subtitle1,
   .subtitle2,
   .subtitle3 {
-    color: #aaa;
+    color: var(--text-secondary) !important;
   }
 
   .bdr, .bdl, .bdb, .bdt {
-    border-color: darken($dark-secondary, 0);
+    border-color: var(--text-secondary3);
   }
 
 
   /* Botton */
   .round-btn,
   .square-btn {
-    background-color: lighten(#2e1222, 3);
+    background-color: var(--dark-secondary3);
     // background-image: linear-gradient(180deg, $dark-secondary, $dark-secondary2) ;
-    box-shadow: 1px 1px 8px 1px darken($dark-secondary, 11);
+    box-shadow: 1px 1px 17px 2px var(--dark-shadow);
   }
 
   .square-btn, .round-btn {
-    color: #aaa;
-  }
+    color: var(--text-primary);
 
+  }
+  // Stepper
+
+  .step-container{
+    margin: 15px 0;
+    width: 100%;
+    position: relative;
+    .step-circle{
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      color: var(--text-primary);
+      padding: 15px;
+      display: flex;
+      background: var(--dark-secondary3);
+      justify-content: center;
+      align-items: center;
+      z-index: 3;
+    }
+    .step-line{
+      position: absolute;
+      // top:50%;
+      right: 0;
+      // transform: translateY(-50%); 
+      width: 95%;
+      height: 2px;
+      opacity: 0.4;
+      background:inherit;
+      z-index: 0;
+    }
+    .step-background{
+      background: linear-gradient(145deg, var(--custom-primary),var(--custom-primary-accent));
+      color: white
+    }
+  }
 
   .round-btn:hover,
   .square-btn:hover {
-    box-shadow: 0px 2px 11px 1px #1c1820;
-    background-color: #bbb;
-    color: $custom-primary;
+    box-shadow: 0px 2px 17px 1px var(--dark-shadow);
+    background-color: var(--dark-secondary);
+    color: var(--text-secondary2);
   }
 
   .list li {
-    background-color: $dark-secondary;
+    background-color: var(--dark-secondary3);
   }
 
   .custom-shadow {
-    background-color: $dark-secondary2;
-    box-shadow: 2px 1px 2px 0px $dark-shadow, -2px -1px 7px 0px $dark-shadow;
+    background-color: var(--dark-secondary2);
+    box-shadow: 2px 1px 15px 1px var(--dark-shadow), -2px -1px 15px 1px var(--dark-shadow);
+  }
+  .custom-shadow2 {
+    background-color: var(--dark-secondary2);
+    box-shadow: 2px 1px 15px 1px var(--dark-shadow2), -2px -1px 15px 1px var(--dark-shadow2);
   }
 
   .filter-input {
-    color: white;
+    color: var(--text-primary);
   }
 
   .postsperpage {
     color: grey;
   }
-}
+// }
 @media screen and (max-width: 991px){
   .side-messagebox{
   

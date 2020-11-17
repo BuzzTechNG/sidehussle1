@@ -3,19 +3,22 @@
 
 
 }
-// .trans-row{
-//     // border:0 !important
-//     border-color: red !important;
-// }
+.trans-row{
+    // border-bottom: 1px solid #00000022;
+    padding: 10px;
+    margin: 10px 0;
+}
 
 .trans-row:hover {
-    color: rgb(142, 150, 142);
+    // color: rgb(142, 150, 142);
     
+    
+
 }
-[dark="dark"] {
+
     .tablehead {
-        background-color: $dark-primary;
-        color: grey;
+        background-color: var(--dark-primary);
+        color: var(--text-primary);
     }
 
     .trans-row {
@@ -23,13 +26,12 @@
         
     }
     .table th,.table td{
-        border-color: #2a2a2a
+        border-color: var(--dark-secondary)
     }
 
     .trans-row:hover {
-        color: rgb(108, 112, 108);
+        color: var(--text-secondary2);
     }
     .table-bordered {
-        border: 1px solid #494949;
+        border: 1px solid var(--dark-secondary);
     }
-}

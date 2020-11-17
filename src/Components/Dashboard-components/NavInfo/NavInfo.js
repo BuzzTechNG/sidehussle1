@@ -7,15 +7,21 @@ import { useQuery } from "@apollo/client";
 import Apollo from "../../../apolloHelper";
 import Lottie from "../../../lottie";
 import { appLogic } from "../../..";
+import { CustomiseDisplayModal } from "../Mainpage/Modals/Modal";
+import AuthUserContext from "../../../AuthContext";
+import LogoutModal from "../Mainpage/Modals/LogoutModal";
 const apollo = new Apollo()
 const NavInfo = () => {
-  const { loading, data, err } = useQuery(apollo.GET_USER, {
+  const { loading, data, err,client } = useQuery(apollo.GET_USER, {
   });
   React.useEffect(()=>{
     if(!loading && data){
       appLogic.userId = data.getUser.id
+      appLogic.userImageUrl = data.getUser.pictureUrl
+      appLogic.userFullName = `${data.getUser.firstName} ${data.getUser.lastName}`
     }  
   },[loading])
+  const context = React.useContext(AuthUserContext)
   return (
     <div className="navinfo">
       <div className="col">
@@ -57,24 +63,24 @@ const NavInfo = () => {
                     data-target=".navbar-collapse.show"
                   >
                     <NavLink
-                      to="/dashboard/avaliablejobs"
+                      to="/avaliablejobs"
                       exact
                       className="nav-link ml-3 custom-nav"
                     >
-                      Available Jobs
+                     <i className="fa fa-briefcase my-auto mr-2"></i> Available Jobs
                       
                     </NavLink>
                     <div className="nav-link-container">
                       
-                      <NavLink to="/dashboard/myproposals" className="item" >
-                      Proposals
+                      <NavLink to="/myproposals" className="item" >
+                      Applications
                       </NavLink>
                       
-                      <NavLink to="/dashboard/myjobs" className="item" >
+                      <NavLink to="/myjobs" className="item" >
                        Posted Jobs
                       </NavLink>
-                      <NavLink to="/dashboard/finduser" className="item" >
-                      Find Husslers
+                      <NavLink to="/finduser" className="item" >
+                      Find User
                       </NavLink>
                  
                       </div>
@@ -88,23 +94,20 @@ const NavInfo = () => {
                     data-target=".navbar-collapse.show"
                   >
                     <NavLink
-                      to="/dashboard/transactionhistory"
+                      to="/wallet"
                       className="nav-link ml-3 custom-nav"
                     >
-                      Finances
+                     <i className="fa fa-money-bill mr-2"></i> Wallet
                     </NavLink>
                     <div className="nav-link-container">
-                      <NavLink to="/dashboard/deposit" className="item" >
+                      <NavLink to="/deposit" className="item" >
                       Deposit Fund
                       </NavLink>
-                      <NavLink to="/dashboard/withdraw" className="item" >
+                      <NavLink to="/withdraw" className="item" >
                       Withdraw Fund
                       </NavLink>
-                      <NavLink to="/dashboard/transactionhistory" className="item" >
+                      <NavLink to="/transactionhistory" className="item" >
                       Transaction History
-                      </NavLink>
-                      <NavLink to="" className="item" >
-                      Finance Report
                       </NavLink>
                       
                       </div>
@@ -115,10 +118,10 @@ const NavInfo = () => {
                     data-target=".navbar-collapse.show"
                   >
                     <NavLink
-                      to="/dashboard/message"
+                      to="/message"
                       className="nav-link ml-3 custom-nav"
                     >
-                      Message
+                     <i className="fa fa-comments mr-2"></i> Message
                     </NavLink>
                   </li>
                   <li
@@ -127,7 +130,7 @@ const NavInfo = () => {
                     data-target=".navbar-collapse.show"
                   >
                     <NavLink
-                      to="/dashboard/"
+                      to="/"
                       exact
                       className="nav-link ml-3 custom-nav d-flex"
                       
@@ -139,16 +142,24 @@ const NavInfo = () => {
                     </>}
                     </NavLink>
                     <div className="nav-link-container">
-                      <NavLink to="" className="item" >
-                      View Profile
+                      
+                      <NavLink to="/store_setup" className="item" >
+                      Business/Store setup
                       </NavLink>
-                      <NavLink to="/dashboard/account_setup" className="item" >
+                      <NavLink to="/account_setup" className="item" >
                       User Settings
                       </NavLink>
-                     
-                      <NavLink to="" className="item" >
-                      Logout
+                      <NavLink to="/report" className="item" >
+                      Report
                       </NavLink>
+                      <div
+                      type="button"  
+                      data-toggle="modal"
+                      data-target="#modal-logout-view"
+                      style={{ border: 0, outline: 0, background:"transparent" }}
+                      className="item mx-0 px-0" >
+                      Logout
+                      </div>
                       
                       </div>
                   </li>
@@ -158,11 +169,11 @@ const NavInfo = () => {
                     data-target=".navbar-collapse.show"
                   >
                     <NavLink
-                      to="/dashboard/postjob"
+                      to="/postjob"
                       exact
-                      className="nav-link   text-light"
+                      className="nav-link action-btn my-0 "
                     >
-                      Post A Job
+                      Post a Job
                     </NavLink>
                   </li>
                   <li
@@ -170,7 +181,13 @@ const NavInfo = () => {
                     data-toggle="collapse"
                     data-target=".navbar-collapse.show"
                   >
-                    <DarkModeToggler />
+                  <button
+                  type="button"
+                  className={`far fa-edit text-primary`}
+                  data-toggle="modal"
+                  data-target="#modal-custom-view"
+                  style={{ border: 0, outline: 0, background:"transparent" }}
+                ></button>
                   </li>
                 </ul>
               </div>
@@ -178,6 +195,8 @@ const NavInfo = () => {
           </nav>
         </div>
       </div>
+      <CustomiseDisplayModal/>
+      <LogoutModal action={()=>{context.signOut();client.clearStore()}}/>
     </div>
   );
 };

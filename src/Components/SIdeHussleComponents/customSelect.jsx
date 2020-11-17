@@ -1,6 +1,6 @@
 import React from 'react'
 
-function SelectModal({data}){
+function SelectModal(props){
     function closeModal(){
         // eslint-disable-next-line no-undef
             $('#customSelect').modal('toggle');
@@ -31,7 +31,12 @@ function SelectModal({data}){
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div className="modal-body "><div className="sidehussle-select-modal" onClick={closeModal}> { data } </div></div>
+          <div className="modal-body ">
+            <div className="job-form">
+            {props.filter && <input type="text" placeholder="search" onChange={(e)=>{props.filterString(e.target.value)}}/>}
+            </div>
+            
+            <div className="sidehussle-select-modal" onClick={closeModal}> { props.data } </div></div>
           {/* <div className="modal-footer">
             <button type="button" className="modal-close-btn" data-dismiss="modal">
               Close
@@ -52,6 +57,8 @@ function CustomSelect(props) {
         if(window.innerWidth < 992){
             // eslint-disable-next-line no-undef
             // $('#customSelect').modal('toggle');
+                        // eslint-disable-next-line no-undef
+            if( $('.modal').hasClass('in') || $('.modal').hasClass('show') ) return
             // eslint-disable-next-line no-undef
             $('#customSelect').appendTo("body").modal('show');
             console.log(window.innerWidth)
@@ -63,8 +70,10 @@ function CustomSelect(props) {
     }
     return (
         <div className="sidehussle-select" onClick={toggle}>
-          <SelectModal data={props.children}/>
-          <i  className="mx-1 fa  fa-angle-down" style={{fontWeight:"900"}}></i>  { props.selected }  
+          <SelectModal data={props.children} {...props}/>
+          <div className="d-flex"><i  className="mx-1 fa  fa-angle-down my-auto mr-2" style={{fontWeight:"900"}}></i> <div style={{width:"100%"}} className="p-2" contentEditable={props.filter}  onInput={(e)=>{props.filterString(e.currentTarget.textContent)}}>
+          { props.selected }
+            </div></div>   
           { optionOpened && <div className="sidehussle-select-overlay"></div>}         
           { optionOpened && <div className="sidehussle-select-option"> { props.children } </div>}         
           <div style={{position:"relative"}}>

@@ -5,6 +5,10 @@
     margin: 10px 15px;
     font-size: 12px;
 }
+.avatar-shadow{
+    box-shadow: 5px 5px 20px var(--dark-shadow2), -2px -2px 20px var(--dark-shadow);
+    padding: 5px;
+}
 .message-left{
   align-self: flex-start;
 //   background-color: white;
@@ -52,9 +56,10 @@ height: 100%;
 display: none;
 }
 .thumb::-webkit-scrollbar{
-  width: 5px;
+  width: 2px;
   visibility: hidden;
   opacity: 0;
+  transform: translateX(2px);
   transition: all 400ms;
 }
 .thumb:hover::-webkit-scrollbar{
@@ -69,6 +74,7 @@ display: none;
 .thumb::-webkit-scrollbar-thumb{
   background: $dark_secondary;
   border-radius: 5px;
+  opacity: 0.5;
 }
 
 
@@ -76,26 +82,26 @@ display: none;
 @mixin messageBox($isDarkMode){
 .message-box-area{
     @if($isDarkMode){
-        background-color: $dark-primary;
-    box-shadow: 0px -1px 5px 0 $dark-primary;
+        background-color: var(--dark-primary);
+    box-shadow: 0px -1px 5px 0 var(--dark-primary);
     }@else{
         background-color: #fcfcfcaa;
     box-shadow: 0px -1px 5px 0 #dddddddd;
     }
     
     min-height: 50px;
-    padding: 7px 0
+    padding: 7px 0;
+    width: 100%;
 
 }   
 .message-box-header{
     position: absolute;
     top: 0;
-    margin-left: -15px;
     height: 50px;
     width: 100%;
     @if($isDarkMode){
-        background-color: $dark-primary;
-    box-shadow: 0px 2px 7px 0 lighten($dark-primary,1);
+        background-color: var(--dark-primary);
+    box-shadow: 0px 2px 7px 0 var(--dark-shadow);
     }@else{
         background-color: #fcfcfcf0;
     box-shadow: 0px 2px 7px 0 #ccc;
@@ -153,7 +159,7 @@ display: none;
     outline: none;
     background: transparent;
     border-color: transparent;
-    border-bottom: 1px solid $custom-primary;
+    border-bottom: 1px solid var(--custom-primary);
     padding-bottom: 7px;
     padding-top: 8px;
     cursor: text;
@@ -169,22 +175,22 @@ display: none;
     position: absolute;
     bottom: 0;
     left: 0; 
-    width: 1px;
-    height: 1.5px;
-    background-color: $custom-secondary;
+    width: 0px;
+    height: 1px;
+    background-color: var(--custom-primary-accent);
     transition: all 500ms;
     transform-origin: right;
-    margin: auto 1.5%
+    margin: auto 2.0%
 }
 .message-box
 .message-box-area div
 :focus::after{
-    width: 97%;
+    width: 96%;
 }
 @mixin complainList($isDarkMode){
 height: 100%;
     @if ($isDarkMode){
-        background-color: $dark-primary;
+        background-color: var(--dark-secondary2);
     // border-right: 1px $dark-secondary solid;
     }@else{
         background-color: #f9f9f988;
@@ -203,28 +209,28 @@ height: 100%;
     margin: 5px 0 0 -3%;
 }
     .item{
-    margin: 7px 0px;
+    margin: 0px 0px;
     width: 100%;
     height: 55px;
     @if($isDarkMode){
-        background-image: linear-gradient(145deg, $dark-secondary, $dark-secondary);
-    box-shadow: 1px 1px 12px 1px darken($dark-secondary,5);
+        background-image: linear-gradient(145deg, var(--dark-secondary), var(--dark-secondary));
+    box-shadow: 1px 1px 12px 1px var(--dark-shadow2);
     }@else{
         background-image: linear-gradient(145deg, #fff, #fcfcfcfc);
-    box-shadow: 1px 1px 12px 1px #e0e0e0;
+    box-shadow: 1px 1px 12px 1px var(--dark-shadow2);
     }
     
     cursor: pointer;
     transition: all 200ms;
     &:hover{
+        // opacity: 0.6;
     @if($isDarkMode){
-       background-image: linear-gradient(135deg,rgba($custom_primary,0.5),rgba($custom_primary_accent,0.5));
-    box-shadow: 1px 1px 12px 1px $dark-secondary;
+       background-image: linear-gradient(135deg,var(--custom_primary),var(--custom_primary));
+    box-shadow: 1px 1px 12px 1px var(--dark-shadow);
     }@else{
-    background-image: linear-gradient(145deg, rgba($custom_primary,0.1),rgba($custom_primary_accent,0.1));
-    box-shadow: 1px 1px 12px 1px #cfcfcfff;    
+    background-image: linear-gradient(145deg, var(--custom_primary),var(--custom_primary));
+    box-shadow: 1px 1px 12px 1px var(--dark-shadow);    
     }    
-    
     }
     .avatar{
     width: 40px;
@@ -246,7 +252,10 @@ height: 100%;
 }
 }
 .complaint-list{
-    @include complainList(false)
+    @include complainList(false);
+    div[category-selected="true"]{
+        background-image: linear-gradient(145deg, var(--dark-secondary3),var(--dark-secondary3));
+        box-shadow: 1px 1px 12px 1px var(--dark-shadow);    }
 }
 
 // .complaint-list 
@@ -256,8 +265,8 @@ height: 100%;
 @mixin searchBArContainer($isDarkMode){
     @if($isDarkMode){
         color: white;
-        background-color: $dark-primary;
-    box-shadow: 0px 2px 7px 0 $dark-secondary;
+        background-color: var(--dark-primary);
+    box-shadow: 0px 2px 7px 0 var(--dark-secondary);
     }@else{
         background-color: #f9f9f988;
     box-shadow: 0px 2px 7px 0 #ccc;
@@ -293,13 +302,13 @@ height: 100%;
 
 @mixin complaintContainer($isDarkMode){
 width: 99%;
-    max-width: 1300px;
+    max-width: 100%;
     height: 78vh;
     margin: auto;
     margin-bottom: 20px;
     @if($isDarkMode){
-        background-color: lighten($dark-secondary2,0);
-    box-shadow: -2px 0 13px 0 darken($dark-shadow,0);
+        background-color: var(--dark-secondary);
+    box-shadow: -2px 0 13px 0 var(--dark-shadow);
     }@else{
         background-color: #eeeeee88;
     box-shadow: -2px 0 13px 0 #cccccc88;
@@ -308,9 +317,10 @@ width: 99%;
     
 }
 .complaint-container{
-    @include complaintContainer(false)
+    @include complaintContainer(false);
+    
 }
-[dark="dark"]{
+[dark="dark-black"], [dark="dark-purple"]{
     .complaint-container{
         @include complaintContainer(true)
     }   
@@ -318,7 +328,11 @@ width: 99%;
         @include searchBArContainer(true)
     }
     .complaint-list{
-        @include complainList(true)
+        @include complainList(true);
+        div[category-selected="true"]{
+            background-image: linear-gradient(145deg, var(--dark-primary),var(--dark-primary2));
+        box-shadow: 1px 1px 12px 1px var(--dark-shadow);    
+    }
     }
     .message-box{
         @include messageBox(true)

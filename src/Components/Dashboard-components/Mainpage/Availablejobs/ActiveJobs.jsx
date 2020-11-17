@@ -3,6 +3,7 @@ import PreviousJobItem from './Card/PreviousJobItem'
 import { Unavaliable } from '../../../../Unavaliable'
 import { useQuery } from '@apollo/client'
 import { appLogic, apolloHelper } from '../../../..'
+import LottieCircleLoading from '../../../SIdeHussleComponents/LottieCircleLoading'
 
 function ActiveJobs() {
     const {data, loading, } = useQuery(apolloHelper.GET_JOBS_ASSIGNED_TO_WITH_STATUS,{
@@ -14,8 +15,10 @@ function ActiveJobs() {
     
     return (
         <div>
-         <div className="container-m bg-dark">
-          {/* // <div className="page-title">Active Jobs</div> */}
+         <div className="container-m">
+          {
+            loading && <LottieCircleLoading/>
+          }
           {
             data?.getJobsAssignedToWithStatus?.map((items,index)=>(
               <PreviousJobItem key={`prec-${index}`} price={items.jobBudget} description={items.jobDescription} id={items.id} topic={items.jobTitle} specification={items.jobSpecification} />  

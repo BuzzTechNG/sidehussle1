@@ -6,15 +6,19 @@ import {
   SkillsViewModal,
   TitleViewModal,
   DescriptionViewModal,
+  VideoUploadViewModal,
+  SocialLinkViewModal,
 } from "../Modals/Modal";
 import Apollo from "../../../../apolloHelper";
 import lottie from "lottie-web";
 import AvaliableBalance from "./AvaliableBalance";
 import Updateinfo from "../Updateuserinfo";
 import { appLogic } from "../../../..";
+import { useParams, NavLink, Link } from "react-router-dom";
 const apollo = new Apollo();
 const ModalBtn = ({title, titleX, icon }) => {
-  
+  const param = useParams()
+  if(param.id) return (<div></div>)
   return (
     <button
       type="button"
@@ -27,11 +31,25 @@ const ModalBtn = ({title, titleX, icon }) => {
   );
 };
 
+const SectionCard = ({children,data}) => {
+  const param = useParams()
+  if( param.id  && !data) return (<div></div>)
+  return (
+   <>{ children }</>
+  )
+}
 class Home extends Component {
   constructor(props) {
     super(props);
-    console.log("object work");
-    this.getUser();
+    console.log(props.match.params.id);
+    if(!props.match.params.id ){
+      this.getUser();
+      this.me = true
+    }else{
+      this.getUser(props.match.params.id)
+      this.me = false
+    }
+    
 
     // this.getUserAfterModalSuccess = this.getUserAfterModalSuccess.bind(this)
     this.state = {
@@ -66,8 +84,8 @@ class Home extends Component {
       path: "/loading3.json",
     });  
   }
-  async getUser() {
-    const userReponse = await apollo.getUser();
+  async getUser(id) {
+    const userReponse = await apollo.getUser(id);
    
     this.setState({ data: userReponse.data.getUser, loading:false });
     document.title = userReponse.data.getUser.firstName
@@ -83,10 +101,10 @@ class Home extends Component {
   };
 
   render() {
-    
+    console.log("object home render")
     return this.state.loading ? (
 
-      <div key="loading-screen" className="full-width" style={{minHeight:"50vh",opacity:0.5}}>
+      <div key="loading-screen" className="full-width" style={{opacity:0.5}}>
         <div className="container-m">
           <div className="mx-auto mt-5" ref={(c) => {
           this.el = c;
@@ -94,7 +112,7 @@ class Home extends Component {
 
        (
       <div key="home-screen" className="full-width column mt-4">
-        <div className="container-m custom-shadow row">
+         { this.me && <div className="container-m custom-shadow row">
           <div className="row bdr justify-content-center align-items-center px-4 ml-0">
             {" "}
             <i className="fa fa-warning text-info"></i>
@@ -115,7 +133,7 @@ class Home extends Component {
               profile and then resubmit it for another review.
             </p>
           </div>
-        </div>
+        </div>}
         
         <div className="col column container-m custom-shadow mb-5 mt-4">
           {/* Top container  */}
@@ -133,7 +151,7 @@ class Home extends Component {
               <div className="title3 mb-1 d-flex align-items-center">
               <i className="fa fa-money mr-2"></i> <AvaliableBalance/>
               </div>
-              {this.state.data.userDetails?.address && <div className="subtitle1">
+              {this.state.data?.userDetails?.address && <div className="subtitle1">
                 <i className="fa fa-map-marker"></i> {this.state.data.userDetails.address}
               </div>}
             </div>
@@ -147,34 +165,36 @@ class Home extends Component {
               <p className="subtitle1">
                 {" "}
                 Video introduction{" "}
-                <i
-                  className="round-btn fa fa-plus"
-                  title="Add introduction video"
-                ></i>
+                <ModalBtn titleX="editShortVid" icon="fa fa-plus" />
               </p>
-              <p className="subtitle1">
-                {" "}
-                Availability{" "}
-                <i
-                  className="round-btn fa fa-pen"
-                  title="Edit availability"
-                ></i>
-              </p>
-              <p className="subtitle1"> Avaliable Online</p>
+              {/* Social links */}
+              <div className="mb-3">
+                <div className="subtitle1">
+                  {" "}
+                  Social links <ModalBtn titleX="editSocialLink" icon="fa fa-plus" />
+              
+                </div>
+                <ul className="list subtitle3">
+                {this.state.data?.userDetails?.socialLinks?.map((socialLink,index)=>(
+                  <li aria-p href={socialLink} to={socialLink} className="link-address" key={index}>
+                    <a  href={"https://"+socialLink} target="_blank" rel="noopener noreferrer"> 
+                    {`${socialLink}`}
+                    </a> 
+                  </li>
+                )) }
+                </ul>
+              </div>
               {/* Language */}
               <div className="mb-3">
                 <div className="subtitle1">
                   {" "}
                   Languages <ModalBtn titleX="editLanguage" icon="fa fa-plus" />
-                  <i
-                    className="round-btn fa fa-pen"
-                    title="editProficiency"
-                  ></i>
+                  
                 </div>
                 <ul className="list subtitle3">
-                {this.state.data.userDetails?.languages.map((language,index)=>(
+                {this.state.data?.userDetails?.languages?.map((language,index)=>(
                   <li key={index}>
-                    {`${language?.language} - ${language?.proficiency}`}
+                    {`${language?.language}(${language?.proficiency})`}
                   </li>
                 )) }
                 </ul>
@@ -189,7 +209,7 @@ class Home extends Component {
                   />{" "}
                 </div>
                 <ul className="list subtitle3">
-                {this.state.data.userDetails?.education.map((school,index)=>(
+                {this.state.data?.userDetails?.education?.map((school,index)=>(
                   <li key={index}>
                     {school.school}
                   </li>
@@ -203,38 +223,62 @@ class Home extends Component {
               <div className="bdb pb-2">
                 <div className="title2">
 
-                  {this.state.data.userDetails?.userTitle}
+                  {this.state.data?.userDetails?.userTitle}
                   <ModalBtn titleX="editTitle" icon="fa fa-pen" />{" "}
 
                 </div>
-                <p className="title3">
+                <p className="subtitle1">
                   {" "}
-                  Costing --{" "}
-                  {this.state.data.userDetails?.userPricePerHour
-                    ? this.state.data.userDetails?.userPricePerHour
+                  {(!this.state.data?.userDetails?.userPricePerHour && this.me) ? "edit your charges" : ""}
+                  {this.state.data?.userDetails?.userPricePerHour
+                    ? this.state.data?.userDetails?.userPricePerHour
                     : "0"}
                   /hr <ModalBtn titleX="changeRate" icon="fa fa-pen" />
                 </p>
                 <p className="subtitle2">
-                  {this.state.data.userDetails?.userInfo ? this.state.data.userDetails?.userInfo : "kindly tell us about you" }
+                  {this.state.data?.userDetails?.userInfo ? this.state.data?.userDetails?.userInfo : "kindly tell us about you" }
                   <ModalBtn titleX="editDescription" icon="fa fa-pen" />
                 </p>
               </div>
               {/* User Skills */}
+              <SectionCard data={this.state.data?.userDetails?.services}>
               <div className="bdb py-3">
                 <p className="title3">
                   {" "}
                   Services <ModalBtn titleX="mySkills" icon="fa fa-pen" />
                 </p>
                 <ul className="subtitle3 list">
-                  {this.state.data.userDetails?.services.map((services,index) => (
+                  {this.state.data?.userDetails?.services?.map((services,index) => (
 
                   <li key={index}> {services} </li>
                   )) }
                   
                 </ul>
               </div>
+              </SectionCard>
+              {/* Portfolio upload */}
+              <SectionCard data={this.state.data?.userDetails?.hello}>
+              <div className="bdb py-3">
+                <p className="title3"> Portfolio</p>
+                <div className="row align-items-center justify-content-center">
+                  <div style={{ width: "40%" }}>
+                    <img
+                      style={{ width: "100%" }}
+                      src={require("../../../../assets/polaroid.svg")}
+                      alt="review"
+                      title="Work history"
+                    />
+                    <p className="text-center subtitle2">Work History</p>
+                    <div className="square-btn" title="Find Work">
+                      {" "}
+                      <i className="fa fa-search my-auto mr-2"></i> Find Work{" "}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </SectionCard>
               {/* Work history and Reviews */}
+              {/* <SectionCard data={this.state.data?.userDetails?.history}> */}
               <div className="bdb py-3">
                 <p className="title3"> Work History</p>
                 <div className="row align-items-center justify-content-center">
@@ -253,7 +297,10 @@ class Home extends Component {
                   </div>
                 </div>
               </div>
+              {/* </SectionCard> */}
               {/* Reviews and Rating */}
+              <SectionCard data={this.state.data?.userDetails?.review}>
+
               <div className="bdb py-3">
                 <p className="title3">Reviews</p>
                 <div className="row align-items-center justify-content-center">
@@ -268,33 +315,42 @@ class Home extends Component {
                   </div>
                 </div>
               </div>
-              /
+              </SectionCard>
             </div>
+            
           </div>)}
         </div>
         <ChangeRateViewModal
           reload={this.getUserAfterModalSuccess}
-          data={this.state.data.userDetails?.userPricePerHour}
+          data={this.state.data?.userDetails?.userPricePerHour}
         />
         <EducationViewModal
           reload={this.getUserAfterModalSuccess}
-          data={this.state.data.userDetails?.education}
+          data={this.state.data?.userDetails?.education}
         />
         <LanguageViewModal
           reload={this.getUserAfterModalSuccess}
-          data={this.state.data.userDetails?.languages}
+          data={this.state.data?.userDetails?.languages}
         />
         <SkillsViewModal
           reload={this.getUserAfterModalSuccess}
-          data={this.state.data.userDetails?.services}
+          data={this.state.data?.userDetails?.services}
         />
         <TitleViewModal
-          data={this.state.data.userDetails?.userTitle}
+          data={this.state.data?.userDetails?.userTitle}
           reload={this.getUserAfterModalSuccess}
         />
         <DescriptionViewModal
           reload={this.getUserAfterModalSuccess}
-          data={this.state.data.userDetails?.userInfo}
+          data={this.state.data?.userDetails?.userInfo}
+        />
+        <VideoUploadViewModal
+          reload={this.getUserAfterModalSuccess}
+          data={this.state.data?.userDetails?.userInfo}
+        />
+        <SocialLinkViewModal
+          reload={this.getUserAfterModalSuccess}
+          data={this.state.data?.userDetails?.socialLinks}
         />
       </div>
       
