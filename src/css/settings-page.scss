@@ -38,11 +38,11 @@
   }
   
   input:checked + .slider {
-    background-color: $custom-primary;
+    background-color: var(--custom-primary);
   }
   
   input:focus + .slider {
-    box-shadow: 0 0 1px $custom-primary;
+    box-shadow: 0 0 1px var(--custom-primary);
   }
   
   input:checked + .slider:before {
@@ -75,48 +75,62 @@
 .settings-navigation{
     ul{
         margin:0 0 0 30px;
-        
+        display: flex;
+        flex-direction: column;
         padding: 0;
-        font-size: 13px;
+        // font-size: 13px;
         list-style-type: none;
-        li{
-            margin:7px 0;
-            padding: 4px 15px;
-            // background-color: $custom-primary;
+        .navlink{
+            margin:4px 0;
+            padding: 9px 15px;
+            // background-color: var(--custom-primary);
             transition: transform 500ms;
             &:hover{
                 cursor: pointer;
-                transform: translateX(2px);
+                opacity: 0.6;
             }
         }
-        li + .active{
+         .active{
+            // margin-left: 15px;
             transition: background-color 200ms ease-in;
-            border-radius: 12px;
-            background-color: lighten($custom-primary-accent,15);
-            color: white
+            // color: white;
+            width: 100%;
+            border-left: 3px solid var(--custom-primary) ;
         }
     }
 }
-[dark="dark"]{
-    .slider{
-        background-color: $dark-secondary;
-    }
-    .settings-navigation li + .active{
-        background-color: $custom-primary-accent;
-    }
+// ThemeSettings
+.theme-border{
+  border: 2px solid var(--custom-primary) !important;
 }
+
+// [dark="dark"]{
+//     .slider{
+//         background-color: $dark-secondary;
+//     }
+//     .settings-navigation li + .active{
+//         background-color: var(--custom-primary)-accent;
+//     }
+// }
 @media screen and ( max-width: 991px){
     .settings-navigation{
+        
         margin-top: -10px;
         margin-bottom: 15px;
         ul{
             display: flex;
+            flex-direction: row;
             flex-wrap: wrap;
             li{
                 margin:3px 0;
                 border-radius: 12px;
             }
-        
+            .active{
+              margin-left: 15px;
+              transition: background-color 200ms ease-in;
+              width: max-content;
+              border-left:  none
+          }
         }
         
     }   

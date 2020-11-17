@@ -12,7 +12,7 @@ import ActiveJobs from "./Availablejobs/ActiveJobs";
 import Home from "./Home/Home.jsx";
 import Thistory from "./Transactionhistory/Transactionhistory";
 import DepositFund from "./Transactionhistory/DepositFund";
-import AccountSetUp from "./Transactionhistory/AccountSetUp";
+import AccountSetUp from "./Settings/AccountSetUp";
 import WithdrawFund from "./Transactionhistory/WithdrawFund";
 import jobPage from "./Jobprogress/JobPage";
 import Report from "./Report/Report";
@@ -25,6 +25,14 @@ import Findperson from "./Findperson/Findpersons";
 import { appLogic, apolloHelper } from "../../..";
 import PageNotFound from "./PageNotFound";
 import ItemPage from "./Market/ItemPage";
+import SetupStore from "./Market/SetupStore";
+import ProductList from "./Market/ProductList";
+import ProductPage from "./Market/ProductPage";
+import MobileMessage from "./MessageModule/MobileMessage";
+import Wallet from "./Transactionhistory/Wallet";
+import UserPage from "./Home/UserPage";
+import Collection from "./Market/Collection";
+import CollectionList from "./Market/CollectionList";
 
 
 class Mainpage extends Component {
@@ -39,32 +47,41 @@ class Mainpage extends Component {
 }
   render() {
     return (
-      <div className="mainpage">
+      <div className="mainpage" >
       
         <Switch>
-          <Route path="/dashboard/transactionhistory" component={Thistory} />
-          <Route path="/dashboard/startjob" component={Startjob} />
-          <Route path="/dashboard/inprogress" component={Jobprogress} />
-          <Route path="/dashboard/myproposals" component={Proposal} />
-          <Route path="/dashboard/postjob" component={PostJob} />
-          <Route path="/dashboard/jobprofile/:id" component={jobPage} />
-          <Route path="/dashboard/myjobs" component={MyJobs} />
-          <Route path="/dashboard/activejobs" component={ActiveJobs} />
-          <Route path="/dashboard/previousjobs" component={Previousjobs} />
-          <Route path="/dashboard/message" component={Message} />
-          <Route path="/dashboard/deposit" component={DepositFund} />
-          <Route path="/dashboard/account_setup" component={AccountSetUp} />
-          <Route path="/dashboard/withdraw" component={WithdrawFund} />
-          <Route path="/dashboard/finduser" component={Findperson} />
-          <Route path="/dashboard/report" component={Report} />
-          <Route path="/dashboard/market" component={Market} />
-          <Route path="/dashboard/item" component={ItemPage} />
+          <Route path="/transactionhistory" component={Thistory} />
+          <Route path="/startjob" component={Startjob} />
+          <Route path="/inprogress" component={Jobprogress} />
+          <Route path="/myproposals" component={Proposal} />
+          <Route path="/postjob" component={PostJob} />
+          <Route path="/jobprofile/:id" component={jobPage} />
+          <Route path="/myjobs" component={MyJobs} />
+          <Route path="/activejobs" component={ActiveJobs} />
+          <Route path="/previousjobs" component={Previousjobs} />
+          <Route path="/message" exact component={Message} />
+          <Route path="/message/:id" component={MobileMessage} />
+          <Route path="/deposit" component={DepositFund} />
+          <Route path="/account_setup" component={AccountSetUp} />
+          <Route path="/store_setup" component={SetupStore} />
+          <Route path="/withdraw" component={WithdrawFund} />
+          <Route path="/finduser" component={Findperson} />
+          <Route path="/report" component={Report} />
+          <Route path="/market" component={Market} />
+          <Route path="/collection" component={Collection} />
+          <Route path="/collection_list" component={CollectionList} />
+          <Route path="/item" component={ItemPage} />
+          <Route path="/productlist" component={ProductList} />
+          <Route path="/product" component={ProductPage} />
+          <Route path="/wallet" component={Wallet} />
           <Route
-            path="/dashboard/avaliablejobs"
+            path="/avaliablejobs"
             exact
             component={Availablejobs}
           />
-          <Route path="/dashboard/" exact component={Home} />
+          <Route path="/user/:id" component={UserPage} />
+          <Route path="/"  component={Home} />
+          {/* <Route path="/:id" exact  component={Home} /> */}
           <Route path="*" exact component={PageNotFound} />
           </Switch>
       

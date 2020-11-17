@@ -29,7 +29,7 @@ function DepositFund(props) {
                 <div className="page-title">
                     Deposit Fund
                 </div>
-                <div className="custom-shadow mx-auto p-4 mt-5 py-5 mx-mb-2" style={{width:"100%"}}>
+                <div className="custom-shadow mx-auto p-4 mt-5 py-5 mx-mb-2 color-shadow" style={{width:"100%"}}>
                     <div className="row my-3 align-items-center">
                         <div className="col-5 subtitle2">Deposit Amount</div>
                         <div className="col-7  text-right">
@@ -49,7 +49,7 @@ function DepositFund(props) {
                         <div className="col text-right" >N{appLogic.numberWithCommas((parseFloat(appLogic.paystackCharge(deposit))+parseFloat(convertNaN(deposit))).toFixed(2))}</div>
                     </div>
                     <div className="row my-3">
-                        <div onClick={paystackInline} className="square-btn col-11 mx-auto py-2">Proceed Payment</div>
+                        <div onClick={paystackInline} className="action-btn col-11 mx-auto py-2">Process Payment</div>
                     </div>
                     <div className="row my-1 subtitle3 px-3">
                     You agree to authorize the use of your card for this deposit and future payments.

@@ -21,7 +21,7 @@ class Footer extends Component {
       //             </button>{" "}
       //           </form>{" "}
       //         </div>{" "}
-      <div className="footer">
+      <div id="footer" className="footer display-non" >
       <div className="footer-shape1"> </div>
       <div className="footer-shape2"> </div>
         <div className="row">
@@ -30,7 +30,7 @@ class Footer extends Component {
           
           <div className="container-m">
             
-            <div className="d-flex flex-wrap align-items-center">
+            <div className="d-flex flex-wrap align-items-center mx-auto" style={{width:"max-content"}}>
               <div className=" p-3">
                 <div className="footer-title"> About Us </div>{" "}
               </div>{" "}

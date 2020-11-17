@@ -11,6 +11,8 @@ class apollaHelperClass {
         pictureUrl
         firstName
         lastName
+        email
+        mobileNumber
         userDetails {
           logAndLat
           address
@@ -31,6 +33,7 @@ class apollaHelperClass {
             areaOfStudy
           }
           services
+          socialLinks
           accountDetails {
             accountNumber
             accountName
@@ -152,6 +155,7 @@ class apollaHelperClass {
       $address: String
       $logAndLat: String
       $services: [String]
+      $socialLinks: [String]
       $languages: [LanguageInput]
       $videoUrl: String
       $education: [EducationInput]
@@ -163,6 +167,7 @@ class apollaHelperClass {
         address: $address
         logAndLat: $logAndLat
         services: $services
+        socialLinks: $socialLinks
         languages: $languages
         videoUrl: $videoUrl
         education: $education
@@ -195,6 +200,7 @@ class apollaHelperClass {
             areaOfStudy
           }
           services
+          socialLinks
           accountDetails {
             accountNumber
             accountName
@@ -219,6 +225,7 @@ class apollaHelperClass {
           userInfo
           userTitle
           videoUrl
+          services
       }
     }
     }
@@ -270,8 +277,20 @@ class apollaHelperClass {
 
   //  Job
   GET_AVALIABLE_JOBS = gql`
-    query getAvaliableJobs($location: String) {
-      getAvaliableJobs(location: $location) {
+    query getAvaliableJobs($location: String
+        $verifiedUser: Boolean,
+        $verifiedPayment: Boolean,
+        $services: [String],
+        $showJobsInOtherLocations: Boolean
+        $showOtherServices: Boolean
+    ) {
+      getAvaliableJobs(location: $location
+        verifiedUser: $verifiedUser,
+        verifiedPayment: $verifiedPayment,
+        services: $services,
+        showOtherServices: $showOtherServices,
+        showJobsInOtherLocations: $showJobsInOtherLocations
+      ) {
         id
         jobTitle
         jobDescription
@@ -294,6 +313,7 @@ class apollaHelperClass {
       $jobTitle: String
       $jobDescription: String
       $jobLocation: String
+      $jobAddress: String
       $jobSpecification: [String]
       $locationSensitive: Boolean
       $isBudgetNegotiable: Boolean
@@ -303,6 +323,7 @@ class apollaHelperClass {
         jobTitle: $jobTitle
         jobDescription: $jobDescription
         jobLocation: $jobLocation
+        jobAddress: $jobAddress
         isBudgetNegotiable: $isBudgetNegotiable
         jobSpecification: $jobSpecification
         locationSensitive: $locationSensitive
@@ -410,7 +431,10 @@ class apollaHelperClass {
   `;
   CAN_APPLY_FOR_JOB = gql`
     query canApplyForJob($jobId: String) {
-      canApplyForJob(jobId: $jobId)
+      canApplyForJob(jobId: $jobId){
+        message
+        status
+      }
     }
   `;
   APPLY_FOR_JOB = gql`
@@ -456,11 +480,37 @@ class apollaHelperClass {
       assignJob(jobId: $jobId, user: $user)
     }
   `;
-  async getAvaliableJobs(location) {
+  // Utilities
+  LOCATION_AUTOCOMPLETE = gql`
+    query locationAutocomplete($location: String){
+      locationAutocomplete(location: $location)
+    }
+  `;
+  async locationAutocomplete(location){
+    return await client.query({
+      query: this.LOCATION_AUTOCOMPLETE,
+      variables: {
+        location
+      }
+    })
+  }
+  async getAvaliableJobs({
+    verifiedUser,
+    verifiedPayment,
+    services,
+    location,
+    showOtherServices,
+    showJobsInOtherLocations,
+  }) {
     return await client.query({
       query: this.GET_AVALIABLE_JOBS,
       variables: {
         location,
+        verifiedUser,
+        verifiedPayment,
+        showOtherServices,
+        services,
+        showJobsInOtherLocations
       },
       fetchPolicy: "network-only",
     });
@@ -651,6 +701,7 @@ class apollaHelperClass {
     address,
     logAndLat,
     services,
+    socialLinks,
     languages,
     videoUrl,
     education,
@@ -664,6 +715,7 @@ class apollaHelperClass {
         address,
         logAndLat,
         services,
+        socialLinks,
         languages,
         videoUrl,
         education,
@@ -679,6 +731,7 @@ class apollaHelperClass {
     jobTitle,
     jobDescription,
     jobLocation,
+    jobAddress,
     jobSpecification,
     locationSensitive,
     isBudgetNegotiable,
@@ -691,6 +744,7 @@ class apollaHelperClass {
         jobTitle,
         jobDescription,
         jobLocation,
+        jobAddress,
         jobSpecification,
         isBudgetNegotiable,
         locationSensitive,

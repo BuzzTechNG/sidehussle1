@@ -39,7 +39,7 @@ class Userlogger extends React.Component {
   render() {
     const mode = this.context[0];
     return (
-      <div className="main-background" dark={mode}>
+      <div className="main-background" dark={mode[0]} theme={mode[1]}>
         <div className="userLogger">
           <DarkModeToggler />
           <div>

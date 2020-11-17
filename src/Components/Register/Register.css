@@ -10,7 +10,7 @@
     position: absolute;
     bottom: -12px;
     left: 0;
-    color: red;
+    color: var(--custom-primary);
 }
 
 [show-validation-error="true"] {
@@ -24,7 +24,7 @@
     position: absolute;
     bottom: -12px;
     left: 0;
-    color: red;
+    color: var(--custom-primary);
 }
 
 [show-password-error="true"] {

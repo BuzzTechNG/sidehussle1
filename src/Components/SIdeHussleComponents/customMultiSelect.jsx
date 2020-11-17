@@ -3,15 +3,38 @@ import React from "react";
 function CustomSelect(props,{onChange, placeholder}) {
   
   const [optionOpened, setOptionOpened] = React.useState(false);
-  const [selected, setSelected] = React.useState({});
+  const newProp = React.useRef(props.items)
+  const [selected, setSelected] = React.useState(()=>{
+    console.log("object custom multi")
+    const localState = {}
+   
+    return localState
+  });
   const [filter, setFilter] = React.useState("");
   const [openCustomModal, setOpenCustomModal] = React.useState(false);
   React.useEffect(() => {
+    
     props.onChange(Object.keys(selected))
+    console.log("object onchange musk")
     return () => {
       
     }
   }, [selected])
+  React.useEffect(() => {
+    console.log(newProp.current)
+    console.log(props.items)
+    if (JSON.stringify(newProp.current) !== JSON.stringify(props.items)) {
+      const localState = {}
+  
+    if(props.items && Array.isArray(props.items) ){
+      console.log("object inside props items")  
+    props.items.forEach(element => {
+      localState[element] = element
+    });
+  }
+   setSelected(localState)
+    }
+  }, [props.items])
   function toggle(){
     setFilter("");
     if (window.innerWidth < 992) {

@@ -8,7 +8,7 @@ function Report() {
     <div className="full-width">
       <div className="container-m">
         <div className="page-title">Report</div>
-        <div className="card p-3 px-5 job-form">
+        <div className="mcard p-3 px-5 job-form mt-3 mt-md-5">
           <div>
             <div>Category</div>
             <select

@@ -6,7 +6,7 @@ $fontSize: 25px;
 }
 .sidehussle-select{
     cursor: pointer;
-    border-bottom: 1px solid $custom-primary;
+    border-bottom: 1px solid var(--custom-primary);
     width: max-content;
     min-width: 150px;
     
@@ -46,7 +46,7 @@ $fontSize: 25px;
           
           /* Handle */
           &::-webkit-scrollbar-thumb {
-            background: $custom-primary;
+            background: var(--custom-primary);
             border-radius: 10px;
           }
     }
@@ -55,7 +55,7 @@ $fontSize: 25px;
         // left: 0;
         // top: 0;
         // top:auto;
-        background-color: #fff;
+        background-color: var(--dark-primary);
         // width: 10%;
         height: max-content;
         max-height: 40vh;
@@ -64,16 +64,17 @@ $fontSize: 25px;
         overflow-y: scroll;
         padding: 0 3px;
         
-        box-shadow: 1px 1px 15px 0 #ddd;
+        box-shadow: 1px 1px 15px 0 var(--dark-shadow);
         z-index: 2;
-        option{
+        .option, option{
+            font-weight: 300;
             margin: 5px 10px;
             padding: 2px 10px;
             
         }
 
-        option:hover{
-            background-color: #ccc;
+        .option:hover, option:hover{
+            background-color: var(--dark-secondary);
         }
         &::-webkit-scrollbar {
             width: 10px;
@@ -86,20 +87,19 @@ $fontSize: 25px;
           
           /* Handle */
           &::-webkit-scrollbar-thumb {
-            background: $custom-primary;
+            background: var(--custom-primary);
             border-radius: 10px;
           }
 
     }
     
 }
-[dark="dark"]{
-    .sidehussle-select .sidehussle-select-option{
-        background-color: $dark-primary;
-        box-shadow: 1px 1px 15px 0 $dark-shadow;
-        option:hover{
-            background-color: $dark-secondary;
-            color: #ccc;
-        }
-    }
-}
+
+    // .sidehussle-select .sidehussle-select-option{
+    //     background-color: $dark-primary;
+    //     box-shadow: 1px 1px 15px 0 $dark-shadow;
+    //     .option:hover, option:hover{
+    //         background-color: $dark-secondary;
+    //         color: var(--text-secondary);
+    //     }
+    // }

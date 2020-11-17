@@ -1,7 +1,6 @@
-.modalbg {
-    background-color: white;
-}
-
-.modalframe {
-    background-color: "#cccccccc";
+/* logout */
+.modal-header-style{
+    border-radius: 10px 10px 0 0;
+    background: linear-gradient(145deg, var(--custom-primary),var(--custom-primary-accent));
+    color: white !important
 }

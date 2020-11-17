@@ -7,7 +7,7 @@ function PreviousJobItem(props){
       <div key={props.key}>
       <NavLink
       title="Click to expand job information"
-      to={`/dashboard/jobprofile/${props.id}`}
+      to={`/jobprofile/${props.id}`}
       className=" xcard row p-3 pl-4 mx-auto "
       
     >

@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 import "./Login.css";
 import "./logindark.scss";
 import Apollo from "../../apolloHelper";
+import AuthUserContext from "../../AuthContext";
 const apollo =  new Apollo()
 class LogIn extends Component {
+  
   constructor(props){
     super(props)
     const mobileNumber = localStorage.getItem("mobileNumber")
@@ -20,9 +22,10 @@ class LogIn extends Component {
     response: "",
     
   };
-  
+  static contextType = AuthUserContext
+
   line() {
-    return <div className="line"></div>;
+    return <div className="line" style={{width:"40%"}}></div>;
   }
   authNavigation(Auth){
     this.setState({loading: false})
@@ -31,7 +34,9 @@ class LogIn extends Component {
     }
     if (Auth.message === "login-sucessful" ){
       localStorage.setItem("token",Auth.token)
-      this.props.history.push("/dashboard");
+      this.context.signIn()
+      // this.props.history.push("/");
+
     }
   }
   inputHandler = (event) => {

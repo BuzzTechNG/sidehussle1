@@ -1,5 +1,7 @@
 class AppLogic{
     userId = ""
+    userFullName = ""
+    userImageUrl = ""
 
     convertDate(date) {
       return new Date(date)

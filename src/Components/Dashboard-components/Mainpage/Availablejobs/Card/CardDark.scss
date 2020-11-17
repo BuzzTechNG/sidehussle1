@@ -1,21 +1,21 @@
 @import "../../../../../css/variables";
 
-[dark="dark"] {
+// [dark="dark"] {
     .xcard {
-        box-shadow: 0 0px 8px 0 $dark-shadow;
+        box-shadow: 0 0px 8px 0 var(--dark-shadow);
 
-        background-color: $dark-secondary2;
+        background-color: var(--dark-secondary2);
         // border: #000 1px solid;
 
     }
 
     .category-card {
-        box-shadow: 0 2px 8px 0 $dark-shadow;
+        box-shadow: 0 2px 8px 0 var(--dark-shadow);
         border-right: 2px solid #111
     }
 
     .bg-card {
-        background-color: $dark-shadow;
+        background-color: var(--dark-primary);
     }
 
-}
+// }

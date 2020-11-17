@@ -41,8 +41,8 @@
 
 .line {
     height: 1px;
-    width: 40%;
-    background-color: #ccc;
+    width: 100%;
+    background-color: var(--text-secondary3);
 }
 
 .line-div {
